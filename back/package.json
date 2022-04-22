@@ -19,5 +19,9 @@
     "uuid": "^8.3.2"
   },
   "description": "",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0"
+  }
 }
