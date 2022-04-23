@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import "antd/dist/antd.css";
 import styled from "styled-components";
 import { Card, Tabs } from "antd";
 
