@@ -6,8 +6,8 @@ import { Card, Tabs } from "antd";
 
 import MyInfoEditForm from "./user/MyInfoEditForm";
 import MyInfo from "./user/MyInfo";
-import BookmarkList from "./user/BookmarkList";
-import ReviewList from "./user/ReviewList";
+import BookmarkList from "./bookmark/BookmarkList";
+import ReviewList from "./review/ReviewList";
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
