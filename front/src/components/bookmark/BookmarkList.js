@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Carousel } from "antd";
+import { Row, Col, Carousel } from "antd";
 
 import BookmarkItem from "./BookmarkItem";
 
