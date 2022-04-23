@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Main from "./components/Main";
+import SignUp from "./components/signUp/SignUp";
 
 function RouterFile() {
   return (
@@ -9,6 +10,7 @@ function RouterFile() {
       <Header />
       <Routes>
         <Route path="/" exact element={<Main />} />
+         <Route path="/signUp" exact element={<SignUp />} />
       </Routes>
     </Router>
   );

@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import RouterFile from "./Router";
+import "antd/dist/antd.min.css";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://webfontworld.github.io/SCoreDream/SCoreDream.css');

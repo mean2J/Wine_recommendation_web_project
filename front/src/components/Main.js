@@ -1,4 +1,4 @@
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import BackVideo from "../media/videoplayback.mp4";
