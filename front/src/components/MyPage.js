@@ -2,26 +2,36 @@ import React, { useState, useEffect } from "react";
 
 import "antd/dist/antd.css";
 import styled from "styled-components";
-import { Tabs } from "antd";
+import { Card, Tabs } from "antd";
+
 import MyInfoEditForm from "./user/MyInfoEditForm";
 import MyInfo from "./user/MyInfo";
+import BookmarkList from "./user/BookmarkList";
+import ReviewList from "./user/ReviewList";
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
+  height: 100vh;
+  background-color: #f8f9fa;
 `;
 
-const MyPageSection = styled.section`
-  height: 100vh;
-  margin-top: 60px;
+const MyPageSection = styled(Card)`
+  margin-top: 100px;
   margin-left: 360px;
   margin-right: 360px;
+
+  background-color: #ffffff;
+  border-radius: 20px;
 `;
 
 const TitleWrapper = styled.div``;
 
-const TitleText = styled.h2``;
+const TitleText = styled.h2`
+  font-size: 30px;
+  font-weight: 500;
+`;
 
 const InfoWrapper = styled.div``;
 
@@ -51,10 +61,10 @@ function MyPage() {
                 )}
               </TabPane>
               <TabPane tab="북마크" key="2">
-                와인 북마크 내용
+                <BookmarkList />
               </TabPane>
-              <TabPane tab="내 리뷰" key="3">
-                내가 작성한 리뷰가 보이는 곳
+              <TabPane tab="나의 리뷰" key="3">
+                <ReviewList />
               </TabPane>
             </Tabs>
           </InfoWrapper>
