@@ -30,7 +30,7 @@ const Logo = styled.p`
   font-weight: 600;
   line-height: 29px;
   min-height: 60px;
-  background: linear-gradient(135deg, #ffaa85 0%, #b3315f 100%);
+  background: linear-gradient(135deg, #F97794 0%, #623AA2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -89,9 +89,6 @@ function Header() {
           </NavItems>
           <NavLogin>
             <NavLoginItems>로그인</NavLoginItems>
-            <NavLoginItems>
-              <Link to={`/signUp`}>회원가입</Link>
-            </NavLoginItems>
           </NavLogin>
         </NavContainer>
       </Navbar>
