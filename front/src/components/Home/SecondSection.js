@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
 
-const SecSection = styled.div`
+const SecSection = styled.section`
   height: 100vh;
 `;
 
@@ -87,12 +87,12 @@ const SecStaticsBox2 = styled(SecStaticsBox)`
 function SecondSection() {
   const animatedItem = {
     0: useScrollFadeIn("up", 1, 0),
-    1: useScrollFadeIn("up", 1, 0),
-    2: useScrollFadeIn("up", 1, 0.1),
+    1: useScrollFadeIn("up", 1, 0.1),
+    2: useScrollFadeIn("up", 1, 0.2),
     3: useScrollFadeIn("up", 1, 0),
-    4: useScrollFadeIn("up", 1, 0),
-    5: useScrollFadeIn("up", 1, 0),
-    6: useScrollFadeIn("up", 1, 0.1),
+    4: useScrollFadeIn("up", 1, 0.1),
+    5: useScrollFadeIn("up", 1, 0.2),
+    6: useScrollFadeIn("up", 1, 0.3),
   };
   return (
     <>
