@@ -3,6 +3,7 @@ import morgan from "morgan";
 import express from "express";
 
 import { userRouter } from "./routers/userRouter.js";
+import { wineRouter } from "./routers/wineRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 const app = express();
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(userRouter);
-
+app.use(wineRouter);
 app.use(errorMiddleware);
 
 export { app };
