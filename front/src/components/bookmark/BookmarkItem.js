@@ -1,13 +1,15 @@
+import { useState } from "react";
 import styled from "styled-components";
-
 import { Card, Rate } from "antd";
-import { FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
+
+import BookmarkButton from "./BookmarkButton";
 
 const BookmarkContainer = styled(Card)`
   border: None;
-  border-radius: 20px;
+  border-radius: 6px;
   margin-right: 20px;
   margin-left: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 `;
 
 const contentStyle = {
@@ -53,12 +55,15 @@ const customIcons = {
 };
 
 function BookmarkItem({ currentBookmark }) {
+  const [isLiked, setIsLiked] = useState(currentBookmark.liked);
+
   return (
     <BookmarkContainer style={contentStyle}>
+      <BookmarkButton isLiked={isLiked} setIsLiked={setIsLiked} />
       <div>{currentBookmark.name}</div>
       <div>타입: {currentBookmark.type}</div>
       <br />
-      <span>당도</span>
+      <span>당도 </span>
       <Rate
         style={{ color: "#c70039" }}
         defaultValue={currentBookmark.sweet}
@@ -66,7 +71,7 @@ function BookmarkItem({ currentBookmark }) {
         character={({ index }) => customIcons[index + 1]}
       />
       <br />
-      <span>산도</span>
+      <span>산도 </span>
       <Rate
         style={{ color: "#c70039" }}
         defaultValue={currentBookmark.acidity}
@@ -74,7 +79,7 @@ function BookmarkItem({ currentBookmark }) {
         character={({ index }) => customIcons[index + 1]}
       />
       <br />
-      <span>바디</span>
+      <span>바디 </span>
       <Rate
         style={{ color: "#c70039" }}
         defaultValue={currentBookmark.body}
@@ -82,7 +87,7 @@ function BookmarkItem({ currentBookmark }) {
         character={({ index }) => customIcons[index + 1]}
       />
       <br />
-      <span>탄닌</span>
+      <span>탄닌 </span>
       <Rate
         style={{ color: "#c70039" }}
         defaultValue={currentBookmark.tannin}

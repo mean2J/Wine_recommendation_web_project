@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
-
 import { Row, Col, Carousel } from "antd";
 
 import BookmarkItem from "./BookmarkItem";
-
-// const contentStyle = {
-//   height: "160px",
-//   color: "#fff",
-//   lineHeight: "160px",
-//   textAlign: "center",
-//   background: "#364d79",
-// };
 
 const dummy = [
   {
@@ -21,6 +12,7 @@ const dummy = [
     acidity: 1,
     body: 1,
     tannin: 1,
+    liked: true,
   },
   {
     id: 2,
@@ -30,6 +22,7 @@ const dummy = [
     acidity: 2,
     body: 2,
     tannin: 2,
+    liked: true,
   },
   {
     id: 3,
@@ -39,6 +32,7 @@ const dummy = [
     acidity: 3,
     body: 3,
     tannin: 3,
+    liked: true,
   },
   {
     id: 4,
@@ -48,6 +42,7 @@ const dummy = [
     acidity: 4,
     body: 4,
     tannin: 4,
+    liked: true,
   },
 ];
 
