@@ -1,13 +1,14 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
 import FirstSection from "./Home/FirstSection";
+import Footer from "./Home/Footer";
 import SecondSection from "./Home/SecondSection";
 import { ThirdSection } from "./Home/ThirdSection";
 
 const MainContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
-  height: 4000px;
+  height: auto;
 `;
 
 function Main() {
@@ -23,6 +24,7 @@ function Main() {
         <FirstSection />
         <SecondSection />
         <ThirdSection />
+        <Footer />
       </MainContainer>
     </>
   );
