@@ -5,6 +5,9 @@ import { UserStateContext, DispatchContext } from '../App';
 // import { Navbar } from 'react-bootstrap'; */
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import React, { useState } from "react";
+import LoginModal from "./login/LoginModal";
+import "antd/dist/antd.min.css";
 
 const Navbar = styled.nav`
   width: 100%;
@@ -30,7 +33,7 @@ const Logo = styled.p`
   font-weight: 600;
   line-height: 29px;
   min-height: 60px;
-  background: linear-gradient(135deg, #F97794 0%, #623AA2 100%);
+  background: linear-gradient(135deg, #f97794 0%, #623aa2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -74,6 +77,13 @@ function Header() {
     // 기본 페이지로 돌아감.
     navigate('/'); */
 
+  const [isModal, setIsModal] = useState(false);
+  const getModalBoolean = (e) => {
+    setIsModal(e);
+  };
+  const showModal = () => {
+    setIsModal(true);
+  };
   return (
     <>
       <Navbar>
@@ -88,7 +98,10 @@ function Header() {
             <Link to={`/community`}>커뮤니티 💬</Link>
           </NavItems>
           <NavLogin>
-            <NavLoginItems>로그인</NavLoginItems>
+            <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
+            {isModal && (
+              <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
+            )}
           </NavLogin>
         </NavContainer>
       </Navbar>
