@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Button, Form } from "antd";
 import {
   UserOutlined,
@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import * as Api from "../../api";
 
 const IntroDesc = styled.p`
   font-weight: 200;
@@ -16,9 +17,54 @@ const IntroDesc = styled.p`
   color: #000000;
 `;
 
+const Notice = styled.p`
+  font-size: 12px;
+  color: #ff0000;
+`;
+
 function SignUpForm() {
-  const onFinish = (values) => {
+  //useState로 email 상태를 생성함.
+  const [email, setEmail] = useState("");
+  //useState로 password 상태를 생성함.
+  const [password, setPassword] = useState("");
+  //useState로 confirmPassword 상태를 생성함.
+  const [confirmPassword, setConfirmPassword] = useState("");
+  //useState로 name 상태를 생성함.
+  const [name, setName] = useState("");
+
+  //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
+  const validateEmail = (email) => {
+    return email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
+  const isEmailValid = validateEmail(email);
+  // 비밀번호가 4글자 이상인지 여부를 확인함.
+  const isPasswordValid = password.length >= 4;
+  // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
+  const isPasswordSame = password === confirmPassword;
+  // 이름이 2글자 이상인지 여부를 확인함.
+  const isNameValid = name.length >= 2;
+
+  const isFormValid =
+    isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
+
+  const onFinish = async (values) => {
     console.log("Success:", values);
+    try {
+      // "user/register" 엔드포인트로 post요청함.
+      await Api.post("users/signup", {
+        email: values.email,
+        password: values.password,
+        name: values.name,
+      });
+    } catch (err) {
+      console.log("회원가입에 실패하였습니다.", err);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -38,79 +84,51 @@ function SignUpForm() {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          name="userEmail"
-          rules={[
-            {
-              required: true,
-              message: "이메일을 입력해주세요",
-            },
-            {
-              type: "email",
-              message: "이메일 형식으로 입력해주세요",
-            },
-          ]}
-        >
+        <Form.Item name="email" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이메일"
-            prefix={<UserOutlined className="userEmail" />}
+            onChange={(e) => setEmail(e.target.value)}
+            prefix={<UserOutlined className="email" />}
           />
         </Form.Item>
-        <Form.Item
-          name="userName"
-          rules={[
-            {
-              required: true,
-              message: "이름을 입력해주세요",
-            },
-          ]}
-        >
+        {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
+        <Form.Item name="name" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이름"
-            prefix={<UserOutlined className="userName" />}
+            onChange={(e) => setName(e.target.value)}
+            prefix={<UserOutlined className="name" />}
           />
         </Form.Item>
-
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "비밀번호를 입력해주세요",
-            },
-          ]}
-        >
+        {!isNameValid && <Notice>이름은 2글자 이상이어야 합니다.</Notice>}
+        <Form.Item name="password" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            onChange={(e) => setPassword(e.target.value)}
+            prefix={<LockOutlined className="password" />}
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
+        </Form.Item>
+        {!isPasswordValid && (
+          <Notice>비밀번호는 4글자 이상이어야 합니다.</Notice>
+        )}
+        <Form.Item name="confirmPassword" style={{ marginBottom: "5px" }}>
+          <Input.Password
+            placeholder="input password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
             prefix={<LockOutlined className="verifyPassword" />}
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
           />
         </Form.Item>
-        <Form.Item
-          name="ConfirmPassword"
-          rules={[
-            {
-              required: true,
-              message: "비밀번호를 확인해주세요",
-            },
-          ]}
-        >
-          <Input.Password
-            placeholder="input password"
-            prefix={<LockOutlined className="verifyPassword" />}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
-
+        {!isPasswordSame && <Notice>비밀번호가 다릅니다.</Notice>}
         <IntroDesc>
           <Link to={`/`}>이미 회원이신가요?</Link>
         </IntroDesc>
 
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block disabled={!isFormValid}>
           회원가입
         </Button>
       </Form>

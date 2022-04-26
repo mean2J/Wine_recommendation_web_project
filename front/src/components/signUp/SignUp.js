@@ -8,7 +8,7 @@ const MainContainer = styled.div`
   height: 100%;
 `;
 
-const FirstSection = styled.section`
+const RegisterSection = styled.section`
   display: flex;
   height: 100vh;
   &::before {
@@ -37,7 +37,7 @@ const RegisterWrapper = styled.div`
   align-items: center;
 `;
 
-const IntroText = styled.h1`
+const TitleText = styled.h1`
   margin-top: 45px;
   font-weight: 600;
   font-size: 32px;
@@ -47,7 +47,7 @@ const IntroText = styled.h1`
   color: #c365fd;
 `;
 
-const IntroDesc = styled.p`
+const TitleDesc = styled.p`
   margin-bottom: 20px;
   font-weight: 200;
   font-size: 15px;
@@ -61,15 +61,15 @@ function SignUp() {
   return (
     <>
       <MainContainer>
-        <FirstSection>
+        <RegisterSection>
           <RegisterWrapper>
-            <IntroText>와인셀러</IntroText>
-            <IntroDesc>
+            <TitleText>와인셀러</TitleText>
+            <TitleDesc>
               와인셀러는 세계 최고의 와인 추천 서비스입니다.
-            </IntroDesc>
+            </TitleDesc>
             <SignUpForm />
           </RegisterWrapper>
-        </FirstSection>
+        </RegisterSection>
       </MainContainer>
     </>
   );
