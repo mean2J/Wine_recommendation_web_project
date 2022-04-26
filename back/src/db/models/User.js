@@ -1,4 +1,4 @@
-import {UserModel} from "../schemas/user.js";
+import { UserModel } from "../schemas/user.js";
 
 class User {
   static async createUser(User) {
@@ -7,22 +7,18 @@ class User {
   }
 
   static async findUserById(userId) {
-    const user = await UserModel.findOne({id: userId});
+    const user = await UserModel.findOne({ id: userId });
     return user;
   }
 
   static async findUserByEmail(email) {
-    const user = await UserModel.findOne({email: email});
+    const user = await UserModel.findOne({ email: email });
     return user;
   }
 
-  static async updateUser({}) {
+  static async updateUser({}) {}
 
-  }
-
-  static async deleteUser() {
-
-  }
+  static async deleteUser() {}
 }
 
-export {User};
+export { User };
