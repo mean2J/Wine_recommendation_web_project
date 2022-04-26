@@ -5,7 +5,7 @@ const userRouter = Router();
 
 userRouter.post("/users/signup", async (req, res, next) => {
   try {
-    const {id, name, email, password} = req.body;
+    const {name, email, password} = req.body;
 
     const newUser = await UserService.addUser({
       id, name, email, password
