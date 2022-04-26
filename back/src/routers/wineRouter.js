@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { WineService } from "../services/WineService.js";
+import { WineService } from "../services/wineService.js";
 
 const wineRouter = Router();
 
 //wine추천
 wineRouter.get("/wines/recommend", async (req, res, next) => {
   try {
-    const { nation, type, sweet, acidity, body, tannin, price } = req.body;
+    const { nation, type, sweet, acidity, body, tannin, price, isChecked } =
+      req.body;
     const wines = await WineService.getRecommendedWine({
       nation,
       type,
@@ -15,6 +16,7 @@ wineRouter.get("/wines/recommend", async (req, res, next) => {
       body,
       tannin,
       price,
+      isChecked,
     });
 
     if (wines.errorMessage) {
