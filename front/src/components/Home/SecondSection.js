@@ -86,13 +86,13 @@ const SecStaticsBox2 = styled(SecStaticsBox)`
 
 function SecondSection() {
   const animatedItem = {
-    0: useScrollFadeIn("up", 1, 0),
-    1: useScrollFadeIn("up", 1, 0.1),
-    2: useScrollFadeIn("up", 1, 0.2),
-    3: useScrollFadeIn("up", 1, 0),
-    4: useScrollFadeIn("up", 1, 0.1),
-    5: useScrollFadeIn("up", 1, 0.2),
-    6: useScrollFadeIn("up", 1, 0.3),
+    0: useScrollFadeIn("up", 0.9, 0),
+    1: useScrollFadeIn("up", 0.9, 0.1),
+    2: useScrollFadeIn("up", 0.9, 0.2),
+    3: useScrollFadeIn("up", 0.9, 0),
+    4: useScrollFadeIn("up", 0.9, 0.1),
+    5: useScrollFadeIn("up", 0.9, 0.2),
+    6: useScrollFadeIn("up", 0.9, 0.3),
   };
   return (
     <>
