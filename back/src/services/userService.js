@@ -1,20 +1,21 @@
 import {User} from "../db/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 
 class UserService {
-  static async addUser({id, name, email, password}) {
-    let user = await User.findUserById(id);
+  static async addUser({name, email, password}) {
+    // let user = await User.findUserById(id);
+    //
+    // if (user !== null) {
+    //   const error = new Error(
+    //     "이 아이디는 현재 사용중입니다. 다른 이메일을 입력해 주세요."
+    //   );
+    //   error.status = 400;
+    //   throw error;
+    // }
 
-    if (user !== null) {
-      const error = new Error(
-        "이 아이디는 현재 사용중입니다. 다른 이메일을 입력해 주세요."
-      );
-      error.status = 400;
-      throw error;
-    }
-
-    user = await User.findUserByEmail(email);
+    let user = await User.findUserByEmail(email);
 
     if (user !== null) {
       const error = new Error(
@@ -26,6 +27,8 @@ class UserService {
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const id = uuidv4();
 
     const newUser = { id, name, email, password: hashedPassword };
 
