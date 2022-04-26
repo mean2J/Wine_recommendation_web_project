@@ -1,0 +1,14 @@
+openapi: '3.0.0'
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+
+servers:
+  - url: localhost:5001/docs
+
+paths:
+  /users/signup:
+    $ref: './user/users-signup.yaml'
+  /users/signin:
+    $ref: './user/users-signin.yaml'
