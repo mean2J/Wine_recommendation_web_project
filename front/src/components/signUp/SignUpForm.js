@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Form } from "antd";
+import { Input, Button, Form, message } from "antd";
 import {
   UserOutlined,
   EyeInvisibleOutlined,
@@ -44,16 +44,23 @@ function SignUpForm() {
   };
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
-  const isEmailValid = validateEmail(email);
+  const isEmailValid = validateEmail(email) || email === "";
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPasswordValid = password.length >= 4;
+  const isPasswordValid = password.length >= 4 || password === "";
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
-  const isPasswordSame = password === confirmPassword;
+  const isPasswordSame = password === confirmPassword || confirmPassword === "";
   // 이름이 2글자 이상인지 여부를 확인함.
-  const isNameValid = name.length >= 2;
+  const isNameValid = name.length >= 2 || name === "";
 
   const isFormValid =
-    isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
+    isEmailValid &&
+    email !== "" &&
+    isPasswordValid &&
+    password !== "" &&
+    isPasswordSame &&
+    confirmPassword !== "" &&
+    isNameValid &&
+    name !== "";
 
   const onFinish = async (values) => {
     console.log("Success:", values);
@@ -65,9 +72,10 @@ function SignUpForm() {
         name: values.name,
       });
       navigate("/");
-      alert("회원가입에 성공하였습니다.");
+      message.info("회원가입이 완료되었습니다.");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
+      message.info("회원가입에 실패하였습니다.");
     }
   };
 

@@ -10,7 +10,7 @@ const MainContainer = styled.div`
 
 const RegisterSection = styled.section`
   display: flex;
-  height: 100vh;
+  height: 70vh;
   &::before {
     background-color: #f8f9fa;
     bottom: 0;
@@ -30,7 +30,7 @@ const RegisterWrapper = styled.div`
   top: 50%;
   left: 50%;
   width: 60%;
-  height: 80%;
+  height: 70%;
   transform: translate(-50%, -50%);
   border: 1px solid lightblue;
   border-radius: 15px;
