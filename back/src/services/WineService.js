@@ -61,9 +61,9 @@ class WineService {
             1
           )[0];
           wineWithoutPriceList.push(wine);
+          wineList.push(wine);
         }
       }
-      wineList.push(wineWithoutPriceList);
     }
 
     //추천된 와인들
@@ -74,35 +74,7 @@ class WineService {
   static async getWineById({ id }) {
     const wine = await Wine.findWineById(id);
 
-    const {
-      name,
-      nation,
-      local,
-      varieties,
-      type,
-      abv,
-      sweet,
-      acidity,
-      body,
-      tannin,
-      price,
-    } = wine;
-
-    const findedWine = {
-      name,
-      nation,
-      local,
-      varieties,
-      type,
-      abv,
-      sweet,
-      acidity,
-      body,
-      tannin,
-      price,
-    };
-
-    return findedWine;
+    return wine;
   }
 }
 

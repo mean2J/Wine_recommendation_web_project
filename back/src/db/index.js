@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "./models/User.js";
-import { Wine } from "./models/wine.js";
+import { Wine } from "./models/Wine.js";
 import dotenv from "dotenv";
 
 dotenv.config();

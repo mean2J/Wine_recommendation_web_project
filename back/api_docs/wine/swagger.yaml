@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: '3.0.0'
 info:
   title: Sample API
   description: API description in Markdown.
@@ -9,8 +9,6 @@ servers:
 
 paths:
   /users/signup:
-    $ref: "./user/users-signup.yaml"
+    $ref: './user/users-signup.yaml'
   /users/signin:
-    $ref: "./user/users-signin.yaml"
-  /wines/recommend:
-    $ref: "./wine/wines-recommend.yaml"
+    $ref: './user/users-signin.yaml'

@@ -30,7 +30,7 @@ wineRouter.get("/wines/recommend", async (req, res, next) => {
 });
 
 //wine id로 특정 와인 찾기
-wineRouter.get("/wine/:id", async (req, res, next) => {
+wineRouter.get("/wines/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const wine = await WineService.getWineById({ id });

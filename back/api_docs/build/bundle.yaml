@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+servers:
+  - url: 'localhost:5001/docs'
+paths:
+  /users/signup:
+    post:
+      summary: 입력받은 유저 정보로 회원가입을 합니다.
+      description: Optional extended description in Markdown.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - name
+                - email
+                - password
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: The response
+  /users/signin:
+    post:
+      summary: 입력받은 유저 정보로 로그인을 합니다.
+      description: Optional extended description in Markdown.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: The response
+  /wines/recommend:
+    get:
+      summary: 입력받은 와인 정보에 따라 필터링된 와인 추천 리스트 전달
+      description: front에서 전달받은 와인 정보를 통해 필터링된 추천 와인 리스트를 전달한다
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nation
+                - type
+                - sweet
+                - acidity
+                - body
+                - tannin
+                - price
+                - isChecked
+              properties:
+                nation:
+                  type: string
+                type:
+                  type: string
+                sweet:
+                  type: number
+                acidity:
+                  type: number
+                body:
+                  type: number
+                tannin:
+                  type: number
+                price:
+                  type: number
+                isChecked:
+                  type: boolean
+      responses:
+        '200':
+          description: The response
