@@ -10,6 +10,7 @@ const ReviewkItemContainer = styled(Card)`
   width: 751px;
   height: auto;
 
+  margin-top: 20px;
   margin-bottom: 20px;
 `;
 

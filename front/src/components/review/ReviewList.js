@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
-import { useInView } from "react-intersection-observer";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import ReviewItem from "./ReviewItem";
@@ -8,6 +7,12 @@ import Loader from "./Loader";
 const ReviewListContainer = styled.div`
   background-color: #f8f9fa;
   border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 `;
 
 // 임시 더미데이터
@@ -139,19 +144,21 @@ const filterReviewList = (page) => {
 };
 
 function ReviewList() {
+  const [page, setPage] = useState(1);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [reviewList, setReviewList] = useState([]);
 
   useEffect(() => {
-    console.log(reviewList);
-  }, [reviewList]);
+    console.log("현재 reviewList", reviewList);
+    console.log("추가되는 list", filterReviewList(page));
+  }, [page, reviewList]);
 
   const getMoreReview = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    let Items = filterReviewList(1);
-    setReviewList((reviewList) => reviewList.concat(Items));
+    let Items = filterReviewList(page);
+    setReviewList((reviewList) => [...reviewList, ...Items]);
     setIsLoaded(false);
   };
 
@@ -160,21 +167,22 @@ function ReviewList() {
       observer.unobserve(entry.target);
       await getMoreReview();
       observer.observe(entry.target);
+      setPage((page) => page + 1);
     }
   };
 
   useEffect(() => {
-    let observer;
+    let observer; // intersection Observer을 담을 변수
+    // target이 존재하는 경우에만 observer를 생성
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.5,
+        threshold: 0.7,
       });
+      // observer가 관찰할 대상 지정
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, page]);
 
   return (
     <ReviewListContainer>
