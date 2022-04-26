@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Tabs } from "antd";
 
-import MyInfoEditForm from "./user/MyInfoEditForm";
-import MyInfo from "./user/MyInfo";
+import MyInfoEditForm from "./myInfo/MyInfoEditForm";
+import MyInfo from "./myInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
 import ReviewList from "./review/ReviewList";
 const { TabPane } = Tabs;
