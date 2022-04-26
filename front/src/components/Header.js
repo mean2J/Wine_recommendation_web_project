@@ -6,7 +6,7 @@ import { UserStateContext, DispatchContext } from '../App';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import React, { useState } from "react";
-import LoginModal from "./login/LoginModal";
+// import LoginModal from "./login/LoginModal";
 import "antd/dist/antd.min.css";
 
 const Navbar = styled.nav`
@@ -100,9 +100,9 @@ function Header() {
           </NavItems>
           <NavLogin>
             <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
-            {isModal && (
+            {/* {isModal && (
               <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
-            )}
+            )} */}
           </NavLogin>
         </NavContainer>
       </Navbar>
