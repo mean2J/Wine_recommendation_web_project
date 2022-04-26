@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import * as Api from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const IntroDesc = styled.p`
   font-weight: 200;
@@ -23,6 +24,7 @@ const Notice = styled.p`
 `;
 
 function SignUpForm() {
+  const navigate = useNavigate();
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
@@ -62,6 +64,8 @@ function SignUpForm() {
         password: values.password,
         name: values.name,
       });
+      navigate("/");
+      alert("회원가입에 성공하였습니다.");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
     }
