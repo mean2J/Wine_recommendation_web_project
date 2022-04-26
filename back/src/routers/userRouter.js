@@ -8,7 +8,7 @@ userRouter.post("/users/signup", async (req, res, next) => {
     const {id, name, email, password} = req.body;
 
     const newUser = await UserService.addUser({
-      id, name, email, password
+      name, email, password
     });
 
     const body = {
