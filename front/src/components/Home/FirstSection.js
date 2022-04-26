@@ -26,23 +26,29 @@ const IntroTextWrapper = styled.div`
 `;
 
 const IntroText = styled.h1`
+  display: block;
   margin-bottom: 20px;
   font-weight: 600;
   font-size: 56px;
   line-height: 72px;
-  display: flex;
   align-items: center;
   color: #ffffff;
+  span {
+    color: #c365fd;
+  }
 `;
 
-const IntroDesc = styled.p`
+const IntroDesc = styled.span`
+  display: block;
   margin-bottom: 20px;
   font-weight: 200;
   font-size: 20px;
   line-height: 45px;
-  display: flex;
   align-items: center;
   color: #ffffff;
+  span {
+    color: #fd6585;
+  }
 `;
 
 const IntroBtn = styled.div`
@@ -96,11 +102,11 @@ function FirstSection() {
           <IntroText>
             와인이 필요한 <br />
             모든 순간, <br />
-            와인셀러
+            <span>와인셀러</span>
           </IntroText>
           <IntroDesc>
             간편 로그인부터 추천서비스까지, <br />
-            와인셀러 단 하나로 와인을 즐겨보세요.
+            <span>와인셀러</span> 단 하나로 <span>와인</span>을 즐겨보세요.
           </IntroDesc>
           <IntroBtn>
             <IntroBtnText>
