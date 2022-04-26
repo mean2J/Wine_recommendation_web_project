@@ -50,7 +50,7 @@ class WineService {
         bodyLte: body[1],
         tanninGte: tannin[0],
         tanninLte: tannin[1],
-        price: 0,
+        price: 9000000,
       });
 
       let wineWithoutPriceList = [];
@@ -60,6 +60,7 @@ class WineService {
             Math.floor(Math.random() * winesWithoutPrice.length),
             1
           )[0];
+          wine.price = 0;
           wineWithoutPriceList.push(wine);
           wineList.push(wine);
         }
