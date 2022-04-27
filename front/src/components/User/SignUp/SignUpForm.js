@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import * as Api from "../../api";
+import * as Api from "../../../api";
 import { useNavigate } from "react-router-dom";
 
 const IntroDesc = styled.p`

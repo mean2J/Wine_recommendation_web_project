@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Modal, Input, Form, message } from "antd";
-import * as Api from "../../api";
+import * as Api from "../../../api";
 import {
   UserOutlined,
   EyeInvisibleOutlined,
@@ -8,7 +8,7 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { DispatchContext } from "../../App";
+import { DispatchContext } from "../../../App";
 
 const Notice = styled.p`
   font-size: 12px;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import LoginModal from "./login/LoginModal";
+import LoginModal from "./User/Login/LoginModal";
 import "antd/dist/antd.min.css";
 
 const Navbar = styled.nav`
