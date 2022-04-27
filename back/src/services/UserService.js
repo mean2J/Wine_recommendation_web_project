@@ -1,10 +1,10 @@
-import {User} from "../db/index.js";
+import { User } from "../db/index.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken";
 
 class UserService {
-  static async addUser({name, email, password}) {
+  static async addUser({ name, email, password }) {
     // const idExists = await User.exists({id: id});
     //
     // if (idExists) {
@@ -15,7 +15,7 @@ class UserService {
     //   throw error;
     // }
 
-    const emailExists = await User.exists({email: email});
+    const emailExists = await User.exists({ email: email });
 
     if (emailExists) {
       const error = new Error(
@@ -42,7 +42,7 @@ class UserService {
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
     const user = await User.findUserByEmail(email);
-
+    console.log(user);
     if (user === null) {
       const error = new Error(
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
@@ -62,6 +62,7 @@ class UserService {
       const error = new Error(
         "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
+
       error.status = 401;
       throw error;
     }
@@ -86,12 +87,10 @@ class UserService {
   }
 
   static async updateUser(userId, fieldToUpdate) {
-    const idExists = await User.exists({id: userId});
+    const idExists = await User.exists({ id: userId });
 
     if (!idExists) {
-      const error = new Error(
-        "존재하지 않는 사용자입니다."
-      );
+      const error = new Error("존재하지 않는 사용자입니다.");
       error.status = 404;
       throw error;
     }
@@ -110,12 +109,10 @@ class UserService {
   }
 
   static async deleteUser(userId) {
-    const idExists = await User.exists({id: userId});
+    const idExists = await User.exists({ id: userId });
 
     if (!idExists) {
-      const error = new Error(
-        "존재하지 않는 사용자입니다."
-      );
+      const error = new Error("존재하지 않는 사용자입니다.");
       error.status = 404;
       throw error;
     }
@@ -124,4 +121,4 @@ class UserService {
   }
 }
 
-export {UserService};
+export { UserService };
