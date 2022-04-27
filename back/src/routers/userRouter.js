@@ -4,7 +4,8 @@ import {loginRequired} from "../middlewares/loginRequired.js";
 
 const userRouter = Router();
 
-userRouter.post("/users/signup", async (req, res, next) => {
+userRouter.post("/users/signup",
+  async (req, res, next) => {
   try {
     const {name, email, password} = req.body;
 
@@ -23,7 +24,8 @@ userRouter.post("/users/signup", async (req, res, next) => {
   }
 });
 
-userRouter.post("/users/signin", async (req, res, next) => {
+userRouter.post("/users/signin",
+  async (req, res, next) => {
   try {
     const {email, password} = req.body;
 
