@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Input, Form } from "antd";
+import React, { useState, useContext } from "react";
+import { Modal, Input, Form, message } from "antd";
 import * as Api from "../../api";
 import {
   UserOutlined,
@@ -8,16 +8,17 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import { DispatchContext } from "../../App";
 
 const Notice = styled.p`
   font-size: 12px;
   color: #ff0000;
 `;
 function LoginModal({ isModal, getModalBoolean }) {
-  const [isModalVisible, setIsModalVisible] = useState(isModal);
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
+  const dispatch = useContext(DispatchContext);
 
   //모달창을 닫기위해 상위 컴포넌트에 값을 전달하는 함수
   const sendModalBoolean = (e) => {
@@ -40,21 +41,25 @@ function LoginModal({ isModal, getModalBoolean }) {
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const handleOk = async (e) => {
     try {
-      // const res = await Api.post("/users/signin", {
-      //   email,
-      //   password,
-      // });
-      // // 유저 정보는 response의 data임.
-      // const user = res.data;
-      // // JWT 토큰은 유저 정보의 token임.
-      // const jwtToken = user.token;
-      // // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      // sessionStorage.setItem("userToken", jwtToken);
-      const res = { email: "123@123.com", password: "1234" };
+      const res = await Api.post("users/signin", {
+        email,
+        password,
+      });
+      // 유저 정보는 response의 data임.
       const user = res.data;
+      // JWT 토큰은 유저 정보의 token임.
+      const jwtToken = user.token;
+      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
+      sessionStorage.setItem("userToken", jwtToken);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
 
+      message.info("로그인이 완료되었습니다.");
       sendModalBoolean(false);
     } catch (err) {
+      message.info("로그인에 실패하였습니다.");
       console.log("로그인에 실패하였습니다.\n", err);
     }
   };
@@ -67,7 +72,7 @@ function LoginModal({ isModal, getModalBoolean }) {
     <>
       <Modal
         title="와인셀러 로그인"
-        visible={isModalVisible}
+        visible={isModal}
         onOk={handleOk}
         onCancel={handleCancel}
         okText="로그인"
