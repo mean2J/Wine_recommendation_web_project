@@ -1,4 +1,4 @@
-#API docs 작성 요령
+# API docs 작성 요령
 1. ```back/api_docs/swagger.yaml``` 파일의 ```servers: - url``` 부분을 자신의 개발 환경에 맞게 수정한다.
 2. ```back/api_docs``` 디렉토리 하위에 MVP 이름으로 된 디렉토리를 생성한다.
 3. 각 endpoint별로 yaml파일을 따로 작성해서 1.에서 만든 디렉토리 하위에 추가한다.
