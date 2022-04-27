@@ -1,10 +1,18 @@
-import {User} from "../db/index.js";
+import { User } from "../db/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class UserService {
-  static async addUser({id, name, email, password}) {
-    let user = await User.findUserById(id);
+  static async addUser({ name, email, password }) {
+    // let user = await User.findUserById(id);
+    //
+    // if (user !== null) {
+    //   const error = new Error(
+    //     "이 아이디는 현재 사용중입니다. 다른 이메일을 입력해 주세요."
+    //   );
+    //   error.status = 400;
+    //   throw error;
+    // }
 
     if (user !== null) {
       const error = new Error(
@@ -39,7 +47,7 @@ class UserService {
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
     const user = await User.findUserByEmail(email);
-
+    console.log(user);
     if (user === null) {
       const error = new Error(
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
@@ -59,6 +67,7 @@ class UserService {
       const error = new Error(
         "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
+
       error.status = 401;
       throw error;
     }
@@ -83,4 +92,4 @@ class UserService {
   }
 }
 
-export {UserService};
+export { UserService };

@@ -1,12 +1,14 @@
-/* import React, { useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-
-import { UserStateContext, DispatchContext } from '../App';
-// import { Navbar } from 'react-bootstrap'; */
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserStateContext, DispatchContext } from "../App";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+<<<<<<< HEAD
 import React, { useState } from "react";
 // import LoginModal from "./login/LoginModal";
+=======
+import LoginModal from "./login/LoginModal";
+>>>>>>> feature/front_login
 import "antd/dist/antd.min.css";
 
 const Navbar = styled.nav`
@@ -59,8 +61,8 @@ const NavLogin = styled.div`
 `;
 
 function Header() {
-  /*   const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate();
+  // const location = useLocation();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -71,14 +73,20 @@ function Header() {
   // 로그아웃 클릭 시 실행되는 함수
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
-    sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem("userToken");
     // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: 'LOGOUT' });
+    dispatch({ type: "LOGOUT" });
     // 기본 페이지로 돌아감.
+<<<<<<< HEAD
     navigate('/'); */
 
   const [isModal, setIsModal] = useState(false);
   //모달창을 열기위해 하위 컴포넌트에 값을 전달하는 함수
+=======
+    navigate("/");
+  };
+  const [isModal, setIsModal] = useState(false);
+>>>>>>> feature/front_login
   const getModalBoolean = (e) => {
     setIsModal(e);
   };
@@ -99,10 +107,21 @@ function Header() {
             <Link to={`/community`}>커뮤니티 💬</Link>
           </NavItems>
           <NavLogin>
+<<<<<<< HEAD
             <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
             {/* {isModal && (
               <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
             )} */}
+=======
+            {!isLogin ? (
+              <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
+            ) : (
+              <NavLoginItems onClick={logout}>로그아웃</NavLoginItems>
+            )}
+            {isModal && (
+              <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
+            )}
+>>>>>>> feature/front_login
           </NavLogin>
         </NavContainer>
       </Navbar>
