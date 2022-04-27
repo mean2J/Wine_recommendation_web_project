@@ -1,14 +1,10 @@
 import RouterFile from "./Router";
-<<<<<<< HEAD
-import "antd/dist/antd.min.css";
-=======
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import React, { useState, useEffect, useReducer, createContext } from "react";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
->>>>>>> feature/front_login
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
