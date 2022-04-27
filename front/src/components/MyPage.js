@@ -44,33 +44,19 @@ function MyPage() {
   const [mypageOwner, setMypageOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  // const userState = useContext(UserStateContext);
+  const userState = useContext(UserStateContext);
 
-  // const fetchMypageOwner = async (ownerId) => {
-  //   // "/users/:유저id"로 사용자 정보 불러오기
-  //   const res = await Api.get("users", ownerId);
-  //   const ownerData = res.data;
-  //   setMypageOwner(ownerData);
-  //   setIsFetchCompleted(true); // 사용자 정보 불러오기 완료
-  // };
+  const fetchMypageOwner = async (ownerId) => {
+    const res = await Api.get("users", ownerId);
+    console.log(res.data);
+  };
 
-  // useEffect(() => {
-  //   if (!userState.user) {
-  //     navigate("/", { replace: true });
-  //     return;
-  //   }
-  //   if (params.userId) {
-  //     const ownerId = params.userId;
-  //     fetchMypageOwner(ownerId);
-  //   } else {
-  //     const ownerId = userState.user.id;
-  //     fetchMypageOwner(ownerId);
-  //   }
-  // }, [params, userState, navigate]);
+  useEffect(() => {
+    const ownerId = userState.user.user.id;
+    console.log("check", ownerId);
 
-  // if (!isFetchCompleted) {
-  //   return "loading...";
-  // }
+    fetchMypageOwner(ownerId);
+  });
 
   // 임시 더미 데이터
   const [user, setUser] = useState({
