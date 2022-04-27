@@ -4,14 +4,19 @@ const {Schema, model} = mongoose;
 const UserSchema = new Schema({
   id: {
     type: String,
-    required: true
+    index: true,
+    unique: true,
+    required: false
   },
   name: {
     type: String,
+    index: true,
     required: true
   },
   email: {
     type: String,
+    index: true,
+    unique: true,
     required: true
   },
   password: {
@@ -20,11 +25,13 @@ const UserSchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
-    default: "안녕하세요!"
+    required: false,
+  },
+  recentLogin: {
+    type: Date,
+    required: false
   }
-});
+}, {timestamps: true}
+);
 
-const UserModel = model("User", UserSchema);
-
-export {UserModel};
+export const UserModel = model("User", UserSchema);

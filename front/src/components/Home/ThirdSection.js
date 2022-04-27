@@ -64,8 +64,8 @@ const ContentDesc = styled.span`
 
 export function ThirdSection() {
   const animatedItem = {
-    0: useScrollFadeIn("up", 1, 0.1),
-    1: useScrollFadeIn("up", 1, 0),
+    0: useScrollFadeIn("up", 0.9, 0),
+    1: useScrollFadeIn("up", 0.9, 0),
   };
   return (
     <TrdSection>
