@@ -26,7 +26,6 @@ userRouter.post("/users/signup", async (req, res, next) => {
 });
 
 userRouter.post("/users/signin", async (req, res, next) => {
-  console.log(req.body);
   try {
     const { email, password } = req.body;
 
