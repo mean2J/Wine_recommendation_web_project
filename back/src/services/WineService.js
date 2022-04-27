@@ -71,6 +71,13 @@ class WineService {
     return wineList;
   }
 
+  //wine 이름 검색 기능
+  static async getWineByName({ name }) {
+    const wines = await Wine.findWineByName(name);
+    console.log(wines.length);
+    return wines;
+  }
+
   //wine id로 특정 와인 찾기
   static async getWineById({ id }) {
     const wine = await Wine.findWineById(id);
