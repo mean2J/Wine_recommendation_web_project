@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { User } from "./models/User.js";
+// import { User } from "./models/User.js";
 import { Wine } from "./models/Wine.js";
 import dotenv from "dotenv";
 
@@ -17,4 +17,5 @@ mongoose
     console.error(error);
   });
 
-export { User, Wine };
+// export { User, Wine };
+export { Wine };

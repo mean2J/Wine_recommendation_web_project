@@ -88,9 +88,10 @@ function WineInfo() {
       tannin,
       isChecked,
     };
-    const Values = JSON.stringify(Inputs);
-    console.log(Values);
-    await Api.get("wines/recommend", Values).then((res) =>
+
+    // const Values = JSON.stringify(Inputs);
+    console.log(Inputs);
+    await Api.post("wines/recommend", Inputs).then((res) =>
       console.log(res.data)
     );
   };

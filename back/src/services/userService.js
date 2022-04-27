@@ -1,10 +1,10 @@
-import {User} from "../db/index.js";
+// import {User} from "../db/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 
 class UserService {
-  static async addUser({name, email, password}) {
+  static async addUser({ name, email, password }) {
     // const idExists = await User.exists({id: id});
     //
     // if (idExists) {
@@ -15,7 +15,7 @@ class UserService {
     //   throw error;
     // }
 
-    const emailExists = await User.exists({email: email});
+    const emailExists = await User.exists({ email: email });
 
     if (emailExists) {
       const error = new Error(
@@ -86,12 +86,10 @@ class UserService {
   }
 
   static async updateUser(userId, fieldToUpdate) {
-    const idExists = await User.exists({id: userId});
+    const idExists = await User.exists({ id: userId });
 
     if (!idExists) {
-      const error = new Error(
-        "존재하지 않는 사용자입니다."
-      );
+      const error = new Error("존재하지 않는 사용자입니다.");
       error.status = 404;
       throw error;
     }
@@ -110,12 +108,10 @@ class UserService {
   }
 
   static async deleteUser(userId) {
-    const idExists = await User.exists({id: userId});
+    const idExists = await User.exists({ id: userId });
 
     if (!idExists) {
-      const error = new Error(
-        "존재하지 않는 사용자입니다."
-      );
+      const error = new Error("존재하지 않는 사용자입니다.");
       error.status = 404;
       throw error;
     }
@@ -124,4 +120,4 @@ class UserService {
   }
 }
 
-export {UserService};
+export { UserService };
