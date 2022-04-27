@@ -4,6 +4,7 @@ import express from "express";
 
 import { userRouter } from "./routers/userRouter.js";
 import { wineRouter } from "./routers/wineRouter.js";
+import { searchRouter } from "./routers/searchRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import swaggerDoc from "../api_docs/swaggerDoc.js";
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 
 app.use(userRouter);
 app.use(wineRouter);
+app.use(searchRouter);
 app.use(errorMiddleware);
 
 export { app };
