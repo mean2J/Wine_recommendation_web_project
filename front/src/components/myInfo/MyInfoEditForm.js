@@ -1,6 +1,8 @@
 import "antd/dist/antd.css";
 import { Card, Form, Input, Button } from "antd";
 
+const { TextArea } = Input;
+
 function MyInfoEditForm({ user, setIsEditing }) {
   return (
     <>
@@ -11,7 +13,8 @@ function MyInfoEditForm({ user, setIsEditing }) {
           wrapperCol={{ span: 16 }}
           initialValues={{
             email: user.email,
-            nickname: user.nickname,
+            name: user.name,
+            description: user.description,
             password: user.password,
           }}
           autoComplete="off"
@@ -26,19 +29,31 @@ function MyInfoEditForm({ user, setIsEditing }) {
               },
             ]}
           >
-            <Input placeholder={user.email} />
+            <Input />
           </Form.Item>
           <Form.Item
-            label="닉네임"
-            name="nickname"
+            label="이름"
+            name="name"
             rules={[
               {
                 required: true,
-                message: "수정할 닉네임을 입력해주세요",
+                message: "수정할 이름을 입력해주세요",
               },
             ]}
           >
-            <Input placeholder={user.nickname} />
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="소개"
+            name="description"
+            rules={[
+              {
+                required: false,
+                message: "소개를 입력해주세요",
+              },
+            ]}
+          >
+            <TextArea showCount maxLength={100} style={{ height: 120 }} />
           </Form.Item>
           <Form.Item
             label="비밀번호"

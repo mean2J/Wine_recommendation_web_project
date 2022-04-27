@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../api";
+import { UserStateContext } from "../App";
 
 import styled from "styled-components";
 import { Card, Tabs } from "antd";
@@ -36,16 +38,46 @@ const TitleText = styled.h2`
 const InfoWrapper = styled.div``;
 
 function MyPage() {
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const [mypageOwner, setMypageOwner] = useState(null);
+  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  // const userState = useContext(UserStateContext);
+
+  // const fetchMypageOwner = async (ownerId) => {
+  //   // "/users/:유저id"로 사용자 정보 불러오기
+  //   const res = await Api.get("users", ownerId);
+  //   const ownerData = res.data;
+  //   setMypageOwner(ownerData);
+  //   setIsFetchCompleted(true); // 사용자 정보 불러오기 완료
+  // };
+
+  // useEffect(() => {
+  //   if (!userState.user) {
+  //     navigate("/", { replace: true });
+  //     return;
+  //   }
+  //   if (params.userId) {
+  //     const ownerId = params.userId;
+  //     fetchMypageOwner(ownerId);
+  //   } else {
+  //     const ownerId = userState.user.id;
+  //     fetchMypageOwner(ownerId);
+  //   }
+  // }, [params, userState, navigate]);
+
+  // if (!isFetchCompleted) {
+  //   return "loading...";
+  // }
+
   // 임시 더미 데이터
   const [user, setUser] = useState({
     email: "qufgml0216@naver.com",
-    nickname: "StoneSeller",
+    name: "김별희",
     password: "1234",
-  });
-
-  useEffect(() => {
-    Api.get("user");
+    description: "안녕하세요. 저는 김별희입니다.",
   });
 
   return (
