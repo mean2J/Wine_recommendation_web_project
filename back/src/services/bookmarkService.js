@@ -28,26 +28,33 @@ class bookmarkService {
 
   static async getBookmarkList(userId) {
     const bookmarkList = await Bookmark.findBookmarkByUserId(userId);
-    let obj = {};
-    for (let key in bookmarkList){
-      //console.log("wineId",bookmarkList[key].wineId);
-      let wineId = bookmarkList[key].wineId;
-      let wine = await Wine.findWineById(wineId);
-      obj[key] = wine;
-      //console.log(obj);
+    const listLength = Object.keys(bookmarkList).length
+    let bookmarkWineList = [];
+    for (let i = 0; i < listLength; i++){
+      //bookmarkId
+      let bookmarkId = bookmarkList[i].id;
+      //wineId와 wineInfo
+      let wineId = bookmarkList[i].wineId;
+      let wineInfo = await Wine.findWineById(wineId);
+      let bookmarkWine = {
+        "bookmarkId" : bookmarkId,
+        "wineInfo" : wineInfo
+      }
+      bookmarkWineList[i] = bookmarkWine;
+      console.log(bookmarkWineList);
     }
-    return obj;
+    return bookmarkWineList;
   }
 
-  static async deleteBookmark(BookmarkId) {
-    const isDataDeleted = await Bookmark.deleteBookmarkById(BookmarkId);
-
-    if (!isDataDeleted) {
-      const errorMessage = '해당 id를 가진 북마크데이터는 없습니다.';
-      return { errorMessage };
+  static async deleteBookmark(bookmarkId) {
+    const isDataDeleted = await Bookmark.deleteBookmarkById(bookmarkId);
+    if (isDataDeleted === false) {
+      const error = new Error(
+        "해당 id를 가진 북마크데이터는 없습니다."
+      );
+      throw error;
     }
-
-    return { status: 'ok' };
+    return {status : '삭제 ok'};
   }
 }
 

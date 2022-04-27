@@ -34,9 +34,10 @@ class Bookmark {
 /**
  * bookmarkId와 매칭되는 document 하나를 삭제
  */
-  static async deleteBookmarkById(BookmarkId) {
-    const deleteResult = await bookmarkModel.deleteOne({id: BookmarkId});
-    return deleteResult
+  static async deleteBookmarkById(bookmarkId) {
+    const deleteResult = await bookmarkModel.deleteOne({id: bookmarkId});
+    const isDataDeleted = (deleteResult.deletedCount === 1);
+    return isDataDeleted;
   }
 }
 
