@@ -16,10 +16,10 @@ class Bookmark {
     return bookmark;
   }
 /**
- * wineId로 해당와인이 bookmark 리스트에 존재하는지 확인
+ * {userId,wineId}로 해당와인이 bookmark 리스트에 존재하는지 확인
  */
-  static async findBookmarkByWineId(wineId) {
-    const bookmark = await bookmarkModel.findOne({wineId});
+  static async findBookmarkByWineId({userId,wineId}) {
+    const bookmark = await bookmarkModel.findOne({userId,wineId});
     return bookmark;
   }
 
@@ -32,10 +32,10 @@ class Bookmark {
   }
 
 /**
- * bookmarkId와 매칭되는 document 하나를 삭제
+ * {userId,wineId}와 매칭되는 document 하나를 삭제
  */
-  static async deleteBookmarkById(bookmarkId) {
-    const deleteResult = await bookmarkModel.deleteOne({id: bookmarkId});
+  static async deleteBookmarkById({userId,wineId}) {
+    const deleteResult = await bookmarkModel.deleteOne({userId,wineId});
     const isDataDeleted = (deleteResult.deletedCount === 1);
     return isDataDeleted;
   }
