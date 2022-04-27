@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Modal, Input, Form, message } from "antd";
+import { Modal, Input, Form, message, Button } from "antd";
 import * as Api from "../../../api";
 import {
   UserOutlined,
@@ -48,7 +48,7 @@ function LoginModal({ isModal, getModalBoolean }) {
       // 유저 정보는 response의 data임.
       const user = res.data;
       // JWT 토큰은 유저 정보의 token임.
-      const jwtToken = user.token;
+      const jwtToken = user.user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
       dispatch({
@@ -68,6 +68,11 @@ function LoginModal({ isModal, getModalBoolean }) {
     sendModalBoolean(false);
   };
 
+  const handleSignUp = () => {
+    sendModalBoolean(false);
+    document.location.href = "/signUp";
+  };
+
   return (
     <>
       <Modal
@@ -75,8 +80,17 @@ function LoginModal({ isModal, getModalBoolean }) {
         visible={isModal}
         onOk={handleOk}
         onCancel={handleCancel}
-        okText="로그인"
-        cancelText="취소"
+        footer={[
+          <Button key="register" type="primary" onClick={handleSignUp}>
+            회원가입
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleOk}>
+            로그인
+          </Button>,
+          <Button key="back" onClick={handleCancel}>
+            취소
+          </Button>,
+        ]}
       >
         <Form.Item name="email" style={{ marginBottom: "5px" }}>
           <Input
