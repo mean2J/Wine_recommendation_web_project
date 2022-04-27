@@ -1,0 +1,81 @@
+post:
+  tags:
+    - "users"
+  summary: 입력받은 유저 정보로 회원가입을 합니다.
+  description: |
+    # 회원가입 API
+    유저의 이메일과 비밀번호, 이름을 전달받아 회원가입을 진행하고 결과를 반환합니다.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+            - email
+            - password
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+        example:
+          name: acorn
+          email: mokoko@elice.com
+          password: 1q2w3e4r5t!
+  responses:
+    '201':
+      description: 정상적으로 회원가입이 되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: userId
+                  name:
+                    type: string
+                    description: 유저가 설정한 이름
+                  email:
+                    type: string
+                    description: 유저가 가입에 사용한 이메일 주소
+          example:
+            success: true
+            user:
+              id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+              name: acorn
+              email: mokoko@elice.com
+    '400':
+      description: 잘못된 요청입니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              error:
+                type: obejct
+                properties:
+                  code:
+                    type: integer
+                    description: http status code
+                  message:
+                    type: string
+                    description: 에러 메시지
+          example:
+            success: false
+            error:
+              code: 400
+              message: 이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.

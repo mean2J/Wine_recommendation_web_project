@@ -1,5 +1,4 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import FirstSection from "./Home/FirstSection";
 import Footer from "./Home/Footer";
