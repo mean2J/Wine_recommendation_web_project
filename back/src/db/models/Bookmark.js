@@ -2,7 +2,7 @@ import {bookmarkModel} from "../schemas/bookmark.js";
 
 class Bookmark {
   static async createBookmark(Bookmark) {
-    const newBookmark = await bookmarkModel.create();
+    const newBookmark = await bookmarkModel.create(Bookmark);
     return newBookmark;
   }
 
@@ -11,19 +11,23 @@ class Bookmark {
     return bookmark;
   }
 
-/**
- * 
- * @param {*} userId 
- * userId로 bookmark 리스트 찾아서 반환
- */
-  static async findBookmarkByuserId(userId) {
-    const bookmarkList = await bookmarkModel.find({userId});
-    return bookmarkList;
+  static async findBookmarkByWineId(wineId) {
+    const bookmark = await bookmarkModel.findOne({wineId});
+    return bookmark;
   }
 
 /**
  * 
- * @param {*} bookmarkId 
+ * userId로 bookmark 리스트 찾아서 반환
+ */
+  static async findBookmarkByUserId(userId) {
+    const bookmarkList = await bookmarkModel.find({userId});
+    console.log(bookmarkList)
+    return bookmarkList;
+  }
+
+/**
+ *  
  * bookmark 컬렉션에서 bookmarkId와 매칭되는 document 하나를 삭제하는 함수
  */
   static async deleteBookmarkById(BookmarkId) {
@@ -31,5 +35,7 @@ class Bookmark {
     return deleteResult
   }
 }
+
+
 
 export {Bookmark};
