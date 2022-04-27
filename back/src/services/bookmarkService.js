@@ -28,12 +28,15 @@ class bookmarkService {
 
   static async getBookmarkList(userId) {
     const bookmarkList = await Bookmark.findBookmarkByUserId(userId);
-    //찾은 북마크 리스트 중 n번 북마크의 wineId로
-    //bookmarkList.
-    //wine DB에서 해당 와인 정보를 구한다.
-    //구한 와인 정보에서 필요한 정보만 뽑아 json 형식으로 반환한다.
-    //wine = Wine.findWineById(wineId)
-    console.log(bookmarkList)
+    let obj = {};
+    for (let key in bookmarkList){
+      //console.log("wineId",bookmarkList[key].wineId);
+      let wineId = bookmarkList[key].wineId;
+      let wine = await Wine.findWineById(wineId);
+      obj[key] = wine;
+      //console.log(obj);
+    }
+    return obj;
   }
 
   static async deleteBookmark(BookmarkId) {
