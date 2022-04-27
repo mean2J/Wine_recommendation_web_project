@@ -1,5 +1,6 @@
 import { User } from "../db/index.js";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
 class UserService {
@@ -26,6 +27,8 @@ class UserService {
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const id = uuidv4();
 
     const newUser = { id, name, email, password: hashedPassword };
 
