@@ -5,19 +5,19 @@ import { v4 as uuidv4 } from "uuid";
 
 class UserService {
   static async addUser({name, email, password}) {
-    // let user = await User.findUserById(id);
+    // const idExists = await User.exists({id: id});
     //
-    // if (user !== null) {
+    // if (idExists) {
     //   const error = new Error(
-    //     "이 아이디는 현재 사용중입니다. 다른 이메일을 입력해 주세요."
+    //     "이 아이디는 현재 사용중입니다. 다른 아이디를 입력해 주세요."
     //   );
     //   error.status = 400;
     //   throw error;
     // }
 
-    let user = await User.findUserByEmail(email);
+    const emailExists = await User.exists({email: email});
 
-    if (user !== null) {
+    if (emailExists) {
       const error = new Error(
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
       );
@@ -83,6 +83,44 @@ class UserService {
     };
 
     return loginUser;
+  }
+
+  static async updateUser(userId, fieldToUpdate) {
+    const idExists = await User.exists({id: userId});
+
+    if (!idExists) {
+      const error = new Error(
+        "존재하지 않는 사용자입니다."
+      );
+      error.status = 404;
+      throw error;
+    }
+
+    // password 필드가 존재한다면
+    if (fieldToUpdate["password"] !== undefined) {
+      // 암호화
+      fieldToUpdate["password"] = await bcrypt.hash(
+        fieldToUpdate["password"],
+        10
+      );
+    }
+    const user = await User.updateUser(userId, fieldToUpdate);
+
+    return user;
+  }
+
+  static async deleteUser(userId) {
+    const idExists = await User.exists({id: userId});
+
+    if (!idExists) {
+      const error = new Error(
+        "존재하지 않는 사용자입니다."
+      );
+      error.status = 404;
+      throw error;
+    }
+
+    await User.deleteUser(userId);
   }
 }
 
