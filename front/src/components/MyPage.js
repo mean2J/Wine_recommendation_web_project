@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as Api from "../api";
 
 import styled from "styled-components";
 import { Card, Tabs } from "antd";
@@ -41,6 +42,10 @@ function MyPage() {
     email: "qufgml0216@naver.com",
     nickname: "StoneSeller",
     password: "1234",
+  });
+
+  useEffect(() => {
+    Api.get("user");
   });
 
   return (
