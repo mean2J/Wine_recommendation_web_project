@@ -58,12 +58,6 @@ class Wine {
     return wines;
   }
 
-  //wine 이름 검색 기능
-  static async findWineByName(name) {
-    const wines = await WineModel.find({ name: { $regex: name } });
-    return wines;
-  }
-
   //wine id로 특정 와인 찾기
   static async findWineById(id) {
     const wine = await WineModel.findOne({ id });

@@ -29,22 +29,6 @@ wineRouter.get("/wines/recommend", async (req, res, next) => {
   }
 });
 
-//wine 이름 검색 기능
-wineRouter.get("/wines/:name", async (req, res, next) => {
-  try {
-    const name = req.params.name;
-    const wines = await WineService.getWineByName({ name });
-
-    if (wines.errorMessage) {
-      throw new Error(wines.errorMessage);
-    }
-
-    res.status(200).json(wines);
-  } catch (e) {
-    next(e);
-  }
-});
-
 //wine id로 특정 와인 찾기
 wineRouter.get("/wines/:id", async (req, res, next) => {
   try {
