@@ -4,6 +4,7 @@ import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, matchedData } from "express-validator";
 import { validationErrorCatcher } from "../middlewares/userMiddleware.js";
 import { removeFields } from "../utils/utils.js";
+import dayjs from "dayjs";
 
 const userRouter = Router();
 
@@ -66,6 +67,12 @@ userRouter.post(
 
       const user = await UserService.getUser({ ...userInfo });
 
+      const userId = user.id;
+      const date = dayjs().toISOString();
+      const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+
+      await UserService.updateUser(userId, fieldToUpdate);
+
       const body = {
         success: true,
         user,
@@ -90,6 +97,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
       "__v",
       "createdAt",
       "updatedAt",
+      "recentLogin"
     ]);
 
     const body = {
