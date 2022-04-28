@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import * as Api from "../../../api";
 import { useNavigate } from "react-router-dom";
+import LoginModal from "../Login/LoginModal";
 
 const IntroDesc = styled.p`
   font-weight: 200;
@@ -33,6 +34,14 @@ function SignUpForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
+
+  const [isModal, setIsModal] = useState(false);
+  const getModalBoolean = (e) => {
+    setIsModal(e);
+  };
+  const showModal = () => {
+    setIsModal(true);
+  };
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -136,8 +145,11 @@ function SignUpForm() {
           />
         </Form.Item>
         {!isPasswordSame && <Notice>비밀번호가 다릅니다.</Notice>}
-        <IntroDesc>
-          <Link to={`/`}>이미 회원이신가요?</Link>
+        <IntroDesc onClick={showModal}>
+          이미 회원이신가요?
+          {isModal && (
+            <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
+          )}
         </IntroDesc>
 
         <Button type="primary" htmlType="submit" block disabled={!isFormValid}>
