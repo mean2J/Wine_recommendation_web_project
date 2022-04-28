@@ -63,6 +63,11 @@ class Wine {
     const wine = await WineModel.findOne({ id });
     return wine;
   }
+
+  static async exists(filter) {
+    const itExists = await WineModel.exists(filter);
+    return itExists;
+  }
 }
 
 export { Wine };
