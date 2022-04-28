@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { User } from "./models/User.js";
-import { Wine } from "./models/Wine.js";
-import { Bookmark } from "./models/Bookmark.js";
+import { User } from "./models/user.js";
+import { Wine } from "./models/wine.js";
+import { Bookmark } from "./models/bookmark.js";
 import dotenv from "dotenv";
 
 dotenv.config();
