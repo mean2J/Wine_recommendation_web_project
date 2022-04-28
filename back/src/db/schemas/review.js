@@ -13,9 +13,8 @@ const ReviewSchema = new Schema({
       required: true
     },
     author: {
-      type: String,
-      index: true,
-      unique: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true
     },
     content: {
@@ -23,7 +22,8 @@ const ReviewSchema = new Schema({
       required: false
     },
     wine: {
-      type: Date,
+      type: Schema.Types.ObjectId,
+      ref: "Wine",
       required: false
     }
   }, {timestamps: true}
