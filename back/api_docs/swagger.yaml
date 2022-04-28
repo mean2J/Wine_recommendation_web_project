@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+openapi: '3.0.0'
+info:
+  title: Sample API
+  description: API description in Markdown.
+=======
 openapi: "3.0.0"
 info:
   title: 5팀 모코코 API 명세서
@@ -10,11 +16,19 @@ info:
     - users MVP에 대한 yaml 파일들
     을 참고하세요.
 
+>>>>>>> 768c4f7e7c7ca3fadc70c29177723144b73b345f
   version: 1.0.0
 
 servers:
   - url: localhost:5001/docs
 
+<<<<<<< HEAD
+paths:
+  /users/signup:
+    $ref: './user/users-signup.yaml'
+  /users/signin:
+    $ref: './user/users-signin.yaml'
+=======
 tags:
   - name: users
     description: 유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등
@@ -34,3 +48,4 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+>>>>>>> 768c4f7e7c7ca3fadc70c29177723144b73b345f

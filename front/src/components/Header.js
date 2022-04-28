@@ -98,7 +98,10 @@ function Header() {
             {!isLogin ? (
               <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
             ) : (
-              <NavLoginItems onClick={logout}>로그아웃</NavLoginItems>
+              <>
+                <Link to={`/myPage`}>마이 페이지</Link>
+                <NavLoginItems onClick={logout}>로그아웃</NavLoginItems>
+              </>
             )}
             {isModal && (
               <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
