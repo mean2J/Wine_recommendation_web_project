@@ -41,14 +41,9 @@ const TitleText = styled.h2`
 
 const InfoWrapper = styled.div``;
 
-const TabText = styled(TabPane)`
-  font-size: 50px;
-  color: "red";
-`;
-
 function MyPage() {
   const navigate = useNavigate();
-  const params = useParams();
+  // const params = useParams();
 
   const [mypageOwner, setMypageOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -56,9 +51,9 @@ function MyPage() {
   const userState = useContext(UserStateContext);
 
   const fetchMypageOwner = async (ownerId) => {
-    const res = await Api.get("users", ownerId);
+    const res = await Api.get("users");
     const ownerData = res.data.user;
-    console.log("users/:userId", ownerData);
+    console.log("Mypage.js의 get요청 users/:userId", ownerData);
 
     setMypageOwner(ownerData);
   };
@@ -73,7 +68,7 @@ function MyPage() {
 
     fetchMypageOwner(ownerId);
     setIsFetchCompleted(true);
-  }, [userState]);
+  }, [userState, navigate]);
 
   if (!isFetchCompleted) {
     return "로딩중입니다...";

@@ -16,14 +16,17 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
       // user 정보 수정 요청
       const res = await Api.put(`users`, {
         name,
-        email,
         description,
       });
       const updateUser = res.data.user;
       setUser(updateUser);
 
+      console.log("수정된 정보 업데이트", updateUser);
+
       setIsEditing(false);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -46,18 +49,12 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item
+          {/* <Form.Item
             label="이메일"
             name="email"
-            rules={[
-              {
-                required: true,
-                message: "수정할 이메일을 입력해주세요",
-              },
-            ]}
           >
-            <Input onChange={(e) => setEmail(e.target.value)} />
-          </Form.Item>
+            <Input email disabled={true} />
+          </Form.Item> */}
           <Form.Item
             label="이름"
             name="name"
