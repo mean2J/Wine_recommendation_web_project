@@ -20,11 +20,15 @@ const MyPageContainer = styled.div`
 `;
 
 const MyPageSection = styled(Card)`
-  margin-top: 100px;
-  margin-left: 360px;
-  margin-right: 360px;
+  position: absolute;
+  width: 1200px;
+  height: 657px;
+  left: 360px;
+  top: 130px;
 
-  background-color: #ffffff;
+  background: #ffffff;
+  border: 1px solid rgba(196, 196, 196, 0.5);
+  box-sizing: border-box;
   border-radius: 20px;
 `;
 
@@ -36,6 +40,11 @@ const TitleText = styled.h2`
 `;
 
 const InfoWrapper = styled.div``;
+
+const TabText = styled(TabPane)`
+  font-size: 50px;
+  color: "red";
+`;
 
 function MyPage() {
   const navigate = useNavigate();
@@ -79,7 +88,11 @@ function MyPage() {
           </TitleWrapper>
           <InfoWrapper>
             <Tabs defaultActiveKey="1">
-              <TabPane tab="내 정보" key="1" forceRender="true">
+              <TabPane
+                tab={<span style={{ fontSize: 18 }}>내 정보</span>}
+                key="1"
+                forceRender="true"
+              >
                 {isEditing ? (
                   <MyInfoEditForm
                     user={mypageOwner}
@@ -90,10 +103,16 @@ function MyPage() {
                   <MyInfo user={mypageOwner} setIsEditing={setIsEditing} />
                 )}
               </TabPane>
-              <TabPane tab="북마크" key="2">
+              <TabPane
+                tab={<span style={{ fontSize: 18 }}>북마크</span>}
+                key="2"
+              >
                 {/* <BookmarkList /> */}
               </TabPane>
-              <TabPane tab="나의 리뷰" key="3">
+              <TabPane
+                tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
+                key="3"
+              >
                 {/* <ReviewList /> */}
               </TabPane>
             </Tabs>

@@ -9,6 +9,8 @@ import styled from "styled-components";
 const MyInfoContainer = styled(Card)`
   width: 642px;
   height: 280px;
+  left: 250px;
+  top: 80px;
 
   background: #f8f9fa;
   border-radius: 15px;
@@ -19,26 +21,40 @@ const Name = styled.div`
   font-size: 25px;
   line-height: 30px;
   font-weight: 500;
+
+  margin-top: 28px;
+  margin-bottom: 20px;
+  margin-left: 23px;
 `;
 
 const Email = styled.div`
   font-size: 18px;
   line-height: 30px;
-  font-weight: 200;
+  font-weight: 400;
+
+  margin-bottom: 5px;
+  margin-left: 23px;
 `;
 
 const Description = styled.div`
-  font-weight: 200;
+  font-weight: 300;
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.8);
+
+  margin-left: 23px;
 `;
 
 const MyInfoButton = styled(Button)`
+  top: 70px;
+  left: 370px;
+  font-weight: 400;
+  font-size: 14px;
   border-radius: 5px;
+  margin-right: 15px;
 `;
 
 function MyInfo({ user, setIsEditing }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
   const handleDelete = async (e) => {
@@ -63,9 +79,9 @@ function MyInfo({ user, setIsEditing }) {
         <MyInfoButton onClick={() => setIsEditing(true)}>
           프로필 수정
         </MyInfoButton>
-        <Button style={{ color: "red" }} onClick={handleDelete}>
+        <MyInfoButton style={{ color: "red" }} onClick={handleDelete}>
           회원 탈퇴
-        </Button>
+        </MyInfoButton>
       </MyInfoContainer>
     </>
   );
