@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import BackVideo from "../../assets/videoplayback.mp4";
 
@@ -51,35 +50,6 @@ const IntroDesc = styled.span`
   }
 `;
 
-const IntroBtn = styled.div`
-  width: 210px;
-  height: 65px;
-  padding: 10px;
-  text-align: center;
-  text-transform: uppercase;
-  transition: 0.5s;
-  background-size: 200% auto;
-  color: white;
-  border-radius: 10px;
-  background-image: linear-gradient(
-    to right,
-    #f6d365 0%,
-    #fda085 51%,
-    #f6d365 100%
-  );
-  cursor: pointer;
-  &:hover {
-    background-position: right center;
-  }
-`;
-
-const IntroBtnText = styled.p`
-  font-size: 17px;
-  line-height: 45px;
-  color: #ffffff;
-  margin: 0;
-`;
-
 const VideoWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -108,11 +78,6 @@ function FirstSection() {
             간편 로그인부터 추천서비스까지, <br />
             <span>와인셀러</span> 단 하나로 <span>와인</span>을 즐겨보세요.
           </IntroDesc>
-          <IntroBtn>
-            <IntroBtnText>
-              <Link to={`/signUp`}>회원가입 하러가기 &rarr;</Link>
-            </IntroBtnText>
-          </IntroBtn>
         </IntroTextWrapper>
         <VideoWrapper>
           <BgVideo autoPlay={true} muted={true} loop={true}>
