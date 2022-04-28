@@ -97,6 +97,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
       "__v",
       "createdAt",
       "updatedAt",
+      "recentLogin"
     ]);
 
     const body = {
