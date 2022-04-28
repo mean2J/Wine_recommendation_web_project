@@ -21,6 +21,11 @@ class Review {
     return reviews;
   }
 
+  static async findReviewByWine(wine) {
+    const reviews = await ReviewModel.find({ wine: wine }).lean();
+    return reviews;
+  }
+
   static async exists(filter) {
     const itExists = await ReviewModel.exists(filter);
     return itExists;
