@@ -3,7 +3,6 @@ const require = createRequire(import.meta.url);
 import cors from "cors";
 import morgan from "morgan";
 import express from "express";
-import { swaggerUi, specs } from "../modules/swagger.js";
 
 import { userRouter } from "./routers/userRouter.js";
 import { wineRouter } from "./routers/wineRouter.js";
@@ -13,7 +12,6 @@ import swaggerDoc from "../api_docs/swaggerDoc.js";
 
 const app = express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true }));
 app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
