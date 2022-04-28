@@ -1,7 +1,13 @@
 import { Slider } from "antd";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { acidityAtom, bodyAtom, sweetAtom, tanninAtom } from "../../atoms";
 
-function WineTaste({ setSweet, setAcidity, setBody, setTannin }) {
+function WineTaste({sweet, acidity, body, tannin}) {
+  const setSweet = useSetRecoilState(sweetAtom);
+  const setAcidity = useSetRecoilState(acidityAtom);
+  const setBody = useSetRecoilState(bodyAtom);
+  const setTannin = useSetRecoilState(tanninAtom);
   const marks = {
     0: "0",
     1: "1",
@@ -12,14 +18,14 @@ function WineTaste({ setSweet, setAcidity, setBody, setTannin }) {
   };
   return (
     <>
-    <span>단맛</span>
+      <span>단맛</span>
       <Slider
         range
         marks={marks}
         max={5}
-        min={0}
+        min={1}
         step={null}
-        defaultValue={[0, 2]}
+        defaultValue={sweet}
         onAfterChange={(value) => {
           setSweet(value);
         }}
@@ -29,9 +35,9 @@ function WineTaste({ setSweet, setAcidity, setBody, setTannin }) {
         range
         marks={marks}
         max={5}
-        min={0}
+        min={1}
         step={null}
-        defaultValue={[0, 2]}
+        defaultValue={acidity}
         onAfterChange={(value) => {
           setAcidity(value);
         }}
@@ -41,9 +47,9 @@ function WineTaste({ setSweet, setAcidity, setBody, setTannin }) {
         range
         marks={marks}
         max={5}
-        min={0}
+        min={1}
         step={null}
-        defaultValue={[0, 2]}
+        defaultValue={body}
         onAfterChange={(value) => {
           setBody(value);
         }}
@@ -53,9 +59,9 @@ function WineTaste({ setSweet, setAcidity, setBody, setTannin }) {
         range
         marks={marks}
         max={5}
-        min={0}
+        min={1}
         step={null}
-        defaultValue={[0, 2]}
+        defaultValue={tannin}
         onAfterChange={(value) => {
           setTannin(value);
         }}

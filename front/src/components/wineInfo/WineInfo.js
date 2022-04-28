@@ -6,6 +6,17 @@ import styled from "styled-components";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import WineType from "./WineType";
 import WineTaste from "./WineTaste";
+import { useRecoilValue } from "recoil";
+import {
+  acidityAtom,
+  bodyAtom,
+  isCheckedAtom,
+  nationAtom,
+  priceAtom,
+  sweetAtom,
+  tanninAtom,
+  typeAtom,
+} from "../../atoms";
 
 const MainContainer = styled.div`
   display: flex;
@@ -35,15 +46,14 @@ const { Step } = Steps;
 
 function WineInfo() {
   const [current, setCurrent] = useState(0);
-  const [price, setPrice] = useState([0, 50000]);
-  const [nation, setNation] = useState("");
-  const [type, setType] = useState("");
-  const [sweet, setSweet] = useState([0, 2]);
-  const [acidity, setAcidity] = useState([0, 2]);
-  const [body, setBody] = useState([0, 2]);
-  const [tannin, setTannin] = useState([0, 2]);
-  const [isChecked, setIsChecked] = useState(false);
-
+  const price = useRecoilValue(priceAtom);
+  const isChecked = useRecoilValue(isCheckedAtom);
+  const nation = useRecoilValue(nationAtom);
+  const type = useRecoilValue(typeAtom);
+  const sweet = useRecoilValue(sweetAtom);
+  const acidity = useRecoilValue(acidityAtom);
+  const body = useRecoilValue(bodyAtom);
+  const tannin = useRecoilValue(tanninAtom);
   const steps = [
     {
       title: "인트로",
@@ -54,10 +64,10 @@ function WineInfo() {
       description: "어떤 종류의 와인을 추천해드릴까요?",
       content: (
         <WineType
-          setPrice={setPrice}
-          setNation={setNation}
-          setType={setType}
-          setIsChecked={setIsChecked}
+          price={price}
+          isChecked={isChecked}
+          nation={nation}
+          type={type}
         />
       ),
     },
@@ -66,16 +76,15 @@ function WineInfo() {
       description: "어떤 맛을 선호하시나요?",
       content: (
         <WineTaste
-          setSweet={setSweet}
-          setAcidity={setAcidity}
-          setBody={setBody}
-          setTannin={setTannin}
+          sweet={sweet}
+          acidity={acidity}
+          body={body}
+          tannin={tannin}
         />
       ),
     },
   ];
 
-  //현재 오류나는 부분 -> 제출하면 정상적으로 네트워크 요청이 처리 X
   const handleSubmit = async (e) => {
     e.preventDefault();
     const Inputs = {
@@ -88,20 +97,28 @@ function WineInfo() {
       tannin,
       isChecked,
     };
-
-    // const Values = JSON.stringify(Inputs);
     console.log(Inputs);
     await Api.post("wines/recommend", Inputs).then((res) =>
       console.log(res.data)
     );
   };
 
-  const next = () => {
-    setCurrent(current + 1);
-  };
-
   const prev = () => {
     setCurrent(current - 1);
+  };
+
+  const handleNextBtn = () => {
+    if (current < 1) {
+      setCurrent(current + 1);
+    } else if (!nation && !type) {
+      message.error("생산국, 와인 종류를 선택해주세요.");
+    } else if (!nation) {
+      message.error("생산국을 선택해주세요.");
+    } else if (!type) {
+      message.error("와인 종류를 선택해주세요.");
+    } else {
+      setCurrent(current + 1);
+    }
   };
 
   return (
@@ -118,7 +135,7 @@ function WineInfo() {
             <StepsContent>{steps[current].content}</StepsContent>
             <StepsAction>
               {current < steps.length - 1 && (
-                <Button type="primary" onClick={() => next()}>
+                <Button type="primary" onClick={handleNextBtn}>
                   다음
                 </Button>
               )}
