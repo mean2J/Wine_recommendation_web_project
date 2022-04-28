@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Api from "../../api";
-import { Steps, Button, message } from "antd";
+import { Steps, Button, message, Card } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -17,6 +17,7 @@ import {
   tanninAtom,
   typeAtom,
 } from "../../atoms";
+import Result from "./Result";
 
 const MainContainer = styled.div`
   display: flex;
@@ -46,6 +47,8 @@ const { Step } = Steps;
 
 function WineInfo() {
   const [current, setCurrent] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [result, setResult] = useState({});
   const price = useRecoilValue(priceAtom);
   const isChecked = useRecoilValue(isCheckedAtom);
   const nation = useRecoilValue(nationAtom);
@@ -97,10 +100,14 @@ function WineInfo() {
       tannin,
       isChecked,
     };
-    console.log(Inputs);
-    await Api.post("wines/recommend", Inputs).then((res) =>
-      console.log(res.data)
-    );
+    await Api.post("wines/recommend", Inputs).then((res) => {
+      if (res.data.length === 0) {
+        message.info("범위를 다시 설정해주세요.");
+      } else {
+        setResult(res.data);
+        setIsLoaded(true);
+      }
+    });
   };
 
   const prev = () => {
@@ -131,42 +138,56 @@ function WineInfo() {
 
       <MainContainer>
         <StepWrapper>
-          <StepBox>
-            <StepsContent>{steps[current].content}</StepsContent>
-            <StepsAction>
-              {current < steps.length - 1 && (
-                <Button type="primary" onClick={handleNextBtn}>
-                  다음
-                </Button>
-              )}
-              {current === steps.length - 1 && (
-                <form onSubmit={handleSubmit}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    onClick={() => console.log("제출됨")}
-                  >
-                    결과보기 &rarr;
+          {!isLoaded ? (
+            <StepBox>
+              <StepsContent>{steps[current].content}</StepsContent>
+              <Steps direction="vertical" size="small" current={current}>
+                {steps.map((item) => (
+                  <Step
+                    key={item.title}
+                    title={item.title}
+                    description={item.description}
+                  />
+                ))}
+              </Steps>
+              <StepsAction>
+                {current < steps.length - 1 && (
+                  <Button type="primary" onClick={handleNextBtn}>
+                    다음
                   </Button>
-                </form>
-              )}
-              {current > 0 && (
-                <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                  이전으로
-                </Button>
-              )}
-            </StepsAction>
-          </StepBox>
+                )}
+                {current === steps.length - 1 && (
+                  <form onSubmit={handleSubmit}>
+                    <Button type="primary" htmlType="submit">
+                      결과보기 &rarr;
+                    </Button>
+                  </form>
+                )}
+                {current > 0 && (
+                  <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+                    이전으로
+                  </Button>
+                )}
+              </StepsAction>
+            </StepBox>
+          ) : (
+            <div key={result.id} title={result.name}>
+              {result.map((result) => (
+                <Result
+                  key={result.id}
+                  title={result.name}
+                  type={result.type}
+                  nation={result.nation}
+                  local={result.local}
+                  price={result.price}
+                  abv={result.abv}
+                  varieties={result.varieties}
+                />
+              ))}
+              <Button onClick={() => setIsLoaded(false)}>돌아가기</Button>
+            </div>
+          )}
         </StepWrapper>
-        <Steps direction="vertical" size="small" current={current}>
-          {steps.map((item) => (
-            <Step
-              key={item.title}
-              title={item.title}
-              description={item.description}
-            />
-          ))}
-        </Steps>
       </MainContainer>
     </>
   );
