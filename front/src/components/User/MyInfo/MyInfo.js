@@ -61,13 +61,13 @@ function MyInfo({ user, setIsEditing }) {
     e.preventDefault();
     if (window.confirm("정말 탈퇴하시겠습니까?")) {
       await Api.del("users");
+      // sessionStorage 에 저장했던 JWT 토큰을 삭제
+      sessionStorage.removeItem("userToken");
+      // dispatch 함수를 이용해 로그아웃
+      dispatch({ type: "LOGOUT" });
+    } else {
+      setIsEditing(false);
     }
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제
-    sessionStorage.removeItem("userToken");
-    // dispatch 함수를 이용해 로그아웃
-    dispatch({ type: "LOGOUT" });
-    // 기본 페이지로
-    // navigate("/");
   };
 
   return (

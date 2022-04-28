@@ -2,8 +2,29 @@ import React, { useState } from "react";
 import "antd/dist/antd.css";
 import { Card, Form, Input, Button } from "antd";
 import * as Api from "../../../api";
+import styled from "styled-components";
 
 const { TextArea } = Input;
+
+const MyInfoEditContainer = styled(Card)`
+  width: 642px;
+  height: 280px;
+  left: 250px;
+  top: 80px;
+
+  background: #f8f9fa;
+  border-radius: 15px;
+  border: none;
+`;
+
+const NameForm = styled(Form.Item)``;
+
+const MyInfoButton = styled(Button)`
+  font-weight: 400;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-right: 15px;
+`;
 
 function MyInfoEditForm({ user, setUser, setIsEditing }) {
   const [name, setName] = useState(user.name);
@@ -35,7 +56,7 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
 
   return (
     <>
-      <Card>
+      <MyInfoEditContainer>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -55,7 +76,7 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           >
             <Input email disabled={true} />
           </Form.Item> */}
-          <Form.Item
+          <NameForm
             label="이름"
             name="name"
             rules={[
@@ -66,7 +87,7 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
             ]}
           >
             <Input onChange={(e) => setName(e.target.value)} />
-          </Form.Item>
+          </NameForm>
           <Form.Item
             label="소개"
             name="description"
@@ -86,15 +107,16 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              수정하기
-            </Button>
-            <Button type="primary" danger onClick={() => setIsEditing(false)}>
+            <MyInfoButton htmlType="submit">수정하기</MyInfoButton>
+            <MyInfoButton
+              style={{ color: "red" }}
+              onClick={() => setIsEditing(false)}
+            >
               취소하기
-            </Button>
+            </MyInfoButton>
           </Form.Item>
         </Form>
-      </Card>
+      </MyInfoEditContainer>
     </>
   );
 }
