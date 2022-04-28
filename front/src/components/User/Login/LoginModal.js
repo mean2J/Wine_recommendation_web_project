@@ -70,7 +70,7 @@ function LoginModal({ isModal, getModalBoolean }) {
 
   const handleSignUp = () => {
     sendModalBoolean(false);
-    document.location.href = "/signUp";
+    document.location.href = "/SignUp";
   };
 
   return (
