@@ -89,7 +89,7 @@ class UserService {
 
   static async getUserById(userId) {
     // db에 유저 존재 여부 확인
-    const userExists = await User.exists({id: userId});
+    const userExists = await User.exists({ id: userId });
 
     if (!userExists) {
       const error = new Error(
