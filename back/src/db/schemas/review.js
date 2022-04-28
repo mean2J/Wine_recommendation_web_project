@@ -22,10 +22,6 @@ const ReviewSchema = new Schema({
       type: String,
       required: false
     },
-    date: {
-      type: Date,
-      required: false
-    },
     wine: {
       type: Date,
       required: false
