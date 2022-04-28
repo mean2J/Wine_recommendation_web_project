@@ -1,4 +1,4 @@
-//DB에 저장될 wine정보에 대한 schema
+//wine정보에 대한 schema
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
@@ -6,6 +6,7 @@ const WineSchema = new Schema({
   id: {
     type: Number,
     required: true,
+    unique: true,
   },
   name: {
     type: String,
