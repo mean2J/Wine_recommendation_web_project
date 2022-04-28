@@ -11,8 +11,8 @@ function RouterFile() {
       <Header />
       <Routes>
         <Route path="/" exact element={<Main />} />
-        <Route path="/myPage" exact element={<MyPage/>} />
-        <Route path="/SignUp" exact element={<SignUp />} />
+        <Route path="/myPage" element={<MyPage/>} />
+        <Route path="/SignUp" element={<SignUp />} />
       </Routes>
     </Router>
   );

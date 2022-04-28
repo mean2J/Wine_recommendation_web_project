@@ -7,9 +7,9 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import * as Api from "../../../api";
 import { useNavigate } from "react-router-dom";
+import LoginModal from "../Login/LoginModal";
 
 const IntroDesc = styled.p`
   font-weight: 200;
@@ -33,6 +33,14 @@ function SignUpForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
+
+  const [isModal, setIsModal] = useState(false);
+  const getModalBoolean = (e) => {
+    setIsModal(e);
+  };
+  const showModal = () => {
+    setIsModal(true);
+  };
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -99,24 +107,33 @@ function SignUpForm() {
         <Form.Item name="email" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이메일"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setEmail(e.target.value)}
-            prefix={<UserOutlined className="email" />}
+            prefix={
+              <UserOutlined className="email" style={{ color: "#c365fd" }} />
+            }
           />
         </Form.Item>
         {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
         <Form.Item name="name" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이름"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setName(e.target.value)}
-            prefix={<UserOutlined className="name" />}
+            prefix={
+              <UserOutlined className="name" style={{ color: "#c365fd" }} />
+            }
           />
         </Form.Item>
         {!isNameValid && <Notice>이름은 2글자 이상이어야 합니다.</Notice>}
         <Form.Item name="password" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setPassword(e.target.value)}
-            prefix={<LockOutlined className="password" />}
+            prefix={
+              <LockOutlined className="password" style={{ color: "#c365fd" }} />
+            }
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
@@ -128,16 +145,25 @@ function SignUpForm() {
         <Form.Item name="confirmPassword" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            prefix={<LockOutlined className="verifyPassword" />}
+            prefix={
+              <LockOutlined
+                className="verifyPassword"
+                style={{ color: "#c365fd" }}
+              />
+            }
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
           />
         </Form.Item>
         {!isPasswordSame && <Notice>비밀번호가 다릅니다.</Notice>}
-        <IntroDesc>
-          <Link to={`/`}>이미 회원이신가요?</Link>
+        <IntroDesc onClick={showModal}>
+          이미 회원이신가요?
+          {isModal && (
+            <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
+          )}
         </IntroDesc>
 
         <Button type="primary" htmlType="submit" block disabled={!isFormValid}>

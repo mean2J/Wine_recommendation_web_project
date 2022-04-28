@@ -4,7 +4,7 @@ import { WineService } from "../services/wineService.js";
 const wineRouter = Router();
 
 //wine추천
-wineRouter.get("/wines/recommend", async (req, res, next) => {
+wineRouter.post("/wines/recommend", async (req, res, next) => {
   try {
     const { nation, type, sweet, acidity, body, tannin, price, isChecked } =
       req.body;

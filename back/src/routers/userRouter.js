@@ -1,9 +1,10 @@
-import {Router} from "express";
-import {UserService} from "../services/userService.js";
-import {loginRequired} from "../middlewares/loginRequired.js";
-import {body, matchedData} from "express-validator";
-import {validationErrorCatcher} from "../middlewares/userMiddleware.js";
-import {removeFields} from "../utils/utils.js";
+import { Router } from "express";
+import { UserService } from "../services/userService.js";
+import { loginRequired } from "../middlewares/loginRequired.js";
+import { body, matchedData } from "express-validator";
+import { validationErrorCatcher } from "../middlewares/userMiddleware.js";
+import { removeFields } from "../utils/utils.js";
+import dayjs from "dayjs";
 
 const userRouter = Router();
 
@@ -33,10 +34,10 @@ userRouter.post(
       const userInfo = matchedData(req);
       const newUser = await UserService.addUser({ ...userInfo });
 
-    const body = {
-      success: true,
-      user: {id: newUser.id, name: newUser.name, email: newUser.email}
-    };
+      const body = {
+        success: true,
+        user: { id: newUser.id, name: newUser.name, email: newUser.email },
+      };
 
       res.status(201).json(body);
     } catch (error) {
@@ -66,16 +67,23 @@ userRouter.post(
 
       const user = await UserService.getUser({ ...userInfo });
 
+      const userId = user.id;
+      const date = dayjs().toISOString();
+      const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+
+      await UserService.updateUser(userId, fieldToUpdate);
+
       const body = {
         success: true,
-        user
+        user,
       };
 
       res.status(200).json(body);
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 
 // userRouter.get(
 //   "/users/:userId",
@@ -111,6 +119,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
       "__v",
       "createdAt",
       "updatedAt",
+      "recentLogin",
     ]);
 
     const body = {
@@ -165,7 +174,8 @@ userRouter.put(
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 
 userRouter.delete("/users", loginRequired, async (req, res, next) => {
   try {
