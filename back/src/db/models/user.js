@@ -7,17 +7,17 @@ class User {
   }
 
   static async findUserById(userId) {
-    const user = await UserModel.findOne({id: userId}).lean();
+    const user = await UserModel.findOne({id: userId});
     return user;
   }
 
   static async findUserByEmail(email) {
-    const user = await UserModel.findOne({email: email}).lean();
+    const user = await UserModel.findOne({email: email});
     return user;
   }
 
   static async findUserByName(name) {
-    const user = await UserModel.findOne({name: name}).lean();
+    const user = await UserModel.findOne({name: name});
     return user;
   }
 
@@ -34,7 +34,7 @@ class User {
       filter,
       {$set: fieldToUpdate},
       option
-    ).lean();
+    );
     return updatedUser;
   }
 

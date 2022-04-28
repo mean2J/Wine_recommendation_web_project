@@ -41,17 +41,15 @@ class UserService {
 
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
-    const emailExists = await User.exists({ email: email });
-
-    if (!emailExists) {
+    const user = await User.findUserByEmail(email);
+    console.log(user);
+    if (user === null) {
       const error = new Error(
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
       );
       error.status = 404;
       throw error;
     }
-
-    const user = await User.findUserByEmail(email);
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password;
@@ -82,26 +80,10 @@ class UserService {
       name,
       email,
       description,
+      errorMessage: null,
     };
 
     return loginUser;
-  }
-
-  static async getUserById(userId) {
-    // db에 유저 존재 여부 확인
-    const userExists = await User.exists({ id: userId });
-
-    if (!userExists) {
-      const error = new Error(
-        "해당 유저 아이디로 가입된 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
-      error.status = 404;
-      throw error;
-    }
-
-    const user = await User.findUserById(userId);
-
-    return user;
   }
 
   static async updateUser(userId, fieldToUpdate) {
