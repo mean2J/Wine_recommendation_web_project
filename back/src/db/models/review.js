@@ -12,7 +12,10 @@ class Review {
   }
 
   static async findReviewByAuthor(author) {
-    const reviews = await ReviewModel.find({ author: author }).lean();
+    const reviews = await ReviewModel
+      .find({ author: author })
+      .populate("author", "id -_id")
+      .lean();
     return reviews;
   }
 
@@ -22,7 +25,10 @@ class Review {
   }
 
   static async findReviewByWine(wine) {
-    const reviews = await ReviewModel.find({ wine: wine }).lean();
+    const reviews = await ReviewModel
+      .find({ wine: wine })
+      .populate("wine", "id -_id")
+      .lean();
     return reviews;
   }
 
