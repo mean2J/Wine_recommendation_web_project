@@ -1,4 +1,5 @@
 import { UserModel } from "../schemas/user.js";
+import bcrypt from "bcrypt";
 
 class User {
   static async createUser(User) {
@@ -29,6 +30,8 @@ class User {
   static async updateUser(userId, fieldToUpdate) {
     const filter = { id: userId };
     const option = { returnOriginal: false };
+
+    option.timestamps = fieldToUpdate["updateTimestamp"] === undefined;
 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
