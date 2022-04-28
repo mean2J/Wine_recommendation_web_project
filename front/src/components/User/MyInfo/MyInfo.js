@@ -1,10 +1,8 @@
-import * as Api from "../../../api";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { DispatchContext } from "../../../App";
+import { useState } from "react";
 
 import { Card, Button } from "antd";
 import styled from "styled-components";
+import WithdrawalModal from "./WithdrawalModal";
 
 const MyInfoContainer = styled(Card)`
   width: 642px;
@@ -55,19 +53,9 @@ const MyInfoButton = styled(Button)`
 
 function MyInfo({ user, setIsEditing }) {
   // const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
-
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    if (window.confirm("정말 탈퇴하시겠습니까?")) {
-      await Api.del("users");
-      // sessionStorage 에 저장했던 JWT 토큰을 삭제
-      sessionStorage.removeItem("userToken");
-      // dispatch 함수를 이용해 로그아웃
-      dispatch({ type: "LOGOUT" });
-    } else {
-      setIsEditing(false);
-    }
+  const [isModal, setIsModal] = useState(false); // 탈퇴 모달 열기/닫기
+  const showModal = () => {
+    setIsModal(true);
   };
 
   return (
@@ -79,9 +67,12 @@ function MyInfo({ user, setIsEditing }) {
         <MyInfoButton onClick={() => setIsEditing(true)}>
           프로필 수정
         </MyInfoButton>
-        <MyInfoButton style={{ color: "red" }} onClick={handleDelete}>
+        <MyInfoButton style={{ color: "red" }} onClick={showModal}>
           회원 탈퇴
         </MyInfoButton>
+        {isModal && (
+          <WithdrawalModal isModal={isModal} setIsModal={setIsModal} />
+        )}
       </MyInfoContainer>
     </>
   );
