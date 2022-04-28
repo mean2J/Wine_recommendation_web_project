@@ -24,13 +24,10 @@ paths:
     $ref: "./user/users-signup.yaml"
   /users/signin:
     $ref: "./user/users-signin.yaml"
-  /wines/recommend:
-    $ref: "./wine/wines-recommend.yaml"
-    $ref: './user/users-signin.yaml'
   /users:
-    $ref: './user/users.yaml'
+    $ref: "./user/users.yaml"
   /users/{userId}:
-    $ref: './user/users-userId.yaml'
+    $ref: "./user/users-userId.yaml"
 
 components:
   securitySchemes:

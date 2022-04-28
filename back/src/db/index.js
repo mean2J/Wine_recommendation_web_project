@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { User } from "./models/User.js";
+import { User } from "./models/user.js";
 import { Wine } from "./models/wine.js";
 import dotenv from "dotenv";
 
