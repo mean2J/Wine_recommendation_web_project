@@ -118,19 +118,18 @@ userRouter.put(
     }
   });
 
-userRouter.delete(
-  "/users",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      const userId = req.currentUserId;
+userRouter.delete("/users", loginRequired, async (req, res, next) => {
+  try {
+    const userId = req.currentUserId;
 
-      await UserService.deleteUser(userId);
+    await UserService.deleteUser(userId);
 
-      res.status(200).json({success: true, message: "성공적으로 삭제되었습니다."});
-    } catch (error) {
-      next(error);
-    }
-  });
+    res
+      .status(200)
+      .json({ success: true, message: "성공적으로 삭제되었습니다." });
+  } catch (error) {
+    next(error);
+  }
+});
 
-export {userRouter};
+export { userRouter };
