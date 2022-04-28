@@ -129,7 +129,7 @@ function LoginModal({ isModal, getModalBoolean }) {
         <LoginModalText>
           와인셀러는 세계 최고의 와인 추천 서비스입니다.
         </LoginModalText>
-        <Form.Item name="email" style={{ marginBottom: "15px" }}>
+        <Form.Item name="email" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이메일"
             onChange={(e) => setEmail(e.target.value)}
@@ -140,7 +140,7 @@ function LoginModal({ isModal, getModalBoolean }) {
           />
         </Form.Item>
         {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
-        <Form.Item name="password">
+        <Form.Item name="password" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="비밀번호"
             onChange={(e) => setPassword(e.target.value)}

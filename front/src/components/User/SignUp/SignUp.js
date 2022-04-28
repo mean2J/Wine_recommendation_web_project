@@ -30,7 +30,7 @@ const RegisterWrapper = styled.div`
   top: 50%;
   left: 50%;
   width: 60%;
-  height: 70%;
+  height: 75%;
   transform: translate(-50%, -50%);
   border: 1px solid lightblue;
   border-radius: 15px;

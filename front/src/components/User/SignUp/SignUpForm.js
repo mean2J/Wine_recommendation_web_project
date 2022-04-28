@@ -7,7 +7,6 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import * as Api from "../../../api";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../Login/LoginModal";
@@ -108,24 +107,33 @@ function SignUpForm() {
         <Form.Item name="email" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이메일"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setEmail(e.target.value)}
-            prefix={<UserOutlined className="email" />}
+            prefix={
+              <UserOutlined className="email" style={{ color: "#c365fd" }} />
+            }
           />
         </Form.Item>
         {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
         <Form.Item name="name" style={{ marginBottom: "5px" }}>
           <Input
             placeholder="이름"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setName(e.target.value)}
-            prefix={<UserOutlined className="name" />}
+            prefix={
+              <UserOutlined className="name" style={{ color: "#c365fd" }} />
+            }
           />
         </Form.Item>
         {!isNameValid && <Notice>이름은 2글자 이상이어야 합니다.</Notice>}
         <Form.Item name="password" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setPassword(e.target.value)}
-            prefix={<LockOutlined className="password" />}
+            prefix={
+              <LockOutlined className="password" style={{ color: "#c365fd" }} />
+            }
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
@@ -137,8 +145,14 @@ function SignUpForm() {
         <Form.Item name="confirmPassword" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            style={{ borderRadius: "5px" }}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            prefix={<LockOutlined className="verifyPassword" />}
+            prefix={
+              <LockOutlined
+                className="verifyPassword"
+                style={{ color: "#c365fd" }}
+              />
+            }
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
