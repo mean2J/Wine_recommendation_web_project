@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Modal, Input, Form, message, Button } from "antd";
+import { Modal, Input, Form, message } from "antd";
 import * as Api from "../../../api";
 import {
   UserOutlined,
@@ -9,12 +9,55 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { DispatchContext } from "../../../App";
+import { useNavigate } from "react-router-dom";
 
 const Notice = styled.p`
   font-size: 12px;
   color: #ff0000;
 `;
+
+const LoginModalTile = styled.h1`
+  color: #c365fd;
+  font-size: 36px;
+  font-weight: 600;
+  text-align: center;
+`;
+
+const LoginModalText = styled.h2`
+  color: #c4c4c4;
+  font-size: 14px;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const LoginButton = styled.button`
+  width: 80%;
+  height: 30px;
+  display: block;
+  margin: 20px auto 10px;
+  background-color: #c365fd;
+  border: 1px solid #c365fd;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+`;
+
+const RegisterButton = styled.button`
+  width: 80%;
+  height: 30px;
+  display: block;
+  margin: 10px auto 10px;
+  background-color: #c4c4c4;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+`;
+
 function LoginModal({ isModal, getModalBoolean }) {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
@@ -58,6 +101,7 @@ function LoginModal({ isModal, getModalBoolean }) {
 
       message.info("로그인이 완료되었습니다.");
       sendModalBoolean(false);
+      navigate("/", { replace: true });
     } catch (err) {
       message.info("로그인에 실패하였습니다.");
       console.log("로그인에 실패하였습니다.\n", err);
@@ -76,41 +120,52 @@ function LoginModal({ isModal, getModalBoolean }) {
   return (
     <>
       <Modal
-        title="와인셀러 로그인"
+        title=""
         visible={isModal}
+        width={400}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={[
-          <Button key="register" type="primary" onClick={handleSignUp}>
-            회원가입
-          </Button>,
-          <Button key="submit" type="primary" onClick={handleOk}>
-            로그인
-          </Button>,
-          <Button key="back" onClick={handleCancel}>
-            취소
-          </Button>,
-        ]}
+        footer={null}
       >
-        <Form.Item name="email" style={{ marginBottom: "5px" }}>
-          <Input
-            placeholder="이메일"
-            onChange={(e) => setEmail(e.target.value)}
-            prefix={<UserOutlined className="email" />}
-          />
-        </Form.Item>
-        {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
-        <Form.Item name="password" style={{ marginBottom: "5px" }}>
-          <Input.Password
-            placeholder="비밀번호"
-            onChange={(e) => setPassword(e.target.value)}
-            prefix={<LockOutlined className="password" />}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
+        <LoginModalTile>와인셀러</LoginModalTile>
+        <LoginModalText>
+          와인셀러는 세계 최고의 와인 추천 서비스입니다.
+        </LoginModalText>
+        <Form>
+          <Form.Item name="email" style={{ marginBottom: "5px" }}>
+            <Input
+              placeholder="이메일"
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ borderRadius: "5px" }}
+              prefix={
+                <UserOutlined className="email" style={{ color: "#c365fd" }} />
+              }
+            />
+          </Form.Item>
+          {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
+          <Form.Item name="password" style={{ marginBottom: "5px" }}>
+            <Input.Password
+              placeholder="비밀번호"
+              autoComplete="off"
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ borderRadius: "5px" }}
+              prefix={
+                <LockOutlined
+                  className="password"
+                  style={{ color: "#c365fd" }}
+                />
+              }
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
+        </Form>
         {!isPasswordValid && <Notice>비밀번호는 4글자 이상입니다.</Notice>}
+
+        <LoginButton onClick={handleOk}>로그인</LoginButton>
+
+        <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
       </Modal>
     </>
   );
