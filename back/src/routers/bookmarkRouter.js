@@ -1,6 +1,6 @@
-import {Router} from "express";
-import {bookmarkService} from "../services/bookmarkService.js";
-import {loginRequired} from '../middlewares/loginRequired.js';
+import { Router } from "express";
+import { bookmarkService } from "../services/bookmarkService.js";
+import { loginRequired } from "../middlewares/loginRequired.js";
 
 const bookmarkRouter = Router();
 bookmarkRouter.use(loginRequired);
@@ -10,7 +10,7 @@ bookmarkRouter.use(loginRequired);
  */
 bookmarkRouter.post("/bookmark", async (req, res, next) => {
   try {
-    const userId = req.currentUserId
+    const userId = req.currentUserId;
     const wineId = req.body.wineId;
 
     const newBookmark = await bookmarkService.addBookmark({
@@ -20,7 +20,7 @@ bookmarkRouter.post("/bookmark", async (req, res, next) => {
 
     const body = {
       success: true,
-      bookmark: newBookmark
+      bookmark: newBookmark,
     };
 
     res.status(201).json(body);
@@ -35,7 +35,7 @@ bookmarkRouter.post("/bookmark", async (req, res, next) => {
 bookmarkRouter.get("/bookmark/:id", async (req, res, next) => {
   try {
     const bookmarkId = req.params.id;
-    const bookmark = await bookmarkService.getBookmark(bookmarkId)
+    const bookmark = await bookmarkService.getBookmark(bookmarkId);
 
     res.status(200).json(bookmark);
   } catch (error) {
@@ -48,7 +48,6 @@ bookmarkRouter.get("/bookmark/:id", async (req, res, next) => {
  */
 bookmarkRouter.get("/bookmarklist", async (req, res, next) => {
   try {
-
     const userId = req.currentUserId;
     const bookmarkList = await bookmarkService.getBookmarkList(userId);
 
@@ -67,7 +66,7 @@ bookmarkRouter.delete("/bookmark/:wineid", async (req, res, next) => {
     //wineid와 userid(currentUserId)가 일치하는 bookmark 기록 삭제
     const userId = req.currentUserId;
     const wineId = req.params.wineid;
-    const isDeleted = await bookmarkService.deleteBookmark({userId,wineId});
+    const isDeleted = await bookmarkService.deleteBookmark({ userId, wineId });
 
     res.status(200).json(isDeleted);
   } catch (error) {
@@ -75,4 +74,4 @@ bookmarkRouter.delete("/bookmark/:wineid", async (req, res, next) => {
   }
 });
 
-export {bookmarkRouter};
+export { bookmarkRouter };

@@ -8,7 +8,7 @@ import { Card, Tabs } from "antd";
 
 import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
-// import BookmarkList from "./bookmark/BookmarkList";
+import BookmarkList from "./bookmark/BookmarkList";
 // import ReviewList from "./review/ReviewList";
 const { TabPane } = Tabs;
 
@@ -102,7 +102,7 @@ function MyPage() {
                 tab={<span style={{ fontSize: 18 }}>북마크</span>}
                 key="2"
               >
-                {/* <BookmarkList /> */}
+                <BookmarkList />
               </TabPane>
               <TabPane
                 tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}

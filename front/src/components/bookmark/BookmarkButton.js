@@ -48,8 +48,6 @@ function BookmarkButton({ isBookmarked, setIsBookmarked, wineId }) {
     }
   };
 
-  // 취소 할 때 function도 만들기 del
-
   return (
     <div>
       {isBookmarked ? (

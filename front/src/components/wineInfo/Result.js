@@ -16,7 +16,7 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
       console.log("존재여부", checked);
       setIsBookmarked(checked);
     });
-  }, []); // deps에 isBookmarked 넣어야할듯?
+  }, [wineId]);
 
   return (
     <Card title={title}>

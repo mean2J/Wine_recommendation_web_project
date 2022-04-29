@@ -9,11 +9,13 @@ const BookmarkContainer = styled(Card)`
   border-radius: 6px;
   margin-right: 20px;
   margin-left: 20px;
+  margin-bottom: 30px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 `;
 
 const contentStyle = {
   height: "400px",
+  width: "300px",
   color: "black",
   textAlign: "center",
   background: "#ececec",
@@ -54,19 +56,22 @@ const customIcons = {
   5: <span>●</span>,
 };
 
-function BookmarkItem({ currentBookmark }) {
-  const [isLiked, setIsLiked] = useState(currentBookmark.liked);
-
+function BookmarkItem({ wineInfo }) {
+  const [isBookmarked, setIsBookmarked] = useState(true);
   return (
     <BookmarkContainer style={contentStyle}>
-      <BookmarkButton isLiked={isLiked} setIsLiked={setIsLiked} />
-      <div>{currentBookmark.name}</div>
-      <div>타입: {currentBookmark.type}</div>
+      <BookmarkButton
+        isBookmarked={isBookmarked}
+        setIsBookmarked={setIsBookmarked}
+        wineId={wineInfo.id}
+      />
+      <div>{wineInfo.name}</div>
+      <div>타입: {wineInfo.type} </div>
       <br />
       <span>당도 </span>
       <Rate
         style={{ color: "#c70039" }}
-        defaultValue={currentBookmark.sweet}
+        defaultValue={wineInfo.sweet}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
       />
@@ -74,7 +79,7 @@ function BookmarkItem({ currentBookmark }) {
       <span>산도 </span>
       <Rate
         style={{ color: "#c70039" }}
-        defaultValue={currentBookmark.acidity}
+        defaultValue={wineInfo.acidity}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
       />
@@ -82,7 +87,7 @@ function BookmarkItem({ currentBookmark }) {
       <span>바디 </span>
       <Rate
         style={{ color: "#c70039" }}
-        defaultValue={currentBookmark.body}
+        defaultValue={wineInfo.body}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
       />
@@ -90,7 +95,7 @@ function BookmarkItem({ currentBookmark }) {
       <span>탄닌 </span>
       <Rate
         style={{ color: "#c70039" }}
-        defaultValue={currentBookmark.tannin}
+        defaultValue={wineInfo.tannin}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
       />
