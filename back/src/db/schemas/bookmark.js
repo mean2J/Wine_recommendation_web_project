@@ -16,8 +16,12 @@ const bookmarkSchema = new Schema({
   wineId: {
     type: Number,
     require:true
-  }
-});
+  },
+},
+{//생성, 갱신 시점
+  timestamps: true,
+}
+);
 
 const bookmarkModel = model("Bookmark", bookmarkSchema);
 
