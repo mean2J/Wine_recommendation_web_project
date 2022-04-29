@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
-
+import { Chart as ChartJS, registerables } from "chart.js";
+import { Line } from "react-chartjs-2";
+ChartJS.register(...registerables);
 const SecSection = styled.section`
   height: 100vh;
 `;
@@ -84,6 +86,26 @@ const SecStaticsBox2 = styled(SecStaticsBox)`
   margin: 0;
 `;
 
+const wineInfoData = {
+  labels: ["2016", "2017", "2018", "2019", "2020"],
+  datasets: [
+    {
+      label: "와인 수입량",
+      data: [37384, 36144, 40292, 43495, 54127],
+      fill: true,
+      backgroundColor: "rgba(75,192,192,0.2)",
+      borderColor: "rgba(75,192,192,1)",
+    },
+    {
+      label: "와인 수입액",
+      data: [19145, 21004, 24400, 25926, 33002],
+      fill: true,
+      backgroundColor: "rgba(113, 88, 145, 0.2)",
+      borderColor: "rgba(113, 88, 145, 1)",
+    },
+  ],
+};
+
 function SecondSection() {
   const animatedItem = {
     0: useScrollFadeIn("up", 0.9, 0),
@@ -100,35 +122,39 @@ function SecondSection() {
         <ReasonWrapper>
           <ReasonTextWrapper>
             <ReasonTitle {...animatedItem[0]}>
-              제목과 <span>강조</span>
+              대한민국은 <span>'와인'</span> 열풍
             </ReasonTitle>
             <ReasonDesc {...animatedItem[1]}>
-              Lorem Ipsum is simply dummy text of <br />
-              the printing and typesetting industry. <br />
-              Lorem Ipsum has been the industry's <br />
-              standard dummy text ever since the 1500s,
+              증가하는 대한민국의 와인 시장 속,
+              <br />
+              무슨 와인을 마실지 문제이신가요?
             </ReasonDesc>
           </ReasonTextWrapper>
           <StaticsWrapper>
-            <StaticsBox {...animatedItem[2]}></StaticsBox>
+            <StaticsBox {...animatedItem[2]}>
+              <Line data={wineInfoData} />
+              수출입무역통계(관세청)
+            </StaticsBox>
           </StaticsWrapper>
         </ReasonWrapper>
         <SecReasonWrapper>
           <SecrTextWrapper>
             <SecrTitle {...animatedItem[3]}>
-              제목과 <span>강조</span>
+              <span>와인</span>은 어렵다?
             </SecrTitle>
             <SecrDesc {...animatedItem[4]}>
-              Lorem Ipsum is simply dummy text of <br />
-              the printing and typesetting industry. <br />
-              Lorem Ipsum has been the industry's <br />
-              standard dummy text ever since the 1500s,
+              <br />
+              나도 와인을 한 번 마셔볼까? <br />
+              오늘은 어떤 와인을 마시지? <br />
+              어떤 와인을 선물해주지? <br />
+              <br />
+              와인에 대한 다양한 고민을 해결해 드립니다!
             </SecrDesc>
           </SecrTextWrapper>
-          <SecStaticsWrapper>
+          {/* <SecStaticsWrapper>
             <SecStaticsBox {...animatedItem[5]}></SecStaticsBox>
             <SecStaticsBox2 {...animatedItem[6]}></SecStaticsBox2>
-          </SecStaticsWrapper>
+          </SecStaticsWrapper> */}
         </SecReasonWrapper>
       </SecSection>
       <ThirdSection />
