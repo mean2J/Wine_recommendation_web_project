@@ -12,7 +12,8 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
       const checked = bookmarkList.some(
         (bookmark) => bookmark.wineId === wineId
       );
-      console.log(checked);
+      console.log(bookmarkList);
+      console.log("존재여부", checked);
       setIsBookmarked(checked);
     });
   }, []); // deps에 isBookmarked 넣어야할듯?
@@ -22,6 +23,7 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
       <BookmarkButton
         isBookmarked={isBookmarked}
         setIsBookmarked={setIsBookmarked}
+        wineId={wineId}
       />
       <p>와인타입: {type}</p>
       <p>제조국: {nation}</p>

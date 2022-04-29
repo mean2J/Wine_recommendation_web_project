@@ -1,5 +1,6 @@
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import styled from "styled-components";
+import * as Api from "../../api";
 
 const EmptyHeart = styled(HeartOutlined)`
   font-size: 40px;
@@ -23,10 +24,28 @@ const Heart = styled(HeartFilled)`
   }
 `;
 
-function BookmarkButton({ isBookmarked, setIsBookmarked }) {
-  const ClickButton = () => {
+function BookmarkButton({ isBookmarked, setIsBookmarked, wineId }) {
+  const uncheckButton = async () => {
+    // 선택된 북마크를 해제하고 delete 요청
     setIsBookmarked(!isBookmarked);
-    // 버튼 클릭 시 북마크 추가
+    console.log("북마크 삭제");
+    // 북마크 삭제
+    if (isBookmarked) {
+      await Api.del(`bookmark/${wineId}`).then((res) => {
+        console.log(res);
+      });
+    }
+  };
+  // 북마크 체크 할 경우 색상이 칠해지면서 post 요청
+  const checkButton = async () => {
+    setIsBookmarked(!isBookmarked);
+    console.log("북마크 추가");
+    // 북마크 추가
+    if (!isBookmarked) {
+      await Api.post("bookmark", { wineId }).then((res) => {
+        console.log(res);
+      });
+    }
   };
 
   // 취소 할 때 function도 만들기 del
@@ -34,9 +53,9 @@ function BookmarkButton({ isBookmarked, setIsBookmarked }) {
   return (
     <div>
       {isBookmarked ? (
-        <Heart onClick={ClickButton} />
+        <Heart onClick={uncheckButton} />
       ) : (
-        <EmptyHeart onClick={ClickButton} />
+        <EmptyHeart onClick={checkButton} />
       )}
     </div>
   );
