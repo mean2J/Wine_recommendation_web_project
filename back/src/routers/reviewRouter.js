@@ -13,15 +13,30 @@ reviewRouter.post(
   loginRequired,
   async (req, res, next) => {
     try {
-      const { title, author, content } = req.body;
+      const { title, content } = req.body;
       const { wineId } = req.params;
+      const userId = req.currentUserId;
+
+      const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
 
-      const review = await ReviewService.addReview({ title, author, content, wine });
+      const review = await ReviewService.addReview({ title, author: userId, content, wine: wineId });
+
+      // response로 돌려줄 값만 담음
+      const authorBody = { id: author.id, name: author.name };
+      const wineBody = { id: wine.id, name: wine.name };
+      const reviewBody = {
+        id: review.id,
+        title: review.title,
+        content: review.content,
+        author: authorBody,
+        wine: wineBody,
+        createdAt: review.createdAt
+      };
 
       const body = {
         success: true,
-        review
+        review: reviewBody
       };
 
       res.status(201).json(body);
@@ -40,9 +55,24 @@ reviewRouter.get(
 
       const review = await ReviewService.getReviewById(reviewId);
 
+      const author = await UserService.getUserById(review.author);
+      const wine = await WineService.getWineById({ id: review.wine });
+
+      // response로 돌려줄 값만 담음
+      const authorBody = { id: author.id, name: author.name };
+      const wineBody = { id: wine.id, name: wine.name };
+
+      const filteredReview = removeFields(review, [
+        "_id",
+        "updatedAt",
+        "__v"
+      ]);
+
+      const reviewBody = { ...filteredReview, author: authorBody, wine: wineBody }
+
       const body = {
         success: true,
-        review
+        review: reviewBody
       };
 
       res.status(200).json(body);
@@ -61,12 +91,18 @@ reviewRouter.get(
 
       // 전달받은 userId로 작성자 정보를 가져옴
       const author = await UserService.getUserById(userId);
+
       // 작성자 정보로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByAuthor(author);
+      const reviews = await ReviewService.getReviewsByAuthorId(author.id);
+
+      const filteredReviews =
+        reviews.map((review) => {
+          return removeFields(review, ["_id", "updatedAt", "__v"]);
+        });
 
       const body = {
         success: true,
-        reviews
+        reviews: filteredReviews
       };
 
       res.status(200).json(body);
@@ -92,7 +128,7 @@ reviewRouter.put(
       const review = await ReviewService.getReviewById(reviewId);
 
       // 현재 로그인한 유저와 작성자가 다르다면
-      if (review.author.id !== userId) {
+      if (review.author !== userId) {
         // 에러를 throw
         const error = new Error("수정 권한이 없습니다.");
         error.status = 401;
@@ -101,9 +137,24 @@ reviewRouter.put(
 
       const updatedReview = await ReviewService.updateReview(reviewId, fieldToUpdate);
 
+      const filteredReview = removeFields(updatedReview, [
+        "_id",
+        "updatedAt",
+        "__v"
+      ]);
+
+      const author = await UserService.getUserById(review.author);
+      const wine = await WineService.getWineById({ id: review.wine });
+
+      // response로 돌려줄 값만 담음
+      const authorBody = { id: author.id, name: author.name };
+      const wineBody = { id: wine.id, name: wine.name };
+
+      const reviewBody = { ...filteredReview, author: authorBody, wine: wineBody }
+
       const body = {
         success: true,
-        review: updatedReview,
+        review: reviewBody,
       };
 
       res.status(201).json(body);
@@ -124,7 +175,7 @@ reviewRouter.delete(
       const review = await ReviewService.getReviewById(reviewId);
 
       // 현재 로그인한 유저와 작성자가 다르다면
-      if (review.author.id !== userId) {
+      if (review.author !== userId) {
         // 에러를 throw
         const error = new Error("삭제 권한이 없습니다.");
         error.status = 401;

@@ -27,9 +27,9 @@ class ReviewService {
     return review
   }
 
-  static async getReviewsByAuthor(author) {
+  static async getReviewsByAuthorId(authorId) {
     // db에 작성자가 있는지 체크
-    const authorExists = await User.exists({id: author.id});
+    const authorExists = await User.exists({id: authorId});
 
     if (!authorExists) {
       const error = new Error("존재하지 않는 유저입니다.");
@@ -37,7 +37,7 @@ class ReviewService {
       throw error;
     }
 
-    const reviews = await Review.findReviewByAuthor(author);
+    const reviews = await Review.findReviewByAuthorId(authorId);
 
     return reviews;
   }

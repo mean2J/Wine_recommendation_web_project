@@ -13,8 +13,7 @@ const ReviewSchema = new Schema({
       required: true
     },
     author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true
     },
     content: {
@@ -22,9 +21,8 @@ const ReviewSchema = new Schema({
       required: false
     },
     wine: {
-      type: Schema.Types.ObjectId,
-      ref: "Wine",
-      required: false
+      type: Number,
+      required: true
     }
   }, {timestamps: true}
 );
