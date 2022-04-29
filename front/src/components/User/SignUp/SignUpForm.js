@@ -16,6 +16,8 @@ const IntroDesc = styled.p`
   font-size: 15px;
   display: flex;
   color: #000000;
+  cursor: pointer;
+  margin-bottom: 5px;
 `;
 
 const Notice = styled.p`
@@ -129,6 +131,7 @@ function SignUpForm() {
         <Form.Item name="password" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            autoComplete="off"
             style={{ borderRadius: "5px" }}
             onChange={(e) => setPassword(e.target.value)}
             prefix={
@@ -145,6 +148,7 @@ function SignUpForm() {
         <Form.Item name="confirmPassword" style={{ marginBottom: "5px" }}>
           <Input.Password
             placeholder="input password"
+            autoComplete="off"
             style={{ borderRadius: "5px" }}
             onChange={(e) => setConfirmPassword(e.target.value)}
             prefix={

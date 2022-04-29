@@ -14,8 +14,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'SCoreDream';
     font-weight: 200; 
     font-style: normal; 
-    src: url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream2.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream2.woff) format('woff');
+    src: url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream2.woff) format('woff');
     font-display: swap;
 }
 @font-face {

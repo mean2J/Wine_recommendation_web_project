@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { User } from "./models/user.js";
 import { Wine } from "./models/wine.js";
 import { Bookmark } from "./models/bookmark.js";
+import { Stat } from "./models/stat.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -18,4 +19,5 @@ mongoose
     console.error(error);
   });
 
-export { User, Wine, Bookmark };
+export { User, Wine, Bookmark, Stat };
+
