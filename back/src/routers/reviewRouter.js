@@ -5,15 +5,27 @@ import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, matchedData } from "express-validator";
 import { removeFields } from "../utils/utils.js";
+import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 
 const reviewRouter = Router();
 
 reviewRouter.post(
   "/reviews/:wineId",
   loginRequired,
+  body("title")
+    .notEmpty()
+    .withMessage("제목은 필수입니다.")
+    .bail()
+    .isString()
+    .trim(),
+  body("content")
+    .notEmpty()
+    .withMessage("본문 내용은 필수입니다.")
+    .bail(),
+  validationErrorCatcher,
   async (req, res, next) => {
     try {
-      const { title, content } = req.body;
+      const { title, content } = matchedData(req);
       const { wineId } = req.params;
       const userId = req.currentUserId;
 
@@ -142,15 +154,13 @@ reviewRouter.get(
 reviewRouter.put(
   "/reviews/:reviewId",
   loginRequired,
+  body("title").exists({ checkNull: true }).isString().trim(),
+  body("content").exists({ checkNull: true }).isString(),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
       const { reviewId } = req.params;
-      const { title, content } = req.body;
-
-      const fieldToUpdate = {
-        title, content
-      };
+      const fieldToUpdate = matchedData(req);
 
       const review = await ReviewService.getReviewById(reviewId);
 

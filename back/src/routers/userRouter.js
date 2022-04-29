@@ -2,7 +2,7 @@ import { Router } from "express";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, matchedData } from "express-validator";
-import { validationErrorCatcher } from "../middlewares/userMiddleware.js";
+import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 import { removeFields } from "../utils/utils.js";
 import dayjs from "dayjs";
 
