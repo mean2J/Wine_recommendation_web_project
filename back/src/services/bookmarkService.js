@@ -6,13 +6,13 @@ class bookmarkService {
   static async addBookmark({userId, wineId}) {
     let bookmark = await Bookmark.findBookmarkByWineId({userId, wineId});
     let wineInfo = await Wine.findWineById(wineId);
-    if (bookmark) {
+    if ( bookmark ) {
       const error = new Error(
         "이미 북마크한 와인입니다."
       );
       throw error;
     }
-    if (!wineInfo) {
+    if ( !wineInfo ) {
       const error = new Error(
         "존재하지 않는 와인입니다."
       );
