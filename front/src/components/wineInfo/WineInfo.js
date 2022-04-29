@@ -104,6 +104,7 @@ function WineInfo() {
       if (res.data.length === 0) {
         message.info("범위를 다시 설정해주세요.");
       } else {
+        message.success(`추천 결과 ${res.data.length}개를 불러왔어요.`);
         setResult(res.data);
         setIsLoaded(true);
       }
