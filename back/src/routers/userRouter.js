@@ -1,39 +1,148 @@
-import {Router} from "express";
-import {UserService} from "../services/userService.js";
-import {loginRequired} from "../middlewares/loginRequired.js";
+import { Router } from "express";
+import { UserService } from "../services/userService.js";
+import { loginRequired } from "../middlewares/loginRequired.js";
+import { body, matchedData } from "express-validator";
+import { validationErrorCatcher } from "../middlewares/userMiddleware.js";
+import { removeFields } from "../utils/utils.js";
+import dayjs from "dayjs";
 
 const userRouter = Router();
 
-userRouter.post("/users/signup",
+userRouter.post(
+  "/users/signup",
+  body("name")
+    .notEmpty()
+    .withMessage("이름 정보는 필수입니다.")
+    .bail()
+    .isString()
+    .trim(),
+  body("email")
+    .notEmpty()
+    .withMessage("이메일 정보는 필수입니다.")
+    .bail()
+    .isEmail()
+    .bail()
+    .normalizeEmail(),
+  body("password")
+    .notEmpty()
+    .withMessage("비밀번호는 필수입니다.")
+    .bail()
+    .isString(),
+  validationErrorCatcher,
   async (req, res, next) => {
-  try {
-    const {name, email, password} = req.body;
+    try {
+      const userInfo = matchedData(req);
+      const newUser = await UserService.addUser({ ...userInfo });
 
-    const newUser = await UserService.addUser({
-      name, email, password
-    });
+      const body = {
+        success: true,
+        user: { id: newUser.id, name: newUser.name, email: newUser.email },
+      };
+
+      res.status(201).json(body);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userRouter.post(
+  "/users/signin",
+  body("email")
+    .notEmpty()
+    .withMessage("이메일 정보는 필수입니다.")
+    .bail()
+    .isEmail()
+    .bail()
+    .normalizeEmail(),
+  body("password")
+    .notEmpty()
+    .withMessage("비밀번호는 필수입니다.")
+    .bail()
+    .isString(),
+  validationErrorCatcher,
+  async (req, res, next) => {
+    try {
+      const userInfo = matchedData(req);
+
+      const user = await UserService.getUser({ ...userInfo });
+
+      const userId = user.id;
+      const date = dayjs().toISOString();
+      const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+
+      await UserService.updateUser(userId, fieldToUpdate);
+
+      const body = {
+        success: true,
+        user,
+      };
+
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// userRouter.get(
+//   "/users/:userId",
+//   loginRequired,
+//   async (req, res, next) => {
+//     try {
+//       const {userId} = req.params;
+
+//       const user = await UserService.getUserById(userId);
+//       const filteredUser = removeFields(user, ["_id", "email", "password", "__v", "createdAt", "updatedAt"]);
+
+//       const body = {
+//         success: true,
+//         user: filteredUser
+//       };
+
+//       res.status(200).json(body);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
+userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await UserService.getUserById(userId);
+    const filteredUser = removeFields(user, [
+      "_id",
+      "email",
+      "password",
+      "__v",
+      "createdAt",
+      "updatedAt",
+      "recentLogin",
+    ]);
 
     const body = {
       success: true,
-      user: newUser
+      user: filteredUser,
     };
 
-    res.status(201).json(body);
+    res.status(200).json(body);
   } catch (error) {
     next(error);
   }
 });
 
-userRouter.post("/users/signin",
-  async (req, res, next) => {
+userRouter.get("/users", loginRequired, async (req, res, next) => {
   try {
-    const {email, password} = req.body;
+    const userId = req.currentUserId;
 
-    const user = await UserService.getUser({email, password});
+    const user = await UserService.getUserById(userId);
+    const filteredUser = removeFields(user, ["_id", "password", "__v"]);
 
     const body = {
       success: true,
-      user
+      user: filteredUser,
     };
 
     res.status(200).json(body);
@@ -45,44 +154,41 @@ userRouter.post("/users/signin",
 userRouter.put(
   "/users",
   loginRequired,
+  body("name").exists({ checkNull: true }).isString().trim(),
+  body("password").exists({ checkNull: true }).isString(),
+  body("description").exists({ checkNull: true }).isString(),
   async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const fieldToUpdate = matchedData(req);
+
+      const user = await UserService.updateUser(userId, fieldToUpdate);
+      const filteredUser = removeFields(user, ["_id", "password", "__v"]);
+
+      const body = {
+        success: true,
+        user: filteredUser,
+      };
+
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userRouter.delete("/users", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-    const {name, email, password, description} = req.body;
 
-    const fieldToUpdate = {
-      name,
-      email,
-      password,
-      description
-    };
+    await UserService.deleteUser(userId);
 
-    const user = await UserService.updateUser(userId, fieldToUpdate);
-
-    const body = {
-      success: true,
-      user
-    };
-
-    res.status(201).json(body);
+    res
+      .status(200)
+      .json({ success: true, message: "성공적으로 삭제되었습니다." });
   } catch (error) {
     next(error);
   }
 });
 
-userRouter.delete(
-  "/users",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      const userId = req.currentUserId;
-
-      await UserService.deleteUser(userId);
-
-      res.status(200).json({success: true, message: "성공적으로 삭제되었습니다."});
-    } catch (error) {
-      next(error);
-    }
-  });
-
-export {userRouter};
+export { userRouter };

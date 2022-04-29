@@ -1,0 +1,23 @@
+post:
+  summary: req.body로 입력 받은 wineId 값을 currentUserId와 함께 저장한다.
+  description: Optional extended description in Markdown.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - id
+            - userID
+            - wineId
+          properties:
+            id:
+              type: string
+            userId:
+              type: string
+            wineId:
+              type: number
+            
+  responses:
+    '200':
+      description: The response
