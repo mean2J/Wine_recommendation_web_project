@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "concurrently \"npx swagger-cli bundle ./api_docs/swagger.yaml --outfile ./api_docs/build/bundle.yaml --type yaml\" \"nodemon index.js\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "concurrently": "^7.1.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.1",
     "dotenv": "^16.0.0",
