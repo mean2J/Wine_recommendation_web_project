@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// import {User} from "../db/index.js";
-=======
 import { User } from "../db/index.js";
->>>>>>> 271d2337b2c9c7058a17f176374c448478370a2a
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -45,7 +41,7 @@ class UserService {
 
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
-    const emailExists = await User.exists({email: email});
+    const emailExists = await User.exists({ email: email });
 
     if (!emailExists) {
       const error = new Error(
