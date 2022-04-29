@@ -41,7 +41,7 @@ class UserService {
 
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
-    const emailExists = await User.exists({ email: email });
+    const emailExists = await User.exists({email: email});
 
     if (!emailExists) {
       const error = new Error(

@@ -1,10 +1,15 @@
 post:
+<<<<<<< HEAD
+  summary: 입력받은 유저 정보로 로그인을 합니다.
+  description: Optional extended description in Markdown.
+=======
   tags:
     - "users"
   summary: 입력받은 유저 정보로 로그인을 합니다.
   description: |
     # 로그인 API
     유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
+>>>>>>> 768c4f7e7c7ca3fadc70c29177723144b73b345f
   requestBody:
     content:
       application/json:
@@ -19,6 +24,11 @@ post:
               format: email
             password:
               type: string
+<<<<<<< HEAD
+  responses:
+    '200':
+      description: The response
+=======
         example:
           email: mokoko@elice.com
           password: 1q2w3e4r5t!
@@ -128,3 +138,4 @@ post:
             error:
               code: 404
               message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
+>>>>>>> 768c4f7e7c7ca3fadc70c29177723144b73b345f

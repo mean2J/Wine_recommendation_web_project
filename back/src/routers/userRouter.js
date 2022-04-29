@@ -85,6 +85,28 @@ userRouter.post(
   }
 );
 
+// userRouter.get(
+//   "/users/:userId",
+//   loginRequired,
+//   async (req, res, next) => {
+//     try {
+//       const {userId} = req.params;
+
+//       const user = await UserService.getUserById(userId);
+//       const filteredUser = removeFields(user, ["_id", "email", "password", "__v", "createdAt", "updatedAt"]);
+
+//       const body = {
+//         success: true,
+//         user: filteredUser
+//       };
+
+//       res.status(200).json(body);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
 userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
@@ -97,7 +119,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
       "__v",
       "createdAt",
       "updatedAt",
-      "recentLogin"
+      "recentLogin",
     ]);
 
     const body = {
