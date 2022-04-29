@@ -112,6 +112,33 @@ reviewRouter.get(
   }
 );
 
+reviewRouter.get(
+  "/reviews/wines/:wineId",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const { wineId } = req.params;
+
+      // 전달받은 wineId로 리뷰 목록을 가져옴
+      const reviews = await ReviewService.getReviewsByWineId(wineId);
+
+      const filteredReviews =
+        reviews.map((review) => {
+          return removeFields(review, ["_id", "updatedAt", "__v"]);
+        });
+
+      const body = {
+        success: true,
+        reviews: filteredReviews
+      };
+
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 reviewRouter.put(
   "/reviews/:reviewId",
   loginRequired,

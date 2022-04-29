@@ -25,9 +25,9 @@ class Review {
     return reviews;
   }
 
-  static async findReviewByWine(wine) {
+  static async findReviewByWineId(wineId) {
     const reviews = await ReviewModel
-      .find({ wine: wine })
+      .find({ wine: wineId })
       .lean();
     return reviews;
   }
