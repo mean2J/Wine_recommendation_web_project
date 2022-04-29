@@ -18,6 +18,8 @@ servers:
 tags:
   - name: users
     description: 유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등
+  - name: reviews
+    description: 리뷰 작성, 조회, 수정, 삭제 등
 
 paths:
   /users/signup:
@@ -28,6 +30,14 @@ paths:
     $ref: "./user/users.yaml"
   /users/{userId}:
     $ref: "./user/users-userId.yaml"
+  /reviews/{wineId}:
+    $ref: "./review/reviews-wineId.yaml"
+  /reviews/{reviewId}:
+    $ref: "./review/reviews-reviewId.yaml"
+  /reviews/authors/{userId}:
+    $ref: "./review/reviews-authors-userId.yaml"
+  /reviews/wines/{wineId}:
+    $ref: "./review/reviews-wines-wineId.yaml"
 
 components:
   securitySchemes:

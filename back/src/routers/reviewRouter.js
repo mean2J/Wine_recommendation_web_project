@@ -32,7 +32,7 @@ reviewRouter.post(
       const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
 
-      const review = await ReviewService.addReview({ title, author: userId, content, wine: wineId });
+      const review = await ReviewService.addReview({ title, content, author: userId, wine: wineId });
 
       // response로 돌려줄 값만 담음
       const authorBody = { id: author.id, name: author.name };
