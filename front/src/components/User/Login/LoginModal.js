@@ -40,17 +40,19 @@ const LoginButton = styled.button`
   border: 1px solid #c365fd;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
 `;
 
 const RegisterButton = styled.button`
   width: 80%;
   height: 30px;
   display: block;
-  margin: 20px auto 10px;
+  margin: 10px auto 10px;
   background-color: #c4c4c4;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
 `;
 
 function LoginModal({ isModal, getModalBoolean }) {
@@ -129,30 +131,36 @@ function LoginModal({ isModal, getModalBoolean }) {
         <LoginModalText>
           와인셀러는 세계 최고의 와인 추천 서비스입니다.
         </LoginModalText>
-        <Form.Item name="email" style={{ marginBottom: "5px" }}>
-          <Input
-            placeholder="이메일"
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ borderRadius: "5px" }}
-            prefix={
-              <UserOutlined className="email" style={{ color: "#c365fd" }} />
-            }
-          />
-        </Form.Item>
-        {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
-        <Form.Item name="password" style={{ marginBottom: "5px" }}>
-          <Input.Password
-            placeholder="비밀번호"
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ borderRadius: "5px" }}
-            prefix={
-              <LockOutlined className="password" style={{ color: "#c365fd" }} />
-            }
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
+        <Form>
+          <Form.Item name="email" style={{ marginBottom: "5px" }}>
+            <Input
+              placeholder="이메일"
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ borderRadius: "5px" }}
+              prefix={
+                <UserOutlined className="email" style={{ color: "#c365fd" }} />
+              }
+            />
+          </Form.Item>
+          {!isEmailValid && <Notice>이메일 형식이 올바르지 않습니다.</Notice>}
+          <Form.Item name="password" style={{ marginBottom: "5px" }}>
+            <Input.Password
+              placeholder="비밀번호"
+              autoComplete="off"
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ borderRadius: "5px" }}
+              prefix={
+                <LockOutlined
+                  className="password"
+                  style={{ color: "#c365fd" }}
+                />
+              }
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
+        </Form>
         {!isPasswordValid && <Notice>비밀번호는 4글자 이상입니다.</Notice>}
 
         <LoginButton onClick={handleOk}>로그인</LoginButton>

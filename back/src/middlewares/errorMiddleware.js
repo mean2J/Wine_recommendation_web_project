@@ -1,3 +1,5 @@
+import {validationResult} from "express-validator";
+
 function errorMiddleware(error, req, res, next) {
   // 터미널에 노란색으로 출력됨.
   console.log("\x1b[33m%s\x1b[0m", error);
@@ -14,4 +16,17 @@ function errorMiddleware(error, req, res, next) {
     .send(body);
 }
 
-export { errorMiddleware };
+function validationErrorCatcher(req, res, next) {
+  const errors = validationResult(req);
+
+  if (errors.isEmpty())
+    return next();
+
+  const error = new Error(
+    errors.array()[0].msg
+  );
+  error.status = 400;
+  throw error;
+}
+
+export { errorMiddleware, validationErrorCatcher };
