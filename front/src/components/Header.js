@@ -86,7 +86,7 @@ function Header() {
   };
 
   const [searchValue, setSearchValue] = useState("");
-  //임의값 지정
+
   const page = 1;
   const perPage = 10;
 
