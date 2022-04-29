@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import LoginModal from "./User/Login/LoginModal";
 import "antd/dist/antd.min.css";
+import SearchWine from "./SearchWine/SearchWine";
+import Search from "antd/lib/transfer/search";
+import { message } from "antd";
 
 const Navbar = styled.nav`
   width: 100%;
@@ -36,7 +39,7 @@ const Logo = styled.p`
   background-clip: text;
 `;
 
-const NavItems = styled.p`
+const NavItems = styled.span`
   justify-content: start;
   margin-left: 40px;
   font-size: 17px;
@@ -81,6 +84,22 @@ function Header() {
   const showModal = () => {
     setIsModal(true);
   };
+
+  const [searchValue, setSearchValue] = useState("");
+  //임의값 지정
+  const page = 1;
+  const perPage = 10;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchValue < 1) {
+      message.info("검색어를 한 글자 이상 입력해주세요.");
+    } else {
+      navigate(
+        `/search/wines?text=${searchValue}&page=${page}&perPage=${perPage}`
+      );
+    }
+  };
   return (
     <>
       <Navbar>
@@ -89,10 +108,18 @@ function Header() {
             <Link to={`/`}>LOGO</Link>
           </Logo>
           <NavItems>
-            <Link to={`/wine`}>와인 추천 받아보기🍷</Link>
+            <form onSubmit={handleSubmit}>
+              <Search
+                placeholder="input search text"
+                allowClear
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                }}
+              />
+            </form>
           </NavItems>
           <NavItems>
-            <Link to={`/community`}>커뮤니티 💬</Link>
+            <Link to={`/wine`}>와인 추천 받아보기🍷</Link>
           </NavItems>
           <NavLogin>
             {!isLogin ? (
