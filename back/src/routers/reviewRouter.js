@@ -22,17 +22,21 @@ reviewRouter.post(
     .notEmpty()
     .withMessage("본문 내용은 필수입니다.")
     .bail(),
+  body("rating")
+    .notEmpty()
+    .withMessage("별점 정보가 없습니다.")
+    .bail(),
   validationErrorCatcher,
   async (req, res, next) => {
     try {
-      const { title, content } = matchedData(req);
+      const fieldToPost = matchedData(req);
       const { wineId } = req.params;
       const userId = req.currentUserId;
 
       const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
 
-      const review = await ReviewService.addReview({ title, content, author: userId, wine: wineId });
+      const review = await ReviewService.addReview({ ...fieldToPost, author: userId, wine: wineId });
 
       // response로 돌려줄 값만 담음
       const authorBody = { id: author.id, name: author.name };
@@ -43,6 +47,7 @@ reviewRouter.post(
         content: review.content,
         author: authorBody,
         wine: wineBody,
+        rating: review.rating,
         createdAt: review.createdAt
       };
 
@@ -156,6 +161,7 @@ reviewRouter.put(
   loginRequired,
   body("title").exists({ checkNull: true }).isString().trim(),
   body("content").exists({ checkNull: true }).isString(),
+  body("rating").exists({ checkNull: true }).isInt({ min: 0, max: 5 }),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
