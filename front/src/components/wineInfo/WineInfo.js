@@ -176,6 +176,7 @@ function WineInfo() {
               {result.map((result) => (
                 <Result
                   key={result.id}
+                  wineId={result.id} // 와인 아이디 테스트 중
                   title={result.name}
                   type={result.type}
                   nation={result.nation}

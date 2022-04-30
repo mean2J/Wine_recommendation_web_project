@@ -60,13 +60,13 @@ class Wine {
 
   //wine id로 특정 와인 찾기
   static async findWineById(id) {
-    const wine = await WineModel.findOne({ id });
+    const wine = await WineModel.findOne({ id }).lean();
     return wine;
   }
 
-  static async findUserByName(name) {
-    const wine = await WineModel.findOne({ name });
-    return wine;
+  static async exists(filter) {
+    const itExists = await WineModel.exists(filter);
+    return itExists;
   }
 }
 

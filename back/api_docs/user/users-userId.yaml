@@ -1,0 +1,112 @@
+get:
+  tags:
+    - "users"
+  summary: 입력받은 유저 정보로 로그인을 합니다.
+  security:
+    - BearerAuth: []
+  description: |
+    # 로그인 API
+    유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
+  parameters:
+    - name: "userId"
+      in: path
+      description: 유저 아이디
+      required: true
+      type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: userId
+                  name:
+                    type: string
+                    description: 유저가 설정한 이름
+          example:
+            success: true
+            user:
+              id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+              name: acorn
+    '400':
+      description: 잘못된 요청입니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              error:
+                type: obejct
+                properties:
+                  code:
+                    type: integer
+                    description: http status code
+                  message:
+                    type: string
+                    description: 에러 메시지
+          example:
+            success: false
+            error:
+              code: 400
+              message: 이메일 정보는 필수입니다.
+    '403':
+      description: 미로그인
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              error:
+                type: obejct
+                properties:
+                  code:
+                    type: integer
+                    description: http status code
+                  message:
+                    type: string
+                    description: 에러 메시지
+          example:
+            success: false
+            error:
+              code: 403
+              message: 로그인한 유저만 사용할 수 있는 서비스입니다.
+      '404':
+        description: 가입 내역이 존재하지 않습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: 요청이 성공했는지를 나타냅니다.
+                error:
+                  type: obejct
+                  properties:
+                    code:
+                      type: integer
+                      description: http status code
+                    message:
+                      type: string
+                      description: 에러 메시지
+            example:
+              success: false
+              error:
+                code: 404
+                message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
