@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import Result from "./Result";
+import Result from "../wineInfo/Result";
 import { Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +37,17 @@ function SearchWine() {
   return (
     <div key={result.id} title={result.name}>
       {result.map((result) => (
-        <Result key={result.id} title={result.name} type={result.type} />
+        <Result
+          key={result.id}
+          wineId={result.id}
+          title={result.name}
+          type={result.type}
+          nation={result.nation}
+          local={result.local}
+          price={result.price}
+          abv={result.abv}
+          varieties={result.varieties}
+        />
       ))}
       <Pagination
         simple

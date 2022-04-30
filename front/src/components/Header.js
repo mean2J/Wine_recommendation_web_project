@@ -110,7 +110,7 @@ function Header() {
           <NavItems>
             <form onSubmit={handleSubmit}>
               <Search
-                placeholder="input search text"
+                placeholder="와인 검색하기"
                 allowClear
                 onChange={(e) => {
                   setSearchValue(e.target.value);
