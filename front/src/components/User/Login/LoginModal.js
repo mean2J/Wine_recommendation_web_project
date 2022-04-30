@@ -56,7 +56,7 @@ const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
-function LoginModal({ isModal, getModalBoolean, setIsModal }) {
+function LoginModal({ isModal, getModalBoolean }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -115,7 +115,6 @@ function LoginModal({ isModal, getModalBoolean, setIsModal }) {
 
   const handleSignUp = () => {
     sendModalBoolean(false);
-    setIsModal(false);
     document.location.href = "/SignUp";
   };
   return (
