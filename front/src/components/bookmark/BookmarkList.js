@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import BookmarkItem from "./BookmarkItem";
 import styled from "styled-components";
 import * as Api from "../../api";
@@ -27,22 +27,72 @@ const DefaultMessage = styled(Card)`
 `;
 
 function BookmarkList() {
+  const [page, setPage] = useState(1);
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const isLoadedRef = React.useRef();
+  const pageRef = React.useRef();
   const [bookmarkList, setBookmarkList] = useState([]); // 북마크 리스트 데이터
+  const maxCount = 6;
+
+  // 확인용
+  useEffect(() => {
+    console.log("%현재 List%", bookmarkList);
+    console.log("page", page);
+  }, [page, bookmarkList]);
 
   const getList = async () => {
-    await Api.get("bookmarklist").then((res) => {
-      setBookmarkList(res.data.bookmark);
-    });
+    setIsLoaded(true);
+    isLoadedRef.current = true;
+    console.log("pageRef.current", pageRef.current);
+
+    let res = await Api.get(
+      `bookmarklistpage?page=${pageRef.current}&maxBookmark=${maxCount}` // page 수정중
+    );
+    const data = res.data.bookmark;
+    if (data.length > 0) {
+      setBookmarkList((prevState) => [...prevState, ...data]);
+      setPage((page) => page + 1);
+      pageRef.current = pageRef.current + 1;
+      setIsLoaded(false);
+      isLoadedRef.current = false;
+    } else {
+      setIsLoaded(false);
+      isLoadedRef.current = false;
+    }
   };
+
+  const onIntersect = useCallback(async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded && isLoadedRef.current === false) {
+      observer.unobserve(entry.target);
+      await getList();
+      observer.observe(entry.target);
+    }
+  }, []);
+
   useEffect(() => {
-    getList();
-  }, [bookmarkList]);
+    let observer;
+
+    if (target) {
+      if (isLoadedRef.current === undefined) {
+        isLoadedRef.current = isLoaded;
+      }
+      if (pageRef.current === undefined) {
+        pageRef.current = page;
+      }
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.7,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, isLoaded, page, onIntersect]);
 
   return (
     <BookmarkListContainer>
       {bookmarkList.length ? (
-        bookmarkList.map((bookmark) => (
-          <BookmarkItem key={bookmark.id} wineInfo={bookmark.wineInfo} />
+        bookmarkList.map((bookmark, idx) => (
+          <BookmarkItem key={idx} wineInfo={bookmark.wineInfo} />
         ))
       ) : (
         <DefaultMessage>
@@ -50,9 +100,7 @@ function BookmarkList() {
           <div>관심있는 와인을 저장 해보세요🍷</div>
         </DefaultMessage>
       )}
-      {/* {bookmarkList.map((bookmark) => (
-        <BookmarkItem key={bookmark.id} wineInfo={bookmark.wineInfo} />
-      ))} */}
+      <div ref={setTarget}></div>
     </BookmarkListContainer>
   );
 }
