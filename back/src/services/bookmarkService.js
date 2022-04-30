@@ -10,12 +10,14 @@ class bookmarkService {
       const error = new Error(
         "이미 북마크한 와인입니다."
       );
+      error.status = 400;
       throw error;
     }
     if ( !wineInfo ) {
       const error = new Error(
         "존재하지 않는 와인입니다."
       );
+      error.status = 404;
       throw error;
     }
 
@@ -35,16 +37,32 @@ class bookmarkService {
 
   static async getBookmarkList(userId) {
     const bookmarkList = await Bookmark.findBookmarkByUserId(userId);
+
+    if ( !bookmarkList ) {
+      const error = new Error(
+        "북마크한 와인이 없습니다. 먼저 관심있는 와인을 북마크해주세요."
+      );
+      error.status = 404;
+      throw error;
+    }
+
     const listLength = Object.keys(bookmarkList).length
     
     let bookmarkWineList = [];
     for (let i = 0; i < listLength; i++){
-      //bookmarkId
+      //bookmarkId와 createAt
       let bookmarkId = bookmarkList[i].id;
       let bookmarkCreate = bookmarkList[i].createdAt;
       //wineId와 wineInfo
       let wineId = bookmarkList[i].wineId;
       let wineInfo = await Wine.findWineById(wineId);
+      if ( !wineInfo ) {
+        const error = new Error(
+          "정보가 없는 와인ID입니다. 고객센터에 문의하세요."
+        );
+        error.status = 404;
+        throw error;
+      }
       let bookmarkWine = {
         "bookmarkId" : bookmarkId,
         "bookmarkCreate" : bookmarkCreate,
@@ -60,7 +78,7 @@ class bookmarkService {
     const listLength = Object.keys(bookmarkList).length
     let bookmarkWineList = [];
     for (let i = 0; i < listLength; i++){
-      //bookmarkId
+      //bookmarkId와 createAt
       let bookmarkId = bookmarkList[i].id;
       let bookmarkCreate = bookmarkList[i].createdAt;
       //wineId와 wineInfo
@@ -83,6 +101,7 @@ class bookmarkService {
       const error = new Error(
         "북마크하지 않은 와인은 해제할 수 없습니다."
       );
+      error.status = 404;
       throw error;
     }
     return {status : '삭제 ok'};
