@@ -1,36 +1,39 @@
 import mongoose from "mongoose";
-const {Schema, model} = mongoose;
+const { Schema, model } = mongoose;
 
-const UserSchema = new Schema({
-  id: {
-    type: String,
-    index: true,
-    unique: true,
-    required: false
+const UserSchema = new Schema(
+  {
+    id: {
+      type: String,
+      index: true,
+      unique: true,
+      required: false,
+    },
+
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      index: true,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    recentLogin: {
+      type: Date,
+      required: false,
+    },
   },
-  name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    index: true,
-    unique: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: false,
-  },
-  recentLogin: {
-    type: Date,
-    required: false
-  }
-}, {timestamps: true}
+  { timestamps: true }
 );
 
 export const UserModel = model("User", UserSchema);
