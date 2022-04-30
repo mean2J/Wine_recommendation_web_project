@@ -9,6 +9,7 @@ import { wineRouter } from "./routers/wineRouter.js";
 import { bookmarkRouter } from "./routers/bookmarkRouter.js";
 import { reviewRouter } from "./routers/reviewRouter.js";
 import { statRouter } from "./routers/statRouter.js";
+import { searchRouter } from "./routers/searchRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import swaggerDoc from "../api_docs/swaggerDoc.js";
 
@@ -24,11 +25,12 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
+app.use(statRouter);
 app.use(userRouter);
 app.use(wineRouter);
 app.use(bookmarkRouter);
-app.use(statRouter);
 app.use(reviewRouter);
+app.use(searchRouter);
 app.use(errorMiddleware);
 
 export { app };
