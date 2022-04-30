@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
-import { Bar, Doughnut, PolarArea, Pie } from "react-chartjs-2";
+import { Doughnut, PolarArea, Pie } from "react-chartjs-2";
 import * as Api from "../../api";
 import {
   Chart as ChartJS,
@@ -46,32 +46,22 @@ const nationData = {
   ],
 };
 
-const typeData = {
-  labels: ["Red", "White", "Rose", "Sparkling"],
-  datasets: [
-    {
-      label: "count",
-      data: [13838, 5478, 336, 1587],
-      fill: true,
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 206, 86, 1)",
-      ],
+const nationOptions = {
+  plugins: {
+    tooltip: {
+      callbacks: {
+        title: function (data) {
+          console.log(data);
+          // return `${nationData.labels[tooltipItem.index].label} 와인은 맛있다`;
+        },
+      },
     },
-  ],
+  },
 };
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
-  height: 1440px;
+  height: 1080px;
 `;
 
 const Titlewrapper = styled.div`
@@ -152,10 +142,10 @@ export function ThirdSection() {
             data: res.data.y_ax,
             fill: true,
             backgroundColor: [
+              "rgba(75, 192, 192, 0.5)",
               "rgba(255, 99, 132, 0.5)",
               "rgba(54, 162, 235, 0.5)",
               "rgba(255, 206, 86, 0.5)",
-              "rgba(75, 192, 192, 0.5)",
             ],
           },
         ],
@@ -248,17 +238,7 @@ export function ThirdSection() {
           <Contents>
             <ContentTitle>생산국</ContentTitle>
             <ContentDesc>
-              <PolarArea data={nationData} />
-            </ContentDesc>
-          </Contents>
-          <Contents>
-            <ContentTitle>타입</ContentTitle>
-            <ContentDesc>
-              <Bar
-                data={typeData}
-                height={300}
-                options={{ maintainAspectRatio: true }}
-              />
+              <PolarArea data={nationData} options={nationOptions} />
             </ContentDesc>
           </Contents>
           <Contents>

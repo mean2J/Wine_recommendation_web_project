@@ -23,11 +23,11 @@ app.use(swaggerDoc);
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
+app.use(statRouter);
 
 app.use(userRouter);
 app.use(wineRouter);
 app.use(bookmarkRouter);
-app.use(statRouter);
 app.use(reviewRouter);
 app.use(errorMiddleware);
 
