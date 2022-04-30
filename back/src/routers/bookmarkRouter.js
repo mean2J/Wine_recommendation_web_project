@@ -4,12 +4,12 @@ import { loginRequired } from "../middlewares/loginRequired.js";
 import { bookmarkModel } from "../db/schemas/bookmark.js";
 
 const bookmarkRouter = Router();
-bookmarkRouter.use(loginRequired);
+
 
 /*
  * 북마크 생성
  */
-bookmarkRouter.post("/bookmark", async (req, res, next) => {
+bookmarkRouter.post("/bookmark", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const wineId = req.body.wineId;
@@ -33,7 +33,7 @@ bookmarkRouter.post("/bookmark", async (req, res, next) => {
 /*
  * 북마크 조회
  */
-bookmarkRouter.get("/bookmark/:id", async (req, res, next) => {
+bookmarkRouter.get("/bookmark/:id", loginRequired, async (req, res, next) => {
   try {
     const bookmarkId = req.params.id;
     const bookmark = await bookmarkService.getBookmark(bookmarkId);
@@ -47,7 +47,7 @@ bookmarkRouter.get("/bookmark/:id", async (req, res, next) => {
 /*
  * 북마크 모든 리스트 조회
  */
-bookmarkRouter.get("/bookmarklist", async (req, res, next) => {
+bookmarkRouter.get("/bookmarklist", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
 
@@ -67,7 +67,7 @@ bookmarkRouter.get("/bookmarklist", async (req, res, next) => {
 /*
  * 북마크 리스트 조회(페이징)
  */
-bookmarkRouter.get("/bookmarklistpage", async (req, res, next) => {
+bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) => {
   try {
     const page = req.query.page || 1; // default 1페이지
     const maxBookmark = req.query.maxBookmark || 10; //default 10개
@@ -98,7 +98,7 @@ bookmarkRouter.get("/bookmarklistpage", async (req, res, next) => {
 /*
  * 북마크 삭제
  */
-bookmarkRouter.delete("/bookmark/:wineid", async (req, res, next) => {
+bookmarkRouter.delete("/bookmark/:wineid", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const wineId = req.params.wineid;
@@ -113,7 +113,7 @@ bookmarkRouter.delete("/bookmark/:wineid", async (req, res, next) => {
 /*
  * 북마크 모두삭제
  */
-bookmarkRouter.delete("/bookmarklist/alldelete", async (req, res, next) => {
+bookmarkRouter.delete("/bookmarklist/alldelete", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const isDeleted = await bookmarkService.deleteAllBookmark({ userId });
