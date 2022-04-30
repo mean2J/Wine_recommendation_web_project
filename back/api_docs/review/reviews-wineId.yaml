@@ -26,9 +26,13 @@ post:
               type: string
             content:
               type: string
+            rating:
+              type: number
+              format: int32
         example:
           title: 리뷰 제목
           content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+          rating: 3
   responses:
     '201':
       description: 정상적으로 리뷰가 작성되었습니다.
@@ -70,6 +74,10 @@ post:
                       name:
                         type: string
                         description: 와인 이름
+                  rating:
+                    type: number
+                    format: int32
+                    description: 별점
                   createdAt:
                     type: string
                     format: date
@@ -86,4 +94,5 @@ post:
               wine:
                 id: 137198
                 name: Altair, Sideral
+              rating: 3
               createdAt: 2022-04-29T07:46:27.333Z

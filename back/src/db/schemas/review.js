@@ -23,6 +23,10 @@ const ReviewSchema = new Schema({
     wine: {
       type: Number,
       required: true
+    },
+    rating: {
+      type: Number,
+      required: true
     }
   }, {timestamps: true}
 );
