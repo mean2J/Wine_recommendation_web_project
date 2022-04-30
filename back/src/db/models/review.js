@@ -6,6 +6,17 @@ class Review {
     return newReview;
   }
 
+  static async getRatings(wineId) {
+    const ratings = await ReviewModel
+      .find(
+        { wine: wineId },
+        { rating: true, _id: false }
+      )
+      .lean();
+
+    return ratings;
+  }
+
   static async findReviewById(id) {
     const review = await ReviewModel
       .findOne({ id: id })

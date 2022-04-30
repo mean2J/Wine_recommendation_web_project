@@ -1,11 +1,12 @@
 import { Review, User, Wine } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
+import {ReviewModel} from "../db/schemas/review.js";
 
 class ReviewService {
-  static async addReview({ title, author, content, wine }) {
+  static async addReview(review) {
     // id 부여
     const id = uuidv4();
-    const newReview = { id, title, author, content, wine };
+    const newReview = { id, ...review };
 
     const createdReview = await Review.createReview(newReview);
 
@@ -55,6 +56,15 @@ class ReviewService {
     const reviews = await Review.findReviewByWineId(wineId);
 
     return reviews;
+  }
+
+  static async getAverageRatingByWineId(wineId) {
+    const ratings = await Review.getRatings(wineId);
+
+    return ratings
+      .reduce((res, {rating}) => {
+        return res += rating;
+      }, 0) / ratings.length;
   }
 
   static async updateReview(id, fieldToUpdate) {

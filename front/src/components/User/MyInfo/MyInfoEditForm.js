@@ -7,10 +7,10 @@ import styled from "styled-components";
 const { TextArea } = Input;
 
 const MyInfoEditContainer = styled(Card)`
-  width: 642px;
-  height: 280px;
-  left: 250px;
-  top: 80px;
+  margin-top: 40px;
+  margin-left: 140px;
+  margin-right: 140px;
+  margin-bottom: 40px;
 
   background: #f8f9fa;
   border-radius: 15px;
@@ -107,7 +107,9 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <MyInfoButton htmlType="submit">수정하기</MyInfoButton>
+            <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
+              수정하기
+            </MyInfoButton>
             <MyInfoButton
               style={{ color: "red" }}
               onClick={() => setIsEditing(false)}
