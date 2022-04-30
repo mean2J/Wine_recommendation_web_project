@@ -8,6 +8,7 @@ class Bookmark {
     const newBookmark = await bookmarkModel.create(Bookmark);
     return newBookmark;
   }
+
 /**
  * BookmarkId(=id)로 bookmark 리스트에 존재하는지 확인
  */
@@ -15,6 +16,7 @@ class Bookmark {
     const bookmark = await bookmarkModel.findOne({id: BookmarkId});
     return bookmark;
   }
+
 /**
  * {userId,wineId}로 해당와인이 bookmark 리스트에 존재하는지 확인
  */
@@ -27,8 +29,26 @@ class Bookmark {
  * userId로 bookmark 리스트 찾아서 반환
  */
   static async findBookmarkByUserId(userId) {
-    const bookmarkList = await bookmarkModel.find({userId});
-    return bookmarkList;
+    const bookmarkListAll = await bookmarkModel.find({userId});
+    return bookmarkListAll;
+  }
+
+/**
+ * {userId, page, maxBookmark}
+ * userId로 찾은 bookmark 리스트를 maxBookmark 단위로 페이징하여 반환
+ */
+  static async findBookmarkByUserIdPage({userId, page, maxBookmark}) {
+    
+    const bookmarkListPage =
+    await bookmarkModel
+    .find({userId}) //userID로 bookmark 기록을 찾아서
+    .sort({createdAt: -1}) //createAt 기준으로 정렬
+    .limit(maxBookmark) //한페이지에서 확인할 수 있는 bookmark의 수 
+    .skip((page - 1) * maxBookmark) //페이지에 따른 skip 기준
+    .exec();
+    
+
+    return bookmarkListPage;
   }
 
 /**
@@ -39,6 +59,15 @@ class Bookmark {
     const isDataDeleted = (deleteResult.deletedCount === 1);
     return isDataDeleted;
   }
+
+/**
+ * userId와 매칭되는 북마크리스트 전체를 삭제
+ * 
+ */
+   static async deleteBookmarkAllByUserId({userId}) {
+    await bookmarkModel.deleteMany({userId});
+  }
+
 }
 
 

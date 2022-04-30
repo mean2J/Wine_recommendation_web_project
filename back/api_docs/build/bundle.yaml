@@ -415,15 +415,14 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                name:
                   type: string
-                  format: email
                 password:
                   type: string
                 description:
                   type: string
             example:
-              email: mokoko@elice.com
+              name: acorn
               password: 1q2w3e4r5t!
               description: 안녕하세요
       responses:
@@ -440,25 +439,21 @@ paths:
                   user:
                     type: object
                     properties:
-                      token:
-                        type: string
-                        description: 이번 로그인에 대한 bearer token
-                      id:
-                        type: string
-                        description: userId
                       name:
                         type: string
                         description: 유저가 설정한 이름
                       email:
                         type: string
                         description: 유저가 가입에 사용한 이메일 주소
+                      description:
+                        type: string
+                        description: 상태 메시지
               example:
                 success: true
                 user:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
                   name: acorn
                   email: mokoko@elice.com
+                  description: 안녕하세요
         '404':
           description: 가입 내역이 존재하지 않습니다.
           content:
@@ -501,7 +496,7 @@ paths:
           type: string
       responses:
         '200':
-          description: 정상적으로 로그인되었습니다.
+          description: OK
           content:
             application/json:
               schema:
@@ -513,25 +508,17 @@ paths:
                   user:
                     type: object
                     properties:
-                      token:
-                        type: string
-                        description: 이번 로그인에 대한 bearer token
                       id:
                         type: string
                         description: userId
                       name:
                         type: string
                         description: 유저가 설정한 이름
-                      email:
-                        type: string
-                        description: 유저가 가입에 사용한 이메일 주소
               example:
                 success: true
                 user:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                   id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
                   name: acorn
-                  email: mokoko@elice.com
         '400':
           description: 잘못된 요청입니다.
           content:

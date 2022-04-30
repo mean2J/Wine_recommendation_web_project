@@ -14,8 +14,6 @@ const ReviewSchema = new Schema({
     },
     author: {
       type: String,
-      index: true,
-      unique: true,
       required: true
     },
     content: {
@@ -23,8 +21,8 @@ const ReviewSchema = new Schema({
       required: false
     },
     wine: {
-      type: Date,
-      required: false
+      type: Number,
+      required: true
     }
   }, {timestamps: true}
 );
