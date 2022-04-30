@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import WineInfo from "./components/wineInfo/WineInfo";
 import MyPage from "./components/MyPage";
+import SearchWine from "./components/SearchWine/SearchWine";
 import SignUp from "./components/User/SignUp/SignUp";
 
 function RouterFile() {
@@ -15,6 +16,7 @@ function RouterFile() {
         <Route path="/wine" element={<WineInfo />} />
         <Route path="/myPage" element={<MyPage/>} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/search/:id" element={<SearchWine />} />
       </Routes>
     </Router>
   );

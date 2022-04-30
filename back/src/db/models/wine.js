@@ -68,6 +68,19 @@ class Wine {
     const itExists = await WineModel.exists(filter);
     return itExists;
   }
+  //wine 이름 검색 기능 (전체 리스트)
+  static async findWineByName(name) {
+    const wines = await WineModel.find({ name: { $regex: name } });
+    return wines;
+  }
+
+  //wine 이름 검색 기능 (pagination 적용)
+  static async findWineByNamePaged({ name, page, perPage }) {
+    const wines = await WineModel.find({ name: { $regex: name } })
+      .skip(perPage * (page - 1))
+      .limit(perPage);
+    return wines;
+  }
 }
 
 export { Wine };
