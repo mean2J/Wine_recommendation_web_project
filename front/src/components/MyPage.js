@@ -22,7 +22,6 @@ const MyPageContainer = styled.div`
 const MyPageSection = styled(Card)`
   position: absolute;
   width: 1200px;
-  height: 657px;
   left: 360px;
   top: 130px;
 
@@ -43,7 +42,6 @@ const InfoWrapper = styled.div``;
 
 function MyPage() {
   const navigate = useNavigate();
-  // const params = useParams();
 
   const [mypageOwner, setMypageOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -53,7 +51,6 @@ function MyPage() {
   const fetchMypageOwner = async (ownerId) => {
     const res = await Api.get("users");
     const ownerData = res.data.user;
-    console.log("Mypage.js의 get요청 users/:userId", ownerData);
 
     setMypageOwner(ownerData);
   };

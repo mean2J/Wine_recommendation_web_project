@@ -8,12 +8,10 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
 
   useEffect(() => {
     Api.get("bookmarklist").then((res) => {
-      const bookmarkList = res.data;
+      const bookmarkList = res.data.bookmark;
       const checked = bookmarkList.some(
         (bookmark) => bookmark.wineId === wineId
       );
-      console.log(bookmarkList);
-      console.log("존재여부", checked);
       setIsBookmarked(checked);
     });
   }, [wineId]);

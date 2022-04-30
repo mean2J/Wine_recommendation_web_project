@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as Api from "../../api";
 
 const EmptyHeart = styled(HeartOutlined)`
-  font-size: 40px;
+  font-size: 30px;
   color: gray;
   transition: transform 0.3s ease;
 
@@ -14,8 +14,8 @@ const EmptyHeart = styled(HeartOutlined)`
 `;
 
 const Heart = styled(HeartFilled)`
-  font-size: 40px;
-  color: red;
+  font-size: 30px;
+  color: #fd6585;
   transition: transform 0.2s ease;
 
   &:hover,
