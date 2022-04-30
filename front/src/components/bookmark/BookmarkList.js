@@ -33,18 +33,11 @@ function BookmarkList() {
   const isLoadedRef = React.useRef();
   const pageRef = React.useRef();
   const [bookmarkList, setBookmarkList] = useState([]); // 북마크 리스트 데이터
-  const maxCount = 6;
-
-  // 확인용
-  useEffect(() => {
-    console.log("%현재 List%", bookmarkList);
-    console.log("page", page);
-  }, [page, bookmarkList]);
+  const maxCount = 3;
 
   const getList = async () => {
     setIsLoaded(true);
     isLoadedRef.current = true;
-    console.log("pageRef.current", pageRef.current);
 
     let res = await Api.get(
       `bookmarklistpage?page=${pageRef.current}&maxBookmark=${maxCount}` // page 수정중
@@ -81,12 +74,12 @@ function BookmarkList() {
         pageRef.current = page;
       }
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.7,
+        threshold: 1,
       });
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target, isLoaded, page, onIntersect]);
+  }, [bookmarkList, setBookmarkList, target, isLoaded, onIntersect, page]);
 
   return (
     <BookmarkListContainer>

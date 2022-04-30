@@ -32,7 +32,7 @@ function BookmarkButton({ isBookmarked, setIsBookmarked, wineId }) {
     // 북마크 삭제
     if (isBookmarked) {
       await Api.del(`bookmark/${wineId}`).then((res) => {
-        console.log(res);
+        window.location.reload();
       });
     }
   };

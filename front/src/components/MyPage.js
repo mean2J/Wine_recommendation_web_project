@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Api from "../api";
 import { UserStateContext } from "../App";
 
@@ -40,7 +40,7 @@ const TitleText = styled.h2`
 
 const InfoWrapper = styled.div``;
 
-function MyPage() {
+function MyPage(props) {
   const navigate = useNavigate();
 
   const [mypageOwner, setMypageOwner] = useState(null);
@@ -70,6 +70,12 @@ function MyPage() {
   if (!isFetchCompleted) {
     return "로딩중입니다...";
   }
+  // test중
+
+  const onTabClick = (id) => {
+    localStorage.setItem("tabKey", id);
+    navigate(`/myPage/${id}`);
+  };
 
   return (
     <>
@@ -79,11 +85,13 @@ function MyPage() {
             <TitleText>마이 페이지</TitleText>
           </TitleWrapper>
           <InfoWrapper>
-            <Tabs defaultActiveKey="1">
+            <Tabs
+              defaultActiveKey={localStorage.getItem("tabKey")}
+              onChange={onTabClick}
+            >
               <TabPane
                 tab={<span style={{ fontSize: 18 }}>내 정보</span>}
                 key="1"
-                forceRender="true"
               >
                 {isEditing ? (
                   <MyInfoEditForm
@@ -104,9 +112,7 @@ function MyPage() {
               <TabPane
                 tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
                 key="3"
-              >
-                {/* <ReviewList /> */}
-              </TabPane>
+              ></TabPane>
             </Tabs>
           </InfoWrapper>
         </MyPageSection>
