@@ -56,6 +56,10 @@ get:
                         name:
                           type: string
                           description: 와인 이름
+                    rating:
+                      type: number
+                      format: int32
+                      description: 별점
                     createdAt:
                       type: string
                       format: date
@@ -72,6 +76,7 @@ get:
                 wine:
                   id: 137198
                   name: Altair, Sideral
+                rating: 2
                 createdAt: 2022-04-29T07:46:27.333Z
               - id: 7d2c290a-54a0-4edf-8c02-6dc8cea39d58
                 title: 와인 리뷰2
@@ -82,4 +87,5 @@ get:
                 wine:
                   id: 137196
                   name: Sideral
+                rating: 1
                 createdAt: 2022-04-29T07:24:28.863Z
