@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { acidityAtom, bodyAtom, sweetAtom, tanninAtom } from "../../atoms";
 
-function WineTaste({sweet, acidity, body, tannin}) {
+function WineTaste({ sweet, acidity, body, tannin }) {
   const setSweet = useSetRecoilState(sweetAtom);
   const setAcidity = useSetRecoilState(acidityAtom);
   const setBody = useSetRecoilState(bodyAtom);
