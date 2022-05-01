@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Api from "../../api";
-import { Steps, Button, message, Card } from "antd";
+import { Steps, Button, message } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -176,7 +176,7 @@ function WineInfo() {
               {result.map((result) => (
                 <Result
                   key={result.id}
-                  wineId={result.id} // 와인 아이디 테스트 중
+                  wineId={result.id}
                   title={result.name}
                   type={result.type}
                   nation={result.nation}

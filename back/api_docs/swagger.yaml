@@ -38,6 +38,12 @@ paths:
     $ref: "./review/reviews-authors-userId.yaml"
   /reviews/wines/{wineId}:
     $ref: "./review/reviews-wines-wineId.yaml"
+  /bookmark:
+    $ref: "./bookmark/bookmark.yaml"
+  /bookmarklist:
+    $ref: "./bookmark/bookmarklist.yaml"
+  /bookmark/{wineId}:
+    $ref: "./bookmark/bookmark-wineid.yaml"
 
 components:
   securitySchemes:
