@@ -76,7 +76,9 @@ class Wine {
 
   //wine 이름 검색 기능 (pagination 적용)
   static async findWineByNamePaged({ name, page, perPage }) {
-    const wines = await WineModel.find({ name: { $regex: name } })
+    const wines = await WineModel.find({
+      name: { $regex: name, $options: "i" },
+    })
       .skip(perPage * (page - 1))
       .limit(perPage);
     return wines;
