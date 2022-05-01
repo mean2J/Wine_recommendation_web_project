@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
-import { Doughnut, PolarArea, Pie } from "react-chartjs-2";
-import * as Api from "../../api";
+import { Doughnut, PolarArea, Bar, Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   registerables,
@@ -46,13 +44,102 @@ const nationData = {
   ],
 };
 
-const nationOptions = {
+const priceData = {
+  labels: [
+    "-5만원",
+    "5-10만원",
+    "10-15만원",
+    "15-30만원",
+    "30-50만원",
+    "50만원 이상",
+  ],
+  datasets: [
+    {
+      label: "와인 가격",
+      data: [4330, 3469, 1377, 1976, 683, 651],
+      fill: true,
+      backgroundColor: [
+        "rgba(255, 99, 132, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+        "rgba(75, 192, 192, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+        "rgba(255, 159, 64, 0.2)",
+      ],
+      borderColor: [
+        "rgba(255, 99, 132, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(255, 206, 86, 1)",
+        "rgba(75, 192, 192, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)",
+      ],
+    },
+  ],
+};
+
+const typeData = {
+  labels: ["Red", "White", "Rose", "Sparkling"],
+  datasets: [
+    {
+      label: "count",
+      data: [13838, 5478, 336, 1587],
+      fill: true,
+      backgroundColor: [
+        "rgba(255, 99, 132, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+      ],
+      borderColor: [
+        "rgba(255, 99, 132, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 206, 86, 1)",
+      ],
+    },
+  ],
+};
+
+const flavorMeanData = {
+  labels: ["Sweet", "Acidity", "Body", "Tannin"],
+  datasets: [
+    {
+      label: "March",
+      backgroundColor: "rgba(34, 202, 236, .2)",
+      borderColor: "rgba(34, 202, 236, 1)",
+      pointBackgroundColor: "rgba(34, 202, 236, 1)",
+      poingBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(34, 202, 236, 1)",
+      data: [1, 2, 3, 5],
+    },
+  ],
+};
+const flavorRadarOptions = {
+  scale: {
+    r: {
+      min: 0,
+      max: 5,
+      beginAtZero: true,
+      angleLines: {
+        display: false,
+      },
+      ticks: {
+        display: false,
+        stepSize: 1,
+      },
+    },
+  },
+};
+
+const typeOptions = {
+  maintainAspectRatio: true,
   plugins: {
     tooltip: {
       callbacks: {
         title: function (data) {
           console.log(data);
-          // return `${nationData.labels[tooltipItem.index].label} 와인은 맛있다`;
         },
       },
     },
@@ -61,7 +148,7 @@ const nationOptions = {
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
-  height: 1080px;
+  height: 190vh;
 `;
 
 const Titlewrapper = styled.div`
@@ -97,12 +184,12 @@ const InnerWrapper = styled.div`
 `;
 
 const Contents = styled.div`
-  padding-top: 24px;
+  padding-top: 8vh;
 `;
 
 const ContentTitle = styled.span`
   font-weight: 500;
-  font-size: 28px;
+  font-size: 34px;
   line-height: 28px;
   display: flex;
   justify-content: center;
@@ -112,7 +199,7 @@ const ContentTitle = styled.span`
 
 const ContentDesc = styled.div`
   position: relative;
-  width: 40vh;
+  width: 55vh;
   height: 100%;
   margin: 0 10px;
 `;
@@ -122,108 +209,6 @@ export function ThirdSection() {
     0: useScrollFadeIn("up", 0.9, 0),
     1: useScrollFadeIn("up", 0.9, 0),
   };
-  const [statLists, setStatLists] = useState();
-  const [firstData, setFirstData] = useState({});
-  const [secondData, setSecondData] = useState({});
-  const [thirdData, setThirdData] = useState({});
-  const [fourthData, setFourthData] = useState({});
-  const [fifthData, setFifthData] = useState({});
-
-  useEffect(() => {
-    Api.get("statlist").then((res) => {
-      setStatLists(res.data);
-    });
-    Api.get("stat", 2).then((res) => {
-      setFirstData({
-        labels: res.data.labels,
-        datasets: [
-          {
-            label: "type",
-            data: res.data.y_ax,
-            fill: true,
-            backgroundColor: [
-              "rgba(75, 192, 192, 0.5)",
-              "rgba(255, 99, 132, 0.5)",
-              "rgba(54, 162, 235, 0.5)",
-              "rgba(255, 206, 86, 0.5)",
-            ],
-          },
-        ],
-      });
-    });
-    Api.get("stat", 3).then((res) => {
-      setSecondData({
-        labels: res.data.labels,
-        datasets: [
-          {
-            label: "type",
-            data: res.data.y_ax,
-            fill: true,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.5)",
-              "rgba(54, 162, 235, 0.5)",
-              "rgba(255, 206, 86, 0.5)",
-              "rgba(75, 192, 192, 0.5)",
-            ],
-          },
-        ],
-      });
-    });
-    Api.get("stat", 4).then((res) => {
-      setThirdData({
-        labels: res.data.labels,
-        datasets: [
-          {
-            label: "type",
-            data: res.data.y_ax,
-            fill: true,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.5)",
-              "rgba(54, 162, 235, 0.5)",
-              "rgba(255, 206, 86, 0.5)",
-              "rgba(75, 192, 192, 0.5)",
-            ],
-          },
-        ],
-      });
-    });
-    Api.get("stat", 5).then((res) => {
-      setFourthData({
-        labels: res.data.labels,
-        datasets: [
-          {
-            label: "type",
-            data: res.data.y_ax,
-            fill: true,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.5)",
-              "rgba(54, 162, 235, 0.5)",
-              "rgba(255, 206, 86, 0.5)",
-              "rgba(75, 192, 192, 0.5)",
-            ],
-          },
-        ],
-      });
-    });
-    Api.get("stat", 5).then((res) => {
-      setFifthData({
-        labels: res.data.labels,
-        datasets: [
-          {
-            label: "type",
-            data: res.data.y_ax,
-            fill: true,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.5)",
-              "rgba(54, 162, 235, 0.5)",
-              "rgba(255, 206, 86, 0.5)",
-              "rgba(75, 192, 192, 0.5)",
-            ],
-          },
-        ],
-      });
-    });
-  }, []);
 
   return (
     <TrdSection>
@@ -236,39 +221,27 @@ export function ThirdSection() {
       <ContentWrapper>
         <InnerWrapper {...animatedItem[1]}>
           <Contents>
-            <ContentTitle>생산국</ContentTitle>
+            <ContentTitle>원산지</ContentTitle>
             <ContentDesc>
-              <PolarArea data={nationData} options={nationOptions} />
+              <PolarArea data={nationData} />
+            </ContentDesc>
+          </Contents>
+          <Contents>
+            <ContentTitle>가격</ContentTitle>
+            <ContentDesc>
+              <Doughnut data={priceData} />
             </ContentDesc>
           </Contents>
           <Contents>
             <ContentTitle>와인 종류</ContentTitle>
             <ContentDesc>
-              {statLists && firstData && <Doughnut data={firstData} />}
+              <Bar data={typeData} height={300} options={typeOptions} />
             </ContentDesc>
           </Contents>
           <Contents>
-            <ContentTitle>프랑스의 와인 생산 비율</ContentTitle>
+            <ContentTitle>맛</ContentTitle>
             <ContentDesc>
-              {statLists && secondData && <Pie data={secondData} />}
-            </ContentDesc>
-          </Contents>
-          <Contents>
-            <ContentTitle>스페인의 와인 생산 비율</ContentTitle>
-            <ContentDesc>
-              {statLists && thirdData && <Pie data={thirdData} />}
-            </ContentDesc>
-          </Contents>
-          <Contents>
-            <ContentTitle>독일의 와인 생산 비율</ContentTitle>
-            <ContentDesc>
-              {statLists && fourthData && <Pie data={fourthData} />}
-            </ContentDesc>
-          </Contents>
-          <Contents>
-            <ContentTitle>뉴질랜드의 와인 생산 비율</ContentTitle>
-            <ContentDesc>
-              {statLists && fifthData && <Pie data={fifthData} />}
+              <Radar data={flavorMeanData} options={flavorRadarOptions} />
             </ContentDesc>
           </Contents>
         </InnerWrapper>
