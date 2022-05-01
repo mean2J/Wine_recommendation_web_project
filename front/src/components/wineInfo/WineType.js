@@ -5,22 +5,22 @@ import { isCheckedAtom, nationAtom, priceAtom, typeAtom } from "../../atoms";
 
 const { Option } = Select;
 
+const Nations = [
+  "칠레 Chile",
+  "프랑스 France",
+  "미국 U.S.A",
+  "이탈리아 Italy",
+  "기타 국가 Others",
+  "스페인 Spain",
+  "호주 Australia",
+];
+const Types = ["Red", "White", "Rose", "Sparkling"];
+
 function WineType({ price, nation, type, isChecked }) {
   const setPrice = useSetRecoilState(priceAtom);
   const setNation = useSetRecoilState(nationAtom);
   const setType = useSetRecoilState(typeAtom);
   const setIsChecked = useSetRecoilState(isCheckedAtom);
-
-  const Nations = [
-    "칠레 Chile",
-    "프랑스 France",
-    "미국 U.S.A",
-    "이탈리아 Italy",
-    "기타 국가 Others",
-    "스페인 Spain",
-    "호주 Australia",
-  ];
-  const Types = ["Red", "White", "Rose", "Sparkling"];
 
   function formatter(value) {
     return `${value}원`;
