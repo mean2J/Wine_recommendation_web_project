@@ -10,7 +10,8 @@ import { Card, Tabs } from "antd";
 import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
-// import ReviewList from "./review/ReviewList";
+import MyReviewList from "./Review/MyReviewList";
+
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
@@ -119,7 +120,9 @@ function MyPage(props) {
               <TabPane
                 tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
                 key="3"
-              ></TabPane>
+              >
+                <MyReviewList />
+              </TabPane>
             </Tabs>
           </InfoWrapper>
         </MyPageSection>
