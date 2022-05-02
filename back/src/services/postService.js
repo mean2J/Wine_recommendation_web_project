@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 class postService {
   /**
-   * post : post 생성
+   * Community : post 생성
    */
   static async addPost({userId, category, author, title, content}) {
 
@@ -18,7 +18,7 @@ class postService {
   }
 
   /**
-   * post : post 읽기
+   * Community : post 읽기
    */
   static async getPost(postId) {
     const post = Post.findPostById(postId);
@@ -27,7 +27,7 @@ class postService {
 
 
   /**
-   * post : category별 post 제목 리스트 읽기(페이징)
+   * Community : category별 post 제목 리스트 읽기(페이징)
    */
   static async getPostListPage({category, page, maxPost}) {
     const postList = await Post.findPostPage({category, page, maxPost});
@@ -35,7 +35,7 @@ class postService {
   }
   
   /**
-   * post : 페이징 처리한 post 리스트의 마지막 페이지 번호 구하기
+   * Community : 페이징 처리한 post 리스트의 마지막 페이지 번호 구하기
    */
   static async getFinalPage({category, maxPost}) {
     const finalPage = await Post.findFinalPage({category, maxPost})
@@ -43,7 +43,7 @@ class postService {
   }
 
   /**
-   * post : post 수정
+   * Community : post 수정
    */
     static async setPost({ postId, toUpdate }) {
         let post = await Post.findPostById(postId);
@@ -70,7 +70,7 @@ class postService {
       }
 
   /**
-   * post : post 삭제
+   * Community : post 삭제
    */
   static async deletePost(postId) {
     const isDataDeleted = await Post.deletePostById(postId);
