@@ -17,6 +17,13 @@ const BookmarkContainer = styled(Card)`
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 50px;
+`;
+
 const contentStyle = {
   height: "400px",
   width: "300px",
@@ -35,13 +42,15 @@ function BookmarkItem({ wineInfo }) {
   const [isBookmarked, setIsBookmarked] = useState(true);
   return (
     <BookmarkContainer style={contentStyle}>
-      <BookmarkButton
-        isBookmarked={isBookmarked}
-        setIsBookmarked={setIsBookmarked}
-        wineId={wineInfo.id}
-      />
+      <HeaderWrapper>
+        <BookmarkInfoType type={wineInfo.type} />
+        <BookmarkButton
+          isBookmarked={isBookmarked}
+          setIsBookmarked={setIsBookmarked}
+          wineId={wineInfo.id}
+        />
+      </HeaderWrapper>
       <Name>{wineInfo.name}</Name>
-      <BookmarkInfoType type={wineInfo.type} />
       <br />
       <br />
       <BookmarkInfoRate name={"당도"} value={wineInfo.sweet} />
