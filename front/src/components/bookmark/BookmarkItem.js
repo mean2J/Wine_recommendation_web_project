@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Card, Rate } from "antd";
+import { Card } from "antd";
 
 import BookmarkButton from "./BookmarkButton";
+import BookmarkInfoRate from "./BookmarkInfoRate"; // 테스트 중
 
 const BookmarkContainer = styled(Card)`
   border: None;
@@ -31,41 +32,6 @@ const Name = styled.div`
 
 const Type = styled.div``;
 
-/*
- * 커스텀 색상 시도 중
- */
-// const CustomIcon1 = () => {
-//   return <span style={{ color: "#f1c0ce" }}>●</span>;
-// };
-// const CustomIcon2 = () => {
-//   return <span style={{ color: "#e999b0" }}>●</span>;
-// };
-// const CustomIcon3 = () => {
-//   return <span style={{ color: "#e07392" }}>●</span>;
-// };
-// const CustomIcon4 = () => {
-//   return <span style={{ color: "#d5406b" }}>●</span>;
-// };
-// const CustomIcon5 = () => {
-//   return <span style={{ color: "#c70039" }}>●</span>;
-// };
-
-// const customIcons = {
-//   1: <CustomIcon1 />,
-//   2: <CustomIcon2 />,
-//   3: <CustomIcon3 />,
-//   4: <CustomIcon4 />,
-//   5: <CustomIcon5 />,
-// };
-
-const customIcons = {
-  1: <span>●</span>,
-  2: <span>●</span>,
-  3: <span>●</span>,
-  4: <span>●</span>,
-  5: <span>●</span>,
-};
-
 function BookmarkItem({ wineInfo }) {
   const [isBookmarked, setIsBookmarked] = useState(true);
   return (
@@ -79,37 +45,42 @@ function BookmarkItem({ wineInfo }) {
       <Type>타입: {wineInfo.type} </Type>
       <br />
       <br />
-      <span>당도 </span>
+      {/* <span>당도 </span>
       <Rate
         style={{ color: "#e07392" }}
         defaultValue={wineInfo.sweet}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
-      />
+      /> */}
+      <BookmarkInfoRate name={"당도"} value={wineInfo.sweet} />
+      {/* 테스트 중 */}
       <br />
-      <span>산도 </span>
+      {/* <span>산도 </span>
       <Rate
         style={{ color: "#e07392" }}
         defaultValue={wineInfo.acidity}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
-      />
+      /> */}
+      <BookmarkInfoRate name={"산도"} value={wineInfo.acidity} />
       <br />
-      <span>바디 </span>
+      {/* <span>바디 </span>
       <Rate
         style={{ color: "#e07392" }}
         defaultValue={wineInfo.body}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
-      />
+      /> */}
+      <BookmarkInfoRate name={"바디"} value={wineInfo.body} />
       <br />
-      <span>탄닌 </span>
+      {/* <span>탄닌 </span>
       <Rate
         style={{ color: "#e07392" }}
         defaultValue={wineInfo.tannin}
         disabled={true}
         character={({ index }) => customIcons[index + 1]}
-      />
+      /> */}
+      <BookmarkInfoRate name={"탄닌"} value={wineInfo.tannin} />
     </BookmarkContainer>
   );
 }
