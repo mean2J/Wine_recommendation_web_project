@@ -40,6 +40,20 @@ const StepBox = styled.div`
   border-radius: 20px;
 `;
 
+const ResultWrapper = styled.div`
+  padding: 64px 0 64px 48px;
+  max-width: calc(1200px + 48px + 48px);
+  margin: 0 auto;
+`;
+
+const BgContainer = styled.div`
+  background-color: #f8f9fa;
+  ${ResultWrapper} {
+    width: 100%;
+    background-color: none;
+  }
+`;
+
 const { Step } = Steps;
 
 const StyledStep = styled(Steps)`
@@ -92,28 +106,30 @@ function WineInfo() {
         </Helmet>
       </HelmetProvider>
 
-      <MainContainer>
+      <BgContainer>
         {!isLoaded ? (
           <>
-            <BoxWrapper>
-              <StepBox>
-                <StpesBtn />
-              </StepBox>
-            </BoxWrapper>
-            <StepWrapper>
-              <StyledStep direction="vertical" size="small" current={current}>
-                {steps.map((item) => (
-                  <Step
-                    key={item.title}
-                    title={item.title}
-                    description={item.description}
-                  />
-                ))}
-              </StyledStep>
-            </StepWrapper>
+            <MainContainer>
+              <BoxWrapper>
+                <StepBox>
+                  <StpesBtn />
+                </StepBox>
+              </BoxWrapper>
+              <StepWrapper>
+                <StyledStep direction="vertical" size="small" current={current}>
+                  {steps.map((item) => (
+                    <Step
+                      key={item.title}
+                      title={item.title}
+                      description={item.description}
+                    />
+                  ))}
+                </StyledStep>
+              </StepWrapper>
+            </MainContainer>
           </>
         ) : (
-          <div key={result.id} title={result.name}>
+          <ResultWrapper key={result.id} title={result.name}>
             {result.map((result) => (
               <Result
                 key={result.id}
@@ -126,11 +142,12 @@ function WineInfo() {
                 abv={result.abv}
                 varieties={result.varieties}
               />
+
             ))}
             <Button onClick={() => setIsLoaded(false)}>돌아가기</Button>
-          </div>
+          </ResultWrapper>
         )}
-      </MainContainer>
+      </BgContainer>
     </>
   );
 }

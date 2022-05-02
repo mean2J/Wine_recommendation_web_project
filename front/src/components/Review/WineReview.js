@@ -1,7 +1,9 @@
-import { Button, Card, Input } from "antd";
+import { Button, Tag, Input, Rate } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useState, useEffect } from "react";
 import * as Api from "../../api";
+
+const desc = ["1", "2", "3", "4", "5"];
 
 function WineReview({ wineId }) {
   const [title, setTitle] = useState("");
@@ -28,6 +30,7 @@ function WineReview({ wineId }) {
       content,
       rating,
     });
+    console.log(res.data);
     // const res = await Api.get(`/reviews/${reviewId}`);
     setWriting(false);
   };
@@ -35,23 +38,37 @@ function WineReview({ wineId }) {
     setWriting(true);
   };
 
+  const handleChange = (value) => {
+    setRating(value);
+  };
+
   return (
     <>
       {writing ? (
-        <form onSubmit={handleReviewSubmit}>
-          <Input
-            placeholder="제목을 입력해주세요."
-            allowClear
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <br />
-          <TextArea
-            placeholder="내용을 입력해주세요."
-            allowClear
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <Button htmlType="submit">제출</Button>
-        </form>
+        <>
+          <span>
+            <Rate tooltips={desc} onChange={handleChange} value={rating} />
+            {rating ? (
+              <span className="ant-rate-text">{desc[rating - 1]}</span>
+            ) : (
+              ""
+            )}
+          </span>
+          <form onSubmit={handleReviewSubmit}>
+            <Input
+              placeholder="제목을 입력해주세요."
+              allowClear
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <br />
+            <TextArea
+              placeholder="내용을 입력해주세요."
+              allowClear
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <Button htmlType="submit">제출</Button>
+          </form>
+        </>
       ) : (
         <button onClick={handleActive}>리뷰 작성</button>
       )}
