@@ -1,34 +1,35 @@
 import mongoose from "mongoose";
+const {Schema, model} = mongoose;
 
- const commentSchema = new Schema({
-    post: {
-      type: mongoose.Types.ObjectId,
-      ref: 'Post',
-      required: true
+const commentSchema = new Schema(
+  {
+    id: {
+      type: String,
+      required: true,
+    },
+    postId: {
+      type: String,
+      required: true,
     },
     userId: {
       type: String,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
+      required: true,
     },
     author: {
       type: String,
-      required: true
+      required: true,
     },
     content: {
       type: String,
-      required: true
+      required: true,
     },
-  
   },
-  {//생성, 갱신 시점
+  {
+    //생성, 갱신 시점
     timestamps: true,
   }
-  );
-  
-  const commentModel = model("Comment", commentSchema);
-  
-  export {commentModel};
+);
+
+const commentModel = model("Comment", commentSchema);
+
+export {commentModel};
