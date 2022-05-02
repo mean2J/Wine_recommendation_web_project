@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../api";
 import { UserStateContext } from "../App";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import styled from "styled-components";
 import { Card, Tabs } from "antd";
@@ -79,6 +80,12 @@ function MyPage(props) {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>마이 페이지</title>
+        </Helmet>
+      </HelmetProvider>
+
       <MyPageContainer>
         <MyPageSection>
           <TitleWrapper>

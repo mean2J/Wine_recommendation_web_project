@@ -44,9 +44,12 @@ const NavItems = styled.span`
   margin-left: 40px;
   font-size: 17px;
   font-weight: 400;
+  a:hover {
+    color: #c365fd;
+  }
 `;
 
-const NavLoginItems = styled.p`
+const NavLoginItems = styled.span`
   margin-left: 20px;
   font-size: 17px;
   font-weight: 400;
@@ -56,6 +59,10 @@ const NavLogin = styled.div`
   display: flex;
   justify-content: end;
   margin-left: auto;
+  a:hover {
+    color: #c365fd;
+  }
+  cursor: pointer;
 `;
 
 function Header() {
@@ -110,7 +117,7 @@ function Header() {
           <NavItems>
             <form onSubmit={handleSubmit}>
               <Search
-                placeholder="input search text"
+                placeholder="와인 검색하기"
                 allowClear
                 onChange={(e) => {
                   setSearchValue(e.target.value);

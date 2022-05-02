@@ -55,13 +55,16 @@ function BookmarkList() {
     }
   };
 
-  const onIntersect = useCallback(async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded && isLoadedRef.current === false) {
-      observer.unobserve(entry.target);
-      await getList();
-      observer.observe(entry.target);
-    }
-  }, []);
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded && isLoadedRef.current === false) {
+        observer.unobserve(entry.target);
+        await getList();
+        observer.observe(entry.target);
+      }
+    },
+    [isLoaded]
+  );
 
   useEffect(() => {
     let observer;

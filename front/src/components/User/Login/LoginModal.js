@@ -41,6 +41,7 @@ const LoginButton = styled.button`
   border-radius: 5px;
   color: white;
   cursor: pointer;
+  type: submit;
 `;
 
 const RegisterButton = styled.button`
@@ -62,7 +63,7 @@ function LoginModal({ isModal, getModalBoolean }) {
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
   const dispatch = useContext(DispatchContext);
-
+  const [form] = Form.useForm();
   //모달창을 닫기위해 상위 컴포넌트에 값을 전달하는 함수
   const sendModalBoolean = (e) => {
     getModalBoolean(e);
@@ -116,22 +117,20 @@ function LoginModal({ isModal, getModalBoolean }) {
     sendModalBoolean(false);
     document.location.href = "/SignUp";
   };
-
   return (
     <>
       <Modal
         title=""
         visible={isModal}
-        width={400}
-        onOk={handleOk}
         onCancel={handleCancel}
+        width={400}
         footer={null}
       >
         <LoginModalTile>와인셀러</LoginModalTile>
         <LoginModalText>
           와인셀러는 세계 최고의 와인 추천 서비스입니다.
         </LoginModalText>
-        <Form>
+        <Form form={form} onFinish={handleOk} onFinishFailed={handleCancel}>
           <Form.Item name="email" style={{ marginBottom: "5px" }}>
             <Input
               placeholder="이메일"
@@ -160,12 +159,14 @@ function LoginModal({ isModal, getModalBoolean }) {
               }
             />
           </Form.Item>
+          {!isPasswordValid && <Notice>비밀번호는 4글자 이상입니다.</Notice>}
+          <Form.Item style={{ margin: "0" }}>
+            <LoginButton onClick={handleOk}>로그인</LoginButton>
+          </Form.Item>
+          <Form.Item style={{ margin: "0" }}>
+            <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
+          </Form.Item>
         </Form>
-        {!isPasswordValid && <Notice>비밀번호는 4글자 이상입니다.</Notice>}
-
-        <LoginButton onClick={handleOk}>로그인</LoginButton>
-
-        <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
       </Modal>
     </>
   );

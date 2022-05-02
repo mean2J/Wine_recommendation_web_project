@@ -622,9 +622,13 @@ paths:
                   type: string
                 content:
                   type: string
+                rating:
+                  type: number
+                  format: int32
             example:
               title: 리뷰 제목
               content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+              rating: 3
       responses:
         '201':
           description: 정상적으로 리뷰가 작성되었습니다.
@@ -666,6 +670,10 @@ paths:
                           name:
                             type: string
                             description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
                       createdAt:
                         type: string
                         format: date
@@ -682,6 +690,7 @@ paths:
                   wine:
                     id: 137198
                     name: 'Altair, Sideral'
+                  rating: 3
                   createdAt: 2022-04-29T07:46:27.333Z
   '/reviews/{reviewId}':
     get:
@@ -785,9 +794,13 @@ paths:
                   type: string
                 content:
                   type: string
+                rating:
+                  type: number
+                  format: int32
             example:
               title: 새로운 리뷰 제목
               content: 크리스마스를 위해 한 병 샀는데 좋았습니다
+              rating: 4
       responses:
         '201':
           description: 정상적으로 리뷰를 편집했습니다.
@@ -829,6 +842,10 @@ paths:
                           name:
                             type: string
                             description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
                       createdAt:
                         type: string
                         format: date
@@ -845,6 +862,7 @@ paths:
                   wine:
                     id: 137198
                     name: 'Altair, Sideral'
+                  rating: 4
                   createdAt: 2022-04-29T07:46:27.333Z
     delete:
       tags:
@@ -1050,6 +1068,100 @@ paths:
                       id: 137196
                       name: Sideral
                     createdAt: 2022-04-29T07:24:28.863Z
+  /bookmark:
+    post:
+      summary: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
+      description: Optional extended description in Markdown.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wineId:
+                  type: number
+      responses:
+        '201':
+          description: 와인 북마크가 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  bookmark:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        description: req.currentUserId
+                      wineId:
+                        type: number
+                        description: wineId 넘버
+        '400':
+          description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
+        '404':
+          description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
+        default:
+          description: Unexpected error
+  /bookmarklist:
+    get:
+      summary: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
+      description: Optional extended description in Markdown.
+      responses:
+        '200':
+          description: 내 북마크리스트가 정상적으로 출력되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  bookmark:
+                    type: object
+                    properties:
+                      bookmarkId:
+                        type: string
+                      bookmarkCreate:
+                        type: string
+                      wineInfo:
+                        type: Object
+        '404':
+          description: 북마크한 와인이 없습니다. 먼저 관심있는 와인을 북마크해주세요.
+        default:
+          description: Unexpected error
+  '/bookmark/{wineId}':
+    delete:
+      summary: 와인 카드의 북마크 버튼을 해제하면 해당와인의 북마크가 해제됩니다.
+      description: Optional extended description in Markdown.
+      parameters:
+        - name: wineId
+          in: path
+          description: wine 고유 넘버
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wineId:
+                  type: number
+      responses:
+        '200':
+          description: 와인 북마크가 해제되었습니다.
+        '404':
+          description: 북마크하지 않은 와인은 해제할 수 없습니다.
+        default:
+          description: Unexpected error
 components:
   securitySchemes:
     BearerAuth:
