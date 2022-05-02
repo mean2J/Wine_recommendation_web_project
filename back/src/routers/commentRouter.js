@@ -53,7 +53,7 @@ async (req, res, next) => {
 /*
  * Community : 해당 포스트에 속한 comment 조회
  */
-commentRouter.get("/comment/:postId", loginRequired, async (req, res, next) => {
+commentRouter.get("/commentlist/:postId", loginRequired, async (req, res, next) => {
   try {
     const postId = req.params.postId;
     console.log("req.params.id",postId );
