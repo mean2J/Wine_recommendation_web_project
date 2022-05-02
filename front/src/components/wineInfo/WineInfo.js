@@ -31,9 +31,10 @@ const StepWrapper = styled.div`
 `;
 
 const StepBox = styled.div`
-  display: flex;
+  /* display: flex; */
   width: 900px;
   height: 560px;
+  position: relative;
   background: #ffffff;
   border: 1px solid rgba(196, 196, 196, 0.5);
   border-radius: 20px;

@@ -28,7 +28,6 @@ function WineReview({ wineId }) {
       content,
       rating,
     });
-    console.log(res.data);
     // const res = await Api.get(`/reviews/${reviewId}`);
     setWriting(false);
   };

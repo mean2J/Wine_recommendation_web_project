@@ -19,10 +19,46 @@ import WineType from "./WineType";
 import WineTaste from "./WineTaste";
 
 const StepsAction = styled.div`
-  margin-top: 24px;
+  display: flex;
+  /* justify-content: flex-end;
+  vertical-align: bottom; */
+  /* margin-top: 20px;
+  padding: 20px; */
+  position: absolute;
+  top: 87%;
+  left: 77%;
 `;
 
-const StepsContent = styled.div``;
+const TextWrapper = styled.div`
+  padding-top: 40px;
+  padding-left: 60px;
+`;
+
+const StepsTitle = styled.h1`
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 38px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.005em;
+  color: #c365fd;
+  margin-bottom: 15px;
+`;
+
+const StepsDesc = styled.span`
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: black;
+`;
+
+const StepsContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 function StpesBtn() {
   const [current, setCurrent] = useRecoilState(currentAtom);
@@ -38,8 +74,8 @@ function StpesBtn() {
   const tannin = useRecoilValue(tanninAtom);
   const steps = [
     {
-      title: "인트로",
-      description: "인트로 페이지입니다.",
+      title: "와인 추천 ",
+      description: "답변 데이터를 기반으로, 잘 맞는 와인를 추천해드릴게요.",
     },
     {
       title: "와인 종류 선택하기",
@@ -110,7 +146,13 @@ function StpesBtn() {
 
   return (
     <>
-      <StepsContent>{steps[current].content}</StepsContent>
+      <StepsContent>
+        <TextWrapper>
+          <StepsTitle>{steps[current].title}</StepsTitle>
+          <StepsDesc>{steps[current].description}</StepsDesc>
+        </TextWrapper>
+        {steps[current].content}
+      </StepsContent>
       <StepsAction>
         {current < steps.length - 1 && (
           <Button type="primary" onClick={handleNextBtn}>
@@ -120,7 +162,7 @@ function StpesBtn() {
         {current === steps.length - 1 && (
           <form onSubmit={handleSubmit}>
             <Button type="primary" htmlType="submit">
-              결과보기 &rarr;
+              결과보기
             </Button>
           </form>
         )}

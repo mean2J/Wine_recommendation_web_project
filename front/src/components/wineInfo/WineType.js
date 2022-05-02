@@ -14,6 +14,54 @@ const Nations = [
   "스페인 Spain",
   "호주 Australia",
 ];
+
+const TypeWrapper = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const InnerBox = styled.div`
+  width: 75%;
+  background: #f8f9fa;
+  border-radius: 15px;
+  height: 20vh;
+  margin-top: 40px;
+`;
+
+const SliderWrapper = styled.div`
+  position: absolute;
+  width: 75%;
+  padding-right: 7%;
+  padding-left: 7%;
+  margin-top: 40px;
+`;
+
+const PriceText = styled.span`
+margin-right: 20px;
+`;
+
+const CheckboxWrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 30px;
+`;
+
+const SelectWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const NationWrapper = styled.div`
+  margin-right: 10px;
+`;
+
+const WineTypeWarpper = styled.div``;
 const Types = ["Red", "White", "Rose", "Sparkling"];
 
 function WineType({ price, nation, type, isChecked }) {
@@ -27,47 +75,62 @@ function WineType({ price, nation, type, isChecked }) {
   }
   return (
     <>
-      <Slider
-        range
-        tipFormatter={formatter}
-        max={500000}
-        min={0}
-        step={10000}
-        defaultValue={price}
-        onAfterChange={(value) => setPrice(value)}
-      />
-      <Checkbox
-        defaultChecked={isChecked}
-        onChange={(e) => setIsChecked(e.target.checked)}
-      >
-        가격정보 없는 와인 포함
-      </Checkbox>
-      <Select
-        allowClear
-        defaultValue={!nation ? null : nation}
-        placeholder="생산국을 선택하세요"
-        optionFilterProp="children"
-        onChange={(value) => setNation(value)}
-      >
-        {Nations.map((nation, idx) => (
-          <Option value={nation} key={idx}>
-            {nation}
-          </Option>
-        ))}
-      </Select>
-      <Select
-        allowClear
-        defaultValue={!type ? null : type}
-        placeholder="와인 종류를 선택하세요"
-        optionFilterProp="children"
-        onChange={(value) => setType(value)}
-      >
-        {Types.map((type, idx) => (
-          <Option value={type} key={idx}>
-            {type}
-          </Option>
-        ))}
-      </Select>
+      <TypeWrapper>
+        <InnerBox>
+          <CheckboxWrapper>
+            <PriceText>가격을 선택해주세요.</PriceText>
+            <Checkbox
+              defaultChecked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+            >
+              가격정보 없는 와인 포함
+            </Checkbox>
+          </CheckboxWrapper>
+          <SliderWrapper>
+            <Slider
+              range
+              tipFormatter={formatter}
+              max={500000}
+              min={0}
+              step={10000}
+              defaultValue={price}
+              onAfterChange={(value) => setPrice(value)}
+            />
+          </SliderWrapper>
+        </InnerBox>
+        <SelectWrapper>
+          <NationWrapper>
+            <Select
+              allowClear
+              defaultValue={!nation ? null : nation}
+              placeholder="생산국을 선택하세요"
+              optionFilterProp="children"
+              onChange={(value) => setNation(value)}
+            >
+              {Nations.map((nation, idx) => (
+                <Option value={nation} key={idx}>
+                  {nation}
+                </Option>
+              ))}
+            </Select>
+          </NationWrapper>
+          <WineTypeWarpper>
+            <Select
+              allowClear
+              defaultValue={!type ? null : type}
+              placeholder="와인 종류를 선택하세요"
+              optionFilterProp="children"
+              onChange={(value) => setType(value)}
+            >
+              {Types.map((type, idx) => (
+                <Option value={type} key={idx}>
+                  {type}
+                </Option>
+              ))}
+            </Select>
+          </WineTypeWarpper>
+        </SelectWrapper>
+      </TypeWrapper>
     </>
   );
 }
