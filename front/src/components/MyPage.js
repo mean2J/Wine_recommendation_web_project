@@ -22,7 +22,6 @@ const MyPageContainer = styled.div`
 `;
 
 const MyPageSection = styled(Card)`
-  position: absolute;
   width: 1200px;
   left: 360px;
   top: 130px;
