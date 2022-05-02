@@ -9,6 +9,7 @@ import { wineRouter } from "./routers/wineRouter.js";
 import { bookmarkRouter } from "./routers/bookmarkRouter.js";
 import { reviewRouter } from "./routers/reviewRouter.js";
 import { postRouter } from "./routers/postRouter.js";
+import { commentRouter } from "./routers/commentRouter.js";
 import { statRouter } from "./routers/statRouter.js";
 import { searchRouter } from "./routers/searchRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
@@ -32,6 +33,7 @@ app.use(wineRouter);
 app.use(bookmarkRouter);
 app.use(reviewRouter);
 app.use(postRouter);
+app.use(commentRouter);
 app.use(searchRouter);
 app.use(errorMiddleware);
 
