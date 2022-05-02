@@ -133,18 +133,10 @@ const flavorRadarOptions = {
   },
 };
 
-const typeOptions = {
-  maintainAspectRatio: true,
-  plugins: {
-    tooltip: {
-      callbacks: {
-        title: function (data) {
-          console.log(data);
-        },
-      },
-    },
-  },
-};
+// const typeOptions = {
+//   maintainAspectRatio: true,
+//
+// };
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
@@ -235,7 +227,11 @@ export function ThirdSection() {
           <Contents>
             <ContentTitle>와인 종류</ContentTitle>
             <ContentDesc>
-              <Bar data={typeData} height={300} options={typeOptions} />
+              <Bar
+                data={typeData}
+                height={300}
+                options={{ maintainAspectRatio: true }}
+              />
             </ContentDesc>
           </Contents>
           <Contents>

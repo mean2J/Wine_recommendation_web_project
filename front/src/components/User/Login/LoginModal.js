@@ -56,7 +56,7 @@ const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
-function LoginModal({ isModal, getModalBoolean }) {
+function LoginModal({ isModal, onClose }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -65,8 +65,8 @@ function LoginModal({ isModal, getModalBoolean }) {
   const dispatch = useContext(DispatchContext);
   const [form] = Form.useForm();
   //모달창을 닫기위해 상위 컴포넌트에 값을 전달하는 함수
-  const sendModalBoolean = (e) => {
-    getModalBoolean(e);
+  const onOpen = (e) => {
+    onClose(e);
   };
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -99,10 +99,10 @@ function LoginModal({ isModal, getModalBoolean }) {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
-
-      message.info("로그인이 완료되었습니다.");
-      sendModalBoolean(false);
+      onOpen(false);
       navigate("/", { replace: true });
+      message.info("로그인이 완료되었습니다.");
+      console.log("1");
     } catch (err) {
       message.info("로그인에 실패하였습니다.");
       console.log("로그인에 실패하였습니다.\n", err);
@@ -110,11 +110,11 @@ function LoginModal({ isModal, getModalBoolean }) {
   };
 
   const handleCancel = () => {
-    sendModalBoolean(false);
+    onOpen(false);
   };
 
   const handleSignUp = () => {
-    sendModalBoolean(false);
+    onOpen(false);
     document.location.href = "/SignUp";
   };
   return (
