@@ -102,7 +102,9 @@ function WineInfo() {
     };
     await Api.post("wines/recommend", Inputs).then((res) => {
       if (res.data.isRandom === true) {
-        message.info("새로운 결과");
+        message.info(
+          "선택하신 영역 내의 와인 데이터가 존재하지 않아, 근접한 결과를 불러왔어요."
+        );
         setResult(res.data.wines);
         setIsLoaded(true);
       } else {
