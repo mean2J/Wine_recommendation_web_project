@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, createContext } from "react";
 import BookmarkItem from "./BookmarkItem";
 import styled from "styled-components";
 import * as Api from "../../api";
 import { Row, Card } from "antd";
+
+export const BookmarkListContext = createContext();
+export const SetBookmarkContext = createContext();
 
 const BookmarkListContainer = styled(Row)`
   background-color: #f8f9fa;
@@ -91,7 +94,12 @@ function BookmarkList() {
     <BookmarkListContainer>
       {bookmarkList.length ? (
         bookmarkList.map((bookmark, idx) => (
-          <BookmarkItem key={idx} wineInfo={bookmark.wineInfo} />
+          <BookmarkItem
+            key={idx}
+            wineInfo={bookmark.wineInfo}
+            bookmarkList={bookmarkList} // test
+            setBookmarkList={setBookmarkList} // test
+          />
         ))
       ) : (
         <DefaultMessage>

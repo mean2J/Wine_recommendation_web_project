@@ -35,16 +35,18 @@ const contentStyle = {
 const Name = styled.div`
   margin-top: 20px;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 450;
 `;
 
-function BookmarkItem({ wineInfo }) {
+function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
   const [isBookmarked, setIsBookmarked] = useState(true);
   return (
     <BookmarkContainer style={contentStyle}>
       <HeaderWrapper>
         <BookmarkInfoType type={wineInfo.type} />
         <BookmarkButton
+          bookmarkList={bookmarkList} // test
+          setBookmarkList={setBookmarkList} // test
           isBookmarked={isBookmarked}
           setIsBookmarked={setIsBookmarked}
           wineId={wineInfo.id}
