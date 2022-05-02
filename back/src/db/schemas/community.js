@@ -1,9 +1,18 @@
 import mongoose from "mongoose";
 const {Schema, model} = mongoose;
 
-const communitySchema = new Schema({
-  //커뮤니티 포스트 아이디
+const postSchema = new Schema({
+  //커뮤니티 post 아이디
   id: {
+    type: String,
+    required: true
+  },
+  userId: {
+    type: String,
+    required: true
+  },
+  //커뮤니티 post 카테고리 : 와인리뷰, 와인정보, 와인뉴스
+  category: {
     type: String,
     required: true
   },
@@ -17,11 +26,6 @@ const communitySchema = new Schema({
   },
   content: {
     type: String,
-    required: false
-  },
-  //커뮤니티 카테고리 : 와인리뷰, 와인정보, 와인뉴스
-  category: {
-    type: String,
     required: true
   },
 
@@ -31,6 +35,6 @@ const communitySchema = new Schema({
 }
 );
 
-const communityModel = model("Community", communitySchema);
+const postModel = model("Post", postSchema);
 
-export {communityModel};
+export {postModel};
