@@ -4,6 +4,7 @@ import { Card } from "antd";
 
 import BookmarkButton from "./BookmarkButton";
 import BookmarkInfoRate from "./BookmarkInfoRate"; // 테스트 중
+import BookmarkInfoType from "./BookmarkInfoType";
 
 const BookmarkContainer = styled(Card)`
   border: None;
@@ -30,8 +31,6 @@ const Name = styled.div`
   font-weight: 400;
 `;
 
-const Type = styled.div``;
-
 function BookmarkItem({ wineInfo }) {
   const [isBookmarked, setIsBookmarked] = useState(true);
   return (
@@ -42,44 +41,15 @@ function BookmarkItem({ wineInfo }) {
         wineId={wineInfo.id}
       />
       <Name>{wineInfo.name}</Name>
-      <Type>타입: {wineInfo.type} </Type>
+      <BookmarkInfoType type={wineInfo.type} />
       <br />
       <br />
-      {/* <span>당도 </span>
-      <Rate
-        style={{ color: "#e07392" }}
-        defaultValue={wineInfo.sweet}
-        disabled={true}
-        character={({ index }) => customIcons[index + 1]}
-      /> */}
       <BookmarkInfoRate name={"당도"} value={wineInfo.sweet} />
-      {/* 테스트 중 */}
       <br />
-      {/* <span>산도 </span>
-      <Rate
-        style={{ color: "#e07392" }}
-        defaultValue={wineInfo.acidity}
-        disabled={true}
-        character={({ index }) => customIcons[index + 1]}
-      /> */}
       <BookmarkInfoRate name={"산도"} value={wineInfo.acidity} />
       <br />
-      {/* <span>바디 </span>
-      <Rate
-        style={{ color: "#e07392" }}
-        defaultValue={wineInfo.body}
-        disabled={true}
-        character={({ index }) => customIcons[index + 1]}
-      /> */}
       <BookmarkInfoRate name={"바디"} value={wineInfo.body} />
       <br />
-      {/* <span>탄닌 </span>
-      <Rate
-        style={{ color: "#e07392" }}
-        defaultValue={wineInfo.tannin}
-        disabled={true}
-        character={({ index }) => customIcons[index + 1]}
-      /> */}
       <BookmarkInfoRate name={"탄닌"} value={wineInfo.tannin} />
     </BookmarkContainer>
   );
