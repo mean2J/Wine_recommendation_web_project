@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Card } from "antd";
 
@@ -45,8 +45,8 @@ function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
       <HeaderWrapper>
         <BookmarkInfoType type={wineInfo.type} />
         <BookmarkButton
-          bookmarkList={bookmarkList} // test
-          setBookmarkList={setBookmarkList} // test
+          bookmarkList={bookmarkList}
+          setBookmarkList={setBookmarkList}
           isBookmarked={isBookmarked}
           setIsBookmarked={setIsBookmarked}
           wineId={wineInfo.id}
@@ -66,4 +66,4 @@ function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
   );
 }
 
-export default BookmarkItem;
+export default React.memo(BookmarkItem);

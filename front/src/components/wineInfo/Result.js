@@ -7,6 +7,8 @@ import ReviewForm from "../Review/ReviewForm";
 
 function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const isResultPage = true; // 북마크 분기점
+
   useEffect(() => {
     Api.get("bookmarklist").then((res) => {
       const bookmarkList = res.data.bookmark;
@@ -21,6 +23,7 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
     <>
       <Card title={title}>
         <BookmarkButton
+          isResultPage={isResultPage}
           isBookmarked={isBookmarked}
           setIsBookmarked={setIsBookmarked}
           wineId={wineId}

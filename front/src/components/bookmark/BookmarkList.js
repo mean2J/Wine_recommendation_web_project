@@ -104,7 +104,7 @@ function BookmarkList() {
       ) : (
         <DefaultMessage>
           <div>북마크 한 와인이 없습니다.</div>
-          <div>관심있는 와인을 저장 해보세요🍷</div>
+          <div>관심있는 와인을 저장 해보세요 🍷</div>
         </DefaultMessage>
       )}
       <div ref={setTarget}></div>

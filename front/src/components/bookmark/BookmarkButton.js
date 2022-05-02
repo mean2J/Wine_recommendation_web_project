@@ -25,19 +25,23 @@ const Heart = styled(HeartFilled)`
 `;
 
 function BookmarkButton({
+  isResultPage,
   isBookmarked,
   setIsBookmarked,
   wineId,
   bookmarkList,
   setBookmarkList,
 }) {
+  // 선택된 북마크를 해제하고 delete 요청
   const uncheckButton = async () => {
-    // 선택된 북마크를 해제하고 delete 요청
-    setIsBookmarked(!isBookmarked);
+    // 필터링 결과 페이지일 경우
+    if (isResultPage) {
+      setIsBookmarked(!isBookmarked);
+    }
+
     // 북마크 삭제
     if (isBookmarked) {
       await Api.del(`bookmark/${wineId}`).then((res) => {
-        // window.location.reload();
         const newState = bookmarkList.filter(
           (item) => item.wineInfo.id !== wineId
         );
