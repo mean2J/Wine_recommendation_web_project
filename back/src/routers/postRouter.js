@@ -8,7 +8,7 @@ import { body, validationResult } from "express-validator";
 const postRouter = Router();
 
 /*
- * Post : Post 생성
+ * Community : Post 생성
  */
 postRouter.post("/post",
 body("category", "카테고리를 선택해주세요.").isString(),
@@ -54,7 +54,7 @@ async (req, res, next) => {
 });
 
 /*
- * Post : Post 조회
+ * Community : Post 조회
  */
 postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
   try {
@@ -75,7 +75,7 @@ postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
 
 
 /*
- * Post : Post 리스트(제목) 조회(페이징)
+ * Community : Post 리스트(제목) 조회(페이징)
  */
 postRouter.get("/postlist", loginRequired, async (req, res, next) => {
   try {
@@ -104,7 +104,7 @@ postRouter.get("/postlist", loginRequired, async (req, res, next) => {
 });
 
 /*
- * Post : Post 수정
+ * Community : Post 수정
  */
 postRouter.put("/post/:id", loginRequired, async (req, res, next) => {
     try {
@@ -131,7 +131,7 @@ postRouter.put("/post/:id", loginRequired, async (req, res, next) => {
 
 
 /*
- * Post : Post 삭제
+ * Community : Post 삭제
  */
 postRouter.delete("/post/:id", loginRequired, async (req, res, next) => {
   try {
