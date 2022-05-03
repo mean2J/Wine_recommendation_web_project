@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
-// import BookmarkItem from "./BookmarkItem";
+import React, { useState, useContext, useEffect, useCallback } from "react";
+import { UserStateContext } from "../../../App";
+import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
-import * as Api from "../../api";
+import * as Api from "../../../api";
 import { Row, Card } from "antd";
 
 const MyReviewListContainer = styled(Row)`
@@ -30,14 +31,26 @@ const DefaultMessage = styled(Card)`
 `;
 
 function MyReviewList() {
+  const userState = useContext(UserStateContext);
   const [myReviewList, setMyReviewList] = useState([]);
+
+  const getMyReviewList = async () => {
+    let res = await Api.get(`reviews/authors/${userState.user.id}`);
+    console.log("내 리뷰들 불러오기", res);
+    const data = res.data.reviews;
+    console.log(data);
+    setMyReviewList(data);
+  };
+
+  useEffect(() => {
+    getMyReviewList();
+  }, []);
 
   return (
     <MyReviewListContainer>
       {myReviewList.length ? (
         myReviewList.map((myReview, idx) => (
-          <div>idx</div>
-          // <BookmarkItem key={idx} wineInfo={bookmark.wineInfo} />
+          <MyReviewItem key={idx} reviewInfo={myReview} />
         ))
       ) : (
         <DefaultMessage>

@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useCallback, createContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import BookmarkItem from "./BookmarkItem";
 import styled from "styled-components";
 import * as Api from "../../api";
 import { Row, Card } from "antd";
-
-export const BookmarkListContext = createContext();
-export const SetBookmarkContext = createContext();
 
 const BookmarkListContainer = styled(Row)`
   background-color: #f8f9fa;

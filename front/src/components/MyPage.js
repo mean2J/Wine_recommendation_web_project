@@ -10,7 +10,7 @@ import { Card, Tabs } from "antd";
 import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
-import MyReviewList from "./Review/MyReviewList";
+import MyReviewList from "./User/MyReview/MyReviewList";
 
 const { TabPane } = Tabs;
 
@@ -71,8 +71,8 @@ function MyPage(props) {
   if (!isFetchCompleted) {
     return "로딩중입니다...";
   }
-  // test중
 
+  // 마이페이지 url
   const onTabClick = (id) => {
     localStorage.setItem("tabKey", id);
     navigate(`/myPage/${id}`);
