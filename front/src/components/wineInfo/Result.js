@@ -167,27 +167,10 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
 
   return (
     <>
-<<<<<<< HEAD
-      <Card title={title}>
-        <BookmarkButton
-          isResultPage={isResultPage}
-          isBookmarked={isBookmarked}
-          setIsBookmarked={setIsBookmarked}
-          wineId={wineId}
-        />
-        <p>와인타입: {type}</p>
-        <p>제조국: {nation}</p>
-        <p>제조지역: {local}</p>
-        <p>가격: {price}</p>
-        <p>도수: {abv}</p>
-        <p>주요 품종: {varieties}</p>
-      </Card>
-      <WineReview wineId={wineId} />
-      <ReviewForm wineId={wineId} />
-=======
       <Container>
         <StyledCard>
           <BookmarkButton
+            isResultPage={isResultPage}
             isBookmarked={isBookmarked}
             setIsBookmarked={setIsBookmarked}
             wineId={wineId}
@@ -222,7 +205,6 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
         </StyledCard>
       </Container>
       <ReviewForm wineId={wineId}></ReviewForm>
->>>>>>> 5359ae8eac4038ceca85548bb0e836d8741f636c
     </>
   );
 }
