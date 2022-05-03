@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {statService} from "../services/statService.js";
+import {StatService} from "../services/statService.js";
 
 const statRouter = Router();
 
@@ -10,7 +10,7 @@ statRouter.get("/stat/:id", async (req, res, next) => {
     try {
   
       const statId = req.params.id;
-      const stat = await statService.getStatById(statId);
+      const stat = await StatService.getStatById(statId);
   
       res.status(200).json(stat);
     } catch (error) {
@@ -25,7 +25,7 @@ statRouter.get("/stat/:id", async (req, res, next) => {
 statRouter.get("/statlist", async (req, res, next) => {
   try {
 
-    const statList = await statService.getStatList();
+    const statList = await StatService.getStatList();
 
     res.status(200).json(statList);
   } catch (error) {

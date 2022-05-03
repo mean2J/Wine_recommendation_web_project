@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const {Schema, model} = mongoose;
 
-const bookmarkSchema = new Schema({
+const BookmarkSchema = new Schema({
   //북마크 id : uuid
   id: {
     type: String,
@@ -25,6 +25,6 @@ const bookmarkSchema = new Schema({
 }
 );
 
-const bookmarkModel = model("Bookmark", bookmarkSchema);
+const BookmarkModel = model("Bookmark", BookmarkSchema);
 
-export {bookmarkModel};
+export {BookmarkModel};

@@ -2,7 +2,7 @@ import {Bookmark} from "../db/index.js";
 import {Wine} from "../db/index.js";
 import {v4 as uuidv4} from "uuid";
 
-class bookmarkService {
+class BookmarkService {
   static async addBookmark({userId, wineId}) {
     const bookmark = await Bookmark.findBookmarkByWineId({userId, wineId});
     const wineInfo = await Wine.findWineById(wineId);
@@ -118,4 +118,4 @@ class bookmarkService {
   }
 }
 
-export {bookmarkService};
+export {BookmarkService};
