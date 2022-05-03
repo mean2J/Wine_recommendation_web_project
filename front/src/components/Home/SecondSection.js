@@ -80,7 +80,6 @@ const StaticsBox = styled.div`
   box-sizing: border-box;
   top: 20%;
   border-radius: 15px;
-  background-color: #f8f9fa;
 `;
 
 const SecReasonWrapper = styled(ReasonWrapper)`
