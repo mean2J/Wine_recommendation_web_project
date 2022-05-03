@@ -1,4 +1,4 @@
-import { Card, Image, Rate } from "antd";
+import { Card, Row, Image, Rate } from "antd";
 
 import styled from "styled-components";
 
@@ -12,44 +12,90 @@ const ReviewkItemContainer = styled(Card)`
 
   margin-top: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
+`;
+
+const ReviewWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+`;
+
+const ImgWrapper = styled.div`
+  margin-right: 40px;
+`;
+
+const InfoWrapper = styled.div`
+  position: flex;
 `;
 
 const ReviewImg = styled(Image)`
   border-radius: 5px;
 `;
 
-const ReviewTitle = styled.h3`
+const InfoSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const Date = styled.div`
+  color: #c4c4c4;
+  padding-top: 5px;
+  margin-left: 230px;
+`;
+
+const WineName = styled.h3`
   font-weight: 600;
   font-size: 18px;
   line-height: 21px;
+  margin-top: 3px;
+  margin-bottom: 10px;
 
   color: #000000;
+`;
+const ContentWrapper = styled.div`
+  margin-bottom: 40px;
+`;
+const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
 `;
 
 function ReviewItem({ reviewInfo }) {
   return (
     <>
       <ReviewkItemContainer>
-        <div>
-          <div>
+        <ReviewWrapper>
+          <ImgWrapper>
             <ReviewImg
               width={200}
               src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
             />
-          </div>
-          <div>
+          </ImgWrapper>
+          <InfoWrapper>
             <div className="review_wrapper">
-              <ReviewTitle>{reviewInfo.title}</ReviewTitle>
-              <Rate defaultValue={reviewInfo.rating} disabled={"true"} />
-              <div className="diary_date">{reviewInfo.createdAt}</div>
-              <div className="review_content">{reviewInfo.content}</div>
+              <WineName>와인 이름 위치</WineName>
+              {/* <WineName>{reviewInfo.title}</WineName> */}
+              <InfoSection>
+                <Rate defaultValue={reviewInfo.rating} disabled={"true"} />
+                <Date className="diary_date">
+                  {reviewInfo.createdAt.slice(0, 10)}
+                </Date>
+              </InfoSection>
+              <ContentWrapper>{reviewInfo.content}</ContentWrapper>
             </div>
-            <div className="btn_wrapper">
+            <BtnWrapper>
               <button className="btn_fix">수정</button>
               <button className="btn_delete">삭제</button>
-            </div>
-          </div>
-        </div>
+            </BtnWrapper>
+          </InfoWrapper>
+        </ReviewWrapper>
       </ReviewkItemContainer>
     </>
   );
