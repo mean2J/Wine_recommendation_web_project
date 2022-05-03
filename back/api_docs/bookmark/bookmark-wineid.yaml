@@ -20,7 +20,7 @@ delete:
   responses:
     '200':
       description: 와인 북마크가 해제되었습니다.
-    '404':
+    '400':
       description: 북마크하지 않은 와인은 해제할 수 없습니다.
     default:
       description: Unexpected error

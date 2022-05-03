@@ -17,7 +17,7 @@ function Main() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>메인 | 서비스이름</title>
+          <title>메인 | 와인셀러</title>
         </Helmet>
       </HelmetProvider>
 

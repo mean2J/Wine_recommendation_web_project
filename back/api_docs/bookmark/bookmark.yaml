@@ -30,9 +30,9 @@ post:
                   wineId:
                     type: number
                     description: wineId 넘버
-    '400':
-      description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
     '404':
+      description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
+    '400':
       description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
     default:
       description: Unexpected error

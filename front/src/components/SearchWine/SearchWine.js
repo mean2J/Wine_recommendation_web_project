@@ -4,6 +4,7 @@ import * as Api from "../../api";
 import Result from "../wineInfo/Result";
 import { Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function SearchWine() {
   const location = useLocation();
@@ -35,28 +36,36 @@ function SearchWine() {
   };
 
   return (
-    <div key={result.id} title={result.name}>
-      {result.map((result) => (
-        <Result
-          key={result.id}
-          wineId={result.id}
-          title={result.name}
-          type={result.type}
-          nation={result.nation}
-          local={result.local}
-          price={result.price}
-          abv={result.abv}
-          varieties={result.varieties}
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>와인 검색 "{searchInp}"</title>
+        </Helmet>
+      </HelmetProvider>
+
+      <div key={result.id} title={result.name}>
+        {result.map((result) => (
+          <Result
+            key={result.id}
+            wineId={result.id}
+            title={result.name}
+            type={result.type}
+            nation={result.nation}
+            local={result.local}
+            price={result.price}
+            abv={result.abv}
+            varieties={result.varieties}
+          />
+        ))}
+        <Pagination
+          simple
+          current={currentPage}
+          defaultCurrent={1}
+          onChange={handlePageChange}
+          total={totalPage}
         />
-      ))}
-      <Pagination
-        simple
-        current={currentPage}
-        defaultCurrent={1}
-        onChange={handlePageChange}
-        total={totalPage}
-      />
-    </div>
+      </div>
+    </>
   );
 }
 
