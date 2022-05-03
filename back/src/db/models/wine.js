@@ -58,6 +58,14 @@ class Wine {
     return wines;
   }
 
+  //wine 국가, type으로만 추천
+  static async findRecommendedWineLeast({ nation, type }) {
+    const wines = await WineModel.find({
+      $and: [{ nation }, { type }],
+    });
+    return wines;
+  }
+
   //wine id로 특정 와인 찾기
   static async findWineById(id) {
     const wine = await WineModel.findOne({ id }).lean();

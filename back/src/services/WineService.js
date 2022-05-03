@@ -12,8 +12,19 @@ class WineService {
     price,
     isChecked,
   }) {
-    //(sweet, acidity, body, tannin), price -> ex) 1이상 3이하 [1, 3]
-    const wines = await Wine.findRecommendedWine({
+    const sweetGte = sweet[0];
+    const sweetLte = sweet[1];
+    const acidityGte = acidity[0];
+    const acidityLte = acidity[1];
+    const bodyGte = body[0];
+    const bodyLte = body[1];
+    const tanninGte = tannin[0];
+    const tanninLte = tannin[1];
+    const priceGte = price[0];
+    const priceLte = price[1];
+
+    //wines -> 가격 정보 없음 포함하지 않는 추천 리스트
+    const wineList = await Wine.findRecommendedWine({
       nation,
       type,
       sweetGte: sweet[0],
@@ -28,16 +39,21 @@ class WineService {
       priceLte: price[1],
     });
 
-    //wines의 값이 5개 이상이라면 5개만 랜덤하게 추출
-    let wineList = [];
-    if (wines.length > 5) {
-      while (wineList.length != 5) {
-        let wine = wines.splice(Math.floor(Math.random() * wines.length), 1)[0];
-        wineList.push(wine);
+    //5개만 랜덤하게 추출
+    let wines = [];
+    if (wineList.length > 5) {
+      for (let i = 0; i < 5; i++) {
+        const wine = wineList.splice(
+          Math.floor(Math.random() * wineList.length),
+          1
+        )[0];
+        wines.push(wine);
       }
+    } else {
+      wines.concat(wineList);
     }
 
-    //isChecked -> true 정보없음 포함
+    //winesWithoutPrice -> 가격 정보 없음을 포함하는 경우 (가격 정보 없는 와인 3개 추가)
     if (isChecked) {
       const winesWithoutPrice = await Wine.findWineWithoutPrice({
         nation,
@@ -52,23 +68,46 @@ class WineService {
         tanninLte: tannin[1],
         price: 9000000,
       });
-
-      let wineWithoutPriceList = [];
+      //3개만 랜덤하게 추출
       if (winesWithoutPrice.length > 3) {
-        while (wineWithoutPriceList.length != 3) {
-          let wine = winesWithoutPrice.splice(
+        for (let i = 0; i < 3; i++) {
+          const wine = winesWithoutPrice.splice(
             Math.floor(Math.random() * winesWithoutPrice.length),
             1
           )[0];
           wine.price = 0;
-          wineWithoutPriceList.push(wine);
-          wineList.push(wine);
+          wines.push(wine);
         }
+      } else {
+        wines.concat(winesWithoutPrice);
       }
     }
 
-    //추천된 와인들
-    return wineList;
+    //wineList에 아무값도 들어오지 못한 경우, nation과 type만으로 추천 리스트 생성
+    let isRandom = false;
+    if (wines.length == 0) {
+      isRandom = true;
+      const leastWines = await Wine.findRecommendedWineLeast({
+        nation,
+        type,
+      });
+
+      if (leastWines.length > 5) {
+        for (let i = 0; i < 5; i++) {
+          const wine = leastWines.splice(
+            Math.floor(Math.random() * leastWines.length),
+            1
+          )[0];
+          if (wine.price == 9000000) {
+            wine.price = 0;
+          }
+          wines.push(wine);
+        }
+      } else {
+        wines.concat(leastWines);
+      }
+    }
+    return { wines, isRandom };
   }
 
   //wine id로 특정 와인 찾기
