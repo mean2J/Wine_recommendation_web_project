@@ -137,6 +137,11 @@ class UserService {
 
     await User.deleteUser(userId);
   }
+
+  static async exists(filter) {
+    const itExists = await User.exists(filter);
+    return itExists;
+  }
 }
 
 export { UserService };
