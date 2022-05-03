@@ -30,13 +30,12 @@ const DefaultMessage = styled(Card)`
   background-color: #f8f9fa;
 `;
 
-function MyReviewList() {
+function MyReviewList({ isEditing, setIsEditing }) {
   const userState = useContext(UserStateContext);
   const [myReviewList, setMyReviewList] = useState([]);
 
   const getMyReviewList = async () => {
     let res = await Api.get(`reviews/authors/${userState.user.id}`);
-    console.log("내 리뷰들 불러오기", res);
     const data = res.data.reviews;
 
     setMyReviewList(data);
@@ -49,7 +48,7 @@ function MyReviewList() {
   return (
     <MyReviewListContainer>
       {myReviewList.length ? (
-        myReviewList.map((myReview, idx) => (
+        myReviewList.map((myReview) => (
           <MyReviewItem
             key={myReview.id}
             reviewInfo={myReview}

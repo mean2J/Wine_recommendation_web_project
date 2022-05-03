@@ -1,8 +1,10 @@
 import { Card, Image, Rate, Button } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import * as Api from "../../../api";
 
 import DeleteModal from "./DeleteModal";
+import MyReviewEditForm from "./MyReviewEditForm";
 
 const ReviewkItemContainer = styled(Card)`
   border: None;
@@ -46,6 +48,11 @@ const InfoSection = styled.div`
   margin-bottom: 20px;
 `;
 
+const ReviewTitle = styled.div`
+  font-weight: 550;
+  font-size: 17px;
+`;
+
 const Date = styled.div`
   color: #c4c4c4;
   padding-top: 5px;
@@ -82,7 +89,20 @@ const MyReviewButton = styled(Button)`
 `;
 
 function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
+  const [isEditing, setIsEditing] = useState(false);
   const [isModal, setIsModal] = useState(false);
+  const [wineName, setWineName] = useState("");
+
+  const [Info, setInfo] = useState(reviewInfo);
+
+  const getWineName = async () => {
+    const res = await Api.get(`wines/${reviewInfo.wine}`);
+    setWineName(res.data.name);
+  };
+
+  useEffect(() => {
+    getWineName();
+  }, []);
 
   const showModal = () => {
     setIsModal(true);
@@ -98,34 +118,49 @@ function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mg0Z3jjdhhILbiweMfnMc4JSYlaf267GyA&usqp=CAU"
             />
           </ImgWrapper>
-          <InfoWrapper>
-            <div className="review_wrapper">
-              <WineName>와인 이름 위치</WineName>
-              {/* <WineName>{reviewInfo.title}</WineName> */}
-              <InfoSection>
-                <Rate defaultValue={reviewInfo.rating} disabled={"true"} />
-                <Date className="diary_date">
-                  {reviewInfo.createdAt.slice(0, 10)}
-                </Date>
-              </InfoSection>
-              <ContentWrapper>{reviewInfo.content}</ContentWrapper>
-            </div>
-            <BtnWrapper>
-              <MyReviewButton>수정</MyReviewButton>
-              <MyReviewButton onClick={showModal} style={{ color: "red" }}>
-                삭제
-              </MyReviewButton>
-            </BtnWrapper>
-            {isModal && (
-              <DeleteModal
-                isModal={isModal}
-                setIsModal={setIsModal}
-                reviewId={reviewInfo.id}
-                myReviewList={myReviewList}
-                setMyReviewList={setMyReviewList}
-              />
-            )}
-          </InfoWrapper>
+          {isEditing ? (
+            <MyReviewEditForm
+              reviewId={reviewInfo.id}
+              setIsEditing={setIsEditing}
+              Info={Info}
+              setInfo={setInfo}
+              setMyReviewList={setMyReviewList}
+            />
+          ) : (
+            <InfoWrapper>
+              <div className="review_wrapper">
+                <WineName>{wineName}</WineName>
+                <InfoSection>
+                  <Rate defaultValue={reviewInfo.rating} disabled={"true"} />
+                  <Date className="diary_date">
+                    {reviewInfo.createdAt.slice(0, 10)}
+                  </Date>
+                </InfoSection>
+                <ReviewTitle>{reviewInfo.title}</ReviewTitle>
+                <ContentWrapper>{reviewInfo.content}</ContentWrapper>
+              </div>
+              <BtnWrapper>
+                <MyReviewButton
+                  style={{ color: "#c365fd" }}
+                  onClick={() => setIsEditing(true)}
+                >
+                  수정
+                </MyReviewButton>
+                <MyReviewButton onClick={showModal} style={{ color: "red" }}>
+                  삭제
+                </MyReviewButton>
+              </BtnWrapper>
+              {isModal && (
+                <DeleteModal
+                  isModal={isModal}
+                  setIsModal={setIsModal}
+                  reviewId={reviewInfo.id}
+                  myReviewList={myReviewList}
+                  setMyReviewList={setMyReviewList}
+                />
+              )}
+            </InfoWrapper>
+          )}
         </ReviewWrapper>
       </ReviewkItemContainer>
     </>

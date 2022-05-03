@@ -40,7 +40,6 @@ const MyInfoButton = styled(Button)`
 
 function MyInfoEditForm({ user, setUser, setIsEditing }) {
   const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
   const [description, setDescription] = useState(user.description);
 
   const onFinish = async (values) => {
@@ -53,8 +52,6 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
       });
       const updateUser = res.data.user;
       setUser(updateUser);
-
-      console.log("수정된 정보 업데이트", updateUser);
 
       setIsEditing(false);
     } catch (err) {
@@ -74,7 +71,6 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 16 }}
           initialValues={{
-            email: email,
             name: name,
             description: description,
           }}

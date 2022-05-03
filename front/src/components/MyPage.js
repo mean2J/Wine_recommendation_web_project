@@ -11,6 +11,7 @@ import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
 import MyReviewList from "./User/MyReview/MyReviewList";
+import MyReviewEditForm from "./User/MyReview/MyReviewEditForm";
 
 const { TabPane } = Tabs;
 
@@ -46,7 +47,7 @@ function MyPage(props) {
 
   const [mypageOwner, setMypageOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isMyInfoEditing, setIsMyInfoEditing] = useState(false);
   const userState = useContext(UserStateContext);
 
   const fetchMypageOwner = async (ownerId) => {
@@ -100,14 +101,17 @@ function MyPage(props) {
                 tab={<span style={{ fontSize: 18 }}>내 정보</span>}
                 key="1"
               >
-                {isEditing ? (
+                {isMyInfoEditing ? (
                   <MyInfoEditForm
                     user={mypageOwner}
                     setUser={setMypageOwner}
-                    setIsEditing={setIsEditing}
+                    setIsEditing={setIsMyInfoEditing}
                   />
                 ) : (
-                  <MyInfo user={mypageOwner} setIsEditing={setIsEditing} />
+                  <MyInfo
+                    user={mypageOwner}
+                    setIsEditing={setIsMyInfoEditing}
+                  />
                 )}
               </TabPane>
               <TabPane
