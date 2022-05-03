@@ -99,7 +99,6 @@ class bookmarkService {
         wineInfo: wineInfo,
       };
       bookmarkWineList[i] = bookmarkWine;
-      console.log(bookmarkWineList);
     }
     return bookmarkWineList;
   }
