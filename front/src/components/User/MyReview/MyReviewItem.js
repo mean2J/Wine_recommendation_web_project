@@ -24,6 +24,10 @@ const ReviewWrapper = styled.div`
 
 const ImgWrapper = styled.div`
   margin-right: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const InfoWrapper = styled.div`
@@ -32,6 +36,9 @@ const InfoWrapper = styled.div`
 
 const ReviewImg = styled(Image)`
   border-radius: 5px;
+
+  postion: abosulte;
+  top: 50%;
 `;
 
 const InfoSection = styled.div`
