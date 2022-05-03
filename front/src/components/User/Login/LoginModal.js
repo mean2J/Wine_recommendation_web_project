@@ -11,7 +11,6 @@ import styled from "styled-components";
 import { DispatchContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
-import axios from "axios";
 
 const Notice = styled.p`
   font-size: 12px;
@@ -123,18 +122,8 @@ function LoginModal({ isModal, onClose }) {
 
   const responseGoogle = async (response) => {
     console.log(response);
-    const result = response.profileObj;
-    const token = response.tokenId;
 
-    let body = {
-      data: {
-        profile: result,
-        tokenId: token,
-      },
-    };
-
-    axios
-      .get("auth/google/signin", body)
+    Api.get("auth/google/signin")
       .then((response) => {
         const user = response.data;
         dispatch({
@@ -201,6 +190,7 @@ function LoginModal({ isModal, onClose }) {
             <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
           </Form.Item>
         </Form>
+        <button onClick={responseGoogle}>구글 로그인</button>
         <GoogleLogin
           clientId={clientID}
           buttonText="Login"
