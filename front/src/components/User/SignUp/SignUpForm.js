@@ -163,12 +163,10 @@ function SignUpForm() {
           />
         </Form.Item>
         {!isPasswordSame && <Notice>비밀번호가 다릅니다.</Notice>}
-        <IntroDesc onClick={showModal}>
-          이미 회원이신가요?
-          {isModal && (
-            <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
-          )}
-        </IntroDesc>
+        <IntroDesc onClick={showModal}>이미 회원이신가요?</IntroDesc>
+        {isModal && (
+          <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
+        )}
 
         <Button type="primary" htmlType="submit" block disabled={!isFormValid}>
           회원가입
