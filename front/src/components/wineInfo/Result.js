@@ -1,8 +1,7 @@
 import { Card, Rate } from "antd";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
-import * as Api from "../../api";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 
 const Container = styled.div`
@@ -151,24 +150,26 @@ const VarietyInfo = styled.div`
   line-height: 24px;
 `;
 
-function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  useEffect(() => {
-    Api.get("bookmarklist").then((res) => {
-      const bookmarkList = res.data.bookmark;
-      const checked = bookmarkList.some(
-        (bookmark) => bookmark.wineId === wineId
-      );
-      setIsBookmarked(checked);
-    });
-  }, [wineId]);
+function Result({
+  wineId,
+  nation,
+  title,
+  type,
+  local,
+  price,
+  abv,
+  varieties,
+  bookmarked,
+}) {
+  const isResultPage = true; // 북마크 분기점
+  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
 
   return (
     <>
       <Container>
         <StyledCard>
           <BookmarkButton
+            isResultPage={isResultPage}
             isBookmarked={isBookmarked}
             setIsBookmarked={setIsBookmarked}
             wineId={wineId}
