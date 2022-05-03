@@ -42,8 +42,8 @@ class WineService {
     //5개만 랜덤하게 추출
     let wines = [];
     if (wineList.length > 5) {
-      while (wines.length != 5) {
-        let wine = wineList.splice(
+      for (let i = 0; i < 5; i++) {
+        const wine = wineList.splice(
           Math.floor(Math.random() * wineList.length),
           1
         )[0];
@@ -70,8 +70,8 @@ class WineService {
       });
       //3개만 랜덤하게 추출
       if (winesWithoutPrice.length > 3) {
-        while (wines.length != 8) {
-          let wine = winesWithoutPrice.splice(
+        for (let i = 0; i < 3; i++) {
+          const wine = winesWithoutPrice.splice(
             Math.floor(Math.random() * winesWithoutPrice.length),
             1
           )[0];
@@ -83,18 +83,18 @@ class WineService {
       }
     }
 
-    let isRandom = false;
     //wineList에 아무값도 들어오지 못한 경우, nation과 type만으로 추천 리스트 생성
+    let isRandom = false;
     if (wines.length == 0) {
       isRandom = true;
-      let leastWines = await Wine.findRecommendedWineLeast({
+      const leastWines = await Wine.findRecommendedWineLeast({
         nation,
         type,
       });
 
       if (leastWines.length > 5) {
-        while (wines.length != 5) {
-          let wine = leastWines.splice(
+        for (let i = 0; i < 5; i++) {
+          const wine = leastWines.splice(
             Math.floor(Math.random() * leastWines.length),
             1
           )[0];
