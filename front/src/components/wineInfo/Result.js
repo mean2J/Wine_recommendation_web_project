@@ -3,6 +3,7 @@ import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
 import { useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
+import WineChart from "./WineChart";
 
 const Container = styled.div`
   &:first-child {
@@ -164,6 +165,10 @@ function Result({
   abv,
   varieties,
   bookmarked,
+  sweet,
+  acidity,
+  body,
+  tannin,
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
@@ -171,6 +176,12 @@ function Result({
   return (
     <>
       <Container>
+        <WineChart
+          sweet={sweet}
+          acidity={acidity}
+          body={body}
+          tannin={tannin}
+        />
         <StyledCard>
           <BookmarkButton
             isResultPage={isResultPage}
