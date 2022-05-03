@@ -1,4 +1,5 @@
 import {Post} from "../db/index.js";
+import {Comment} from "../db/index.js";
 import { v4 as uuidv4 } from 'uuid';
 
 class postService {
@@ -21,13 +22,15 @@ class postService {
    * Community : post 읽기
    */
   static async getPost(postId) {
-    const post = Post.findPostById(postId);
+    const post = await Post.findPostById(postId);
+    const commentList = await Comment.findCommentListByPostId(postId);
+    post.commentList = commentList;
     return post; 
   }
 
 
   /**
-   * Community : category별 post 제목 리스트 읽기(페이징)
+   * Community : category별 post 목록 읽기(페이징)
    */
   static async getPostListPage({category, page, maxPost}) {
     const postList = await Post.findPostPage({category, page, maxPost});
