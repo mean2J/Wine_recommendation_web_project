@@ -4,8 +4,8 @@ import {v4 as uuidv4} from "uuid";
 
 class bookmarkService {
   static async addBookmark({userId, wineId}) {
-    let bookmark = await Bookmark.findBookmarkByWineId({userId, wineId});
-    let wineInfo = await Wine.findWineById(wineId);
+    const bookmark = await Bookmark.findBookmarkByWineId({userId, wineId});
+    const wineInfo = await Wine.findWineById(wineId);
     if (bookmark) {
       const error = new Error(
         "이미 북마크한 와인입니다."
