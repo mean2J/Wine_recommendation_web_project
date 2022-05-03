@@ -200,22 +200,6 @@ authRouter.get(
   passport.authenticate("googleStrategy", { scope: ["profile", "email"] })
 );
 
-// authRouter.get("/auth/google/signout",
-//   async (req, res, next) => {
-//     req.logout();
-//     req.session.destroy((error) => {
-//       if (error)
-//         next(error);
-//
-//       const body = {
-//         success: true,
-//         message: "성공적으로 로그아웃되었습니다.",
-//       };
-//
-//       res.status(200).json(body);
-//     });
-//   });
-
 authRouter.get(
   "/auth/google/callback",
   passport.authenticate("googleStrategy", {

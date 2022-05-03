@@ -1,0 +1,130 @@
+post:
+  tags:
+    - "auth"
+  summary: 입력받은 유저 정보로 로그인을 합니다.
+  description: |
+    # 로컬 로그인 API
+    유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+        example:
+          email: mokoko@elice.com
+          password: 1q2w3e4r5t!
+  responses:
+    '200':
+      description: 정상적으로 로그인되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              user:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: 이번 로그인에 대한 bearer token
+                  id:
+                    type: string
+                    description: userId
+                  name:
+                    type: string
+                    description: 유저가 설정한 이름
+                  email:
+                    type: string
+                    description: 유저가 가입에 사용한 이메일 주소
+          example:
+            success: true
+            user:
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+              id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+              name: acorn
+              email: mokoko@elice.com
+
+    '400':
+      description: 잘못된 요청입니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              error:
+                type: obejct
+                properties:
+                  code:
+                    type: integer
+                    description: http status code
+                  message:
+                    type: string
+                    description: 에러 메시지
+          example:
+            success: false
+            error:
+              code: 400
+              message: 이메일 정보는 필수입니다.
+    '401':
+      description: 비밀번호가 잘못되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              error:
+                type: obejct
+                properties:
+                  code:
+                    type: integer
+                    description: http status code
+                  message:
+                    type: string
+                    description: 에러 메시지
+          example:
+            success: false
+            error:
+              code: 401
+              message: 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.
+    '404':
+      description: 가입 내역이 존재하지 않습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              error:
+                type: obejct
+                properties:
+                  code:
+                    type: integer
+                    description: http status code
+                  message:
+                    type: string
+                    description: 에러 메시지
+          example:
+            success: false
+            error:
+              code: 404
+              message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
