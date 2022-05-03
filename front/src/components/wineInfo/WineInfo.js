@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import * as Api from "../../api";
 import { Steps, Button } from "antd";
 import styled from "styled-components";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -31,12 +33,27 @@ const StepWrapper = styled.div`
 `;
 
 const StepBox = styled.div`
-  display: flex;
+  /* display: flex; */
   width: 900px;
   height: 560px;
+  position: relative;
   background: #ffffff;
   border: 1px solid rgba(196, 196, 196, 0.5);
   border-radius: 20px;
+`;
+
+const ResultWrapper = styled.div`
+  padding: 64px 0 64px 48px;
+  max-width: calc(1200px + 48px + 48px);
+  margin: 0 auto;
+`;
+
+const BgContainer = styled.div`
+  background-color: #f8f9fa;
+  ${ResultWrapper} {
+    width: 100%;
+    background-color: none;
+  }
 `;
 
 const { Step } = Steps;
@@ -68,6 +85,7 @@ function WineInfo() {
   const current = useRecoilValue(currentAtom);
   const [isLoaded, setIsLoaded] = useRecoilState(isLoadedAtom);
   const result = useRecoilValue(resultAtom);
+  const [bookmarkList, setBookmarkList] = useState([]);
   const steps = [
     {
       title: "인트로",
@@ -83,6 +101,13 @@ function WineInfo() {
     },
   ];
 
+  useEffect(() => {
+    Api.get("bookmarklist").then((res) => {
+      const data = res.data.bookmark;
+      setBookmarkList(data);
+    });
+  }, []);
+
   return (
     <>
       <HelmetProvider>
@@ -91,45 +116,63 @@ function WineInfo() {
         </Helmet>
       </HelmetProvider>
 
-      <MainContainer>
+      <BgContainer>
         {!isLoaded ? (
           <>
-            <BoxWrapper>
-              <StepBox>
-                <StpesBtn />
-              </StepBox>
-            </BoxWrapper>
-            <StepWrapper>
-              <StyledStep direction="vertical" size="small" current={current}>
-                {steps.map((item) => (
-                  <Step
-                    key={item.title}
-                    title={item.title}
-                    description={item.description}
-                  />
-                ))}
-              </StyledStep>
-            </StepWrapper>
+            <MainContainer>
+              <BoxWrapper>
+                <StepBox>
+                  <StpesBtn />
+                </StepBox>
+              </BoxWrapper>
+              <StepWrapper>
+                <StyledStep direction="vertical" size="small" current={current}>
+                  {steps.map((item) => (
+                    <Step
+                      key={item.title}
+                      title={item.title}
+                      description={item.description}
+                    />
+                  ))}
+                </StyledStep>
+              </StepWrapper>
+            </MainContainer>
           </>
         ) : (
-          <div key={result.id} title={result.name}>
-            {result.map((result) => (
-              <Result
-                key={result.id}
-                wineId={result.id}
-                title={result.name}
-                type={result.type}
-                nation={result.nation}
-                local={result.local}
-                price={result.price}
-                abv={result.abv}
-                varieties={result.varieties}
-              />
-            ))}
+          <ResultWrapper key={result.id} title={result.name}>
+            {result.map((result) =>
+              bookmarkList.some((bookmark) => bookmark.wineId === result.id) ? (
+                <Result
+                  key={result.id}
+                  wineId={result.id}
+                  title={result.name}
+                  type={result.type}
+                  nation={result.nation}
+                  local={result.local}
+                  price={result.price}
+                  abv={result.abv}
+                  varieties={result.varieties}
+                  bookmarked={true}
+                />
+              ) : (
+                <Result
+                  key={result.id}
+                  wineId={result.id}
+                  title={result.name}
+                  type={result.type}
+                  nation={result.nation}
+                  local={result.local}
+                  price={result.price}
+                  abv={result.abv}
+                  varieties={result.varieties}
+                  bookmarked={false}
+                />
+              )
+            )}
             <Button onClick={() => setIsLoaded(false)}>돌아가기</Button>
-          </div>
+          </ResultWrapper>
         )}
-      </MainContainer>
+      </BgContainer>
     </>
   );
 }

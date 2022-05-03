@@ -12,7 +12,7 @@ const bookmarkRouter = Router();
 bookmarkRouter.post("/bookmark", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-    const wineId = req.body.wineId;
+    const { wineId } = req.body;
 
     const newBookmark = await bookmarkService.addBookmark({
       userId,
@@ -72,10 +72,8 @@ bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) =>
     const page = req.query.page || 1; // default 1페이지
     const maxBookmark = req.query.maxBookmark || 10; //default 10개
     const userId = req.currentUserId;
-    /** 서비스단으로 이동 예정 */
-    const totalBookmark = await bookmarkModel.countDocuments({ userId }).exec();
-    const finalPage = Math.ceil(totalBookmark / maxBookmark);
 
+    //const finalPage = bookmarkService.getFinalPage({userId, maxBookmark});
     const bookmarkList = await bookmarkService.getBookmarkListPage({
       userId,
       page,
@@ -85,7 +83,6 @@ bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) =>
     const body = {
       success: true,
       page: page,
-      finalPage: finalPage,
       bookmark: bookmarkList,
     };
 
