@@ -35,8 +35,8 @@ class bookmarkService {
     return Bookmark.findBookmarkById(BookmarkId);
   }
 
-  static async getFinalPage(maxBookmark) {
-    const finalPage = await Bookmark.findFinalPage(maxBookmark);
+  static async getFinalPage({userId, maxBookmark}) {
+    const finalPage = await Bookmark.findFinalPage({userId, maxBookmark});
     return finalPage;
   }
 
