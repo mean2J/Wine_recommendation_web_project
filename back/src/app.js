@@ -27,19 +27,19 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  session({
-    secret: process.env.JWT_SECRET_KEY,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: MONGODB_URI, collectionName: "session" }),
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24
-    }
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.JWT_SECRET_KEY,
+//     resave: false,
+//     saveUninitialized: true,
+//     store: MongoStore.create({ mongoUrl: MONGODB_URI, collectionName: "session" }),
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24
+//     }
+//   })
+// );
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 app.use(swaggerDoc);
 
 app.get("/", (req, res) => {

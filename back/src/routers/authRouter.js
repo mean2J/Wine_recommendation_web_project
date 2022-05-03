@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { passport } from "../auths/passport/index.js";
-import jwt from "jsonwebtoken";
 import {body, matchedData} from "express-validator";
 import {validationErrorCatcher} from "../middlewares/errorMiddleware.js";
 import {UserService} from "../services/userService.js";
@@ -61,7 +60,7 @@ authRouter.post(
     .bail()
     .isString(),
   validationErrorCatcher,
-  passport.authenticate("localStrategy"),
+  passport.authenticate("localStrategy", { session: false }),
   async (req, res, next) => {
     try {
       const userInfo = matchedData(req);
@@ -74,9 +73,15 @@ authRouter.post(
 
       await UserService.updateUser(userId, fieldToUpdate);
 
+      const jwt = issueJWT(user);
+
       const body = {
         success: true,
-        user,
+        user: {
+          ...user,
+          token: jwt.token,
+          expiresIn: jwt.expires
+        },
       };
 
       res.status(200).json(body);
@@ -195,25 +200,26 @@ authRouter.get(
   passport.authenticate("googleStrategy", { scope: ["profile", "email"] })
 );
 
-authRouter.get("/auth/google/signout",
-  async (req, res, next) => {
-    req.logout();
-    req.session.destroy((error) => {
-      if (error)
-        next(error);
-
-      const body = {
-        success: true,
-        message: "성공적으로 로그아웃되었습니다.",
-      };
-
-      res.status(200).json(body);
-    });
-  });
+// authRouter.get("/auth/google/signout",
+//   async (req, res, next) => {
+//     req.logout();
+//     req.session.destroy((error) => {
+//       if (error)
+//         next(error);
+//
+//       const body = {
+//         success: true,
+//         message: "성공적으로 로그아웃되었습니다.",
+//       };
+//
+//       res.status(200).json(body);
+//     });
+//   });
 
 authRouter.get(
   "/auth/google/callback",
   passport.authenticate("googleStrategy", {
+    session: false,
     failureMessage: "구글 로그인에 실패했습니다."
   }),
   async (req, res, next) => {
@@ -224,13 +230,17 @@ authRouter.get(
 
     await UserService.updateUser(user.id, fieldToUpdate);
 
+    const jwt = issueJWT(user);
+
     const body = {
       success: true,
       user: {
         id: user.id,
         name: user.name,
         email: user.email,
-      }
+        token: jwt.token,
+        expiresIn: jwt.expires
+      },
     };
 
     res.status(201).json(body);
