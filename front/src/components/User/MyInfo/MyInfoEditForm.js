@@ -17,7 +17,17 @@ const MyInfoEditContainer = styled(Card)`
   border: none;
 `;
 
-const NameForm = styled(Form.Item)``;
+const NameForm = styled(Form.Item)`
+  margin-top: 40px;
+`;
+
+const NameInput = styled(Input)`
+  border-radius: 15px;
+`;
+
+const StyledArea = styled(TextArea)`
+  border-radius: 15px;
+`;
 
 const MyInfoButton = styled(Button)`
   font-weight: 400;
@@ -59,7 +69,7 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
       <MyInfoEditContainer>
         <Form
           name="basic"
-          labelCol={{ span: 8 }}
+          labelCol={{ span: 5 }}
           wrapperCol={{ span: 16 }}
           initialValues={{
             email: email,
@@ -80,7 +90,7 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
               },
             ]}
           >
-            <Input onChange={(e) => setName(e.target.value)} />
+            <NameInput onChange={(e) => setName(e.target.value)} />
           </NameForm>
           <Form.Item
             label="소개"
@@ -92,15 +102,14 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
               },
             ]}
           >
-            <TextArea
-              showCount
+            <StyledArea
               maxLength={100}
-              style={{ height: 120 }}
+              autoSize={{ minRows: 3, maxRows: 6 }}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Form.Item wrapperCol={{ offset: 15, span: 16 }}>
             <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
               수정하기
             </MyInfoButton>
