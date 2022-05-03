@@ -33,6 +33,17 @@ class Bookmark {
     return bookmarkListAll;
   }
 
+  /**
+   * bookmark 페이징 리스트 마지막 페이지 번호 반환
+   */
+
+  static async findFinalPage(maxBookmark) {
+    const totalBookmark = await bookmarkModel.countDocuments({ userId })
+    const finalPage = Math.ceil(totalBookmark / maxBookmark);
+    return finalPage;
+  }
+
+
 /**
  * {userId, page, maxBookmark}
  * userId로 찾은 bookmark 리스트를 maxBookmark 단위로 페이징하여 반환

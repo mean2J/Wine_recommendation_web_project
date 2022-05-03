@@ -5,7 +5,9 @@ const bookmarkSchema = new Schema({
   //북마크 id : uuid
   id: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    index: true
   },
   //로그인한 유저의 아이디
   userId: {
