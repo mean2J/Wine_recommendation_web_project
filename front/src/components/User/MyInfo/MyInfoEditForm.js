@@ -7,14 +7,16 @@ import styled from "styled-components";
 const { TextArea } = Input;
 
 const MyInfoEditContainer = styled(Card)`
+  width: 642px;
+  margin-left: 260px;
   margin-top: 40px;
-  margin-left: 140px;
-  margin-right: 140px;
   margin-bottom: 40px;
 
   background: #f8f9fa;
   border-radius: 15px;
   border: none;
+
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const NameForm = styled(Form.Item)`
