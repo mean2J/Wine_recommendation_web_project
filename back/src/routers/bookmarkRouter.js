@@ -12,7 +12,7 @@ const bookmarkRouter = Router();
 bookmarkRouter.post("/bookmark", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-    const wineId = req.body.wineId;
+    const { wineId } = req.body;
 
     const newBookmark = await bookmarkService.addBookmark({
       userId,
