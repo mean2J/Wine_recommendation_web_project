@@ -53,6 +53,16 @@ const WineSchema = new Schema({
     type: Number,
     required: true,
   },
+  rating: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
+  ratingCnt: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
 });
 
 const WineModel = model("Wine", WineSchema);
