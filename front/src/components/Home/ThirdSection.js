@@ -133,11 +133,6 @@ const flavorRadarOptions = {
   },
 };
 
-// const typeOptions = {
-//   maintainAspectRatio: true,
-//
-// };
-
 const TrdSection = styled.section`
   background-color: #f9fafb;
   height: 190vh;

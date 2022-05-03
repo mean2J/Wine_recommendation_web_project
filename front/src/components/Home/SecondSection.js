@@ -1,8 +1,28 @@
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
-import { Chart as ChartJS, registerables } from "chart.js";
+import {
+  Chart as ChartJS,
+  registerables,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
-ChartJS.register(...registerables);
+ChartJS.register(
+  ...registerables,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 const SecSection = styled.section`
   height: 100vh;
 `;
@@ -80,10 +100,17 @@ const SecStaticsBox = styled(StaticsBox)`
   margin-right: 20px;
   position: relative;
   top: 5%;
-  width: 332px;
+  width: 700px;
 `;
-const SecStaticsBox2 = styled(SecStaticsBox)`
-  margin: 0;
+
+const ContentTitle = styled.span`
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 28px;
+  display: flex;
+  justify-content: center;
+  color: #fd6585;
+  margin: 20px auto;
 `;
 
 const wineInfoData = {
@@ -106,6 +133,50 @@ const wineInfoData = {
   ],
 };
 
+const growthData = {
+  labels: ["2018", "2019", "2020"],
+  datasets: [
+    {
+      label: "와인",
+      data: [40291, 43495, 54192],
+      backgroundColor: "rgba(75,192,192,0.2)",
+      borderColor: "rgba(75,192,192,1)",
+      yAxisID: "y",
+    },
+    {
+      label: "맥주",
+      data: [387981, 360131, 277931],
+      backgroundColor: "rgba(113, 88, 145, 0.2)",
+      borderColor: "rgba(113, 88, 145, 1)",
+      yAxisID: "y1",
+    },
+  ],
+};
+
+const growthOptions = {
+  responsive: true,
+  interaction: {
+    mode: "index",
+    intersect: false,
+  },
+  stacked: false,
+  scales: {
+    y: {
+      type: "linear",
+      display: true,
+      position: "left",
+    },
+    y1: {
+      type: "linear",
+      display: true,
+      position: "right",
+      grid: {
+        drawOnChartArea: false,
+      },
+    },
+  },
+};
+
 function SecondSection() {
   const animatedItem = {
     0: useScrollFadeIn("up", 0.9, 0),
@@ -114,7 +185,6 @@ function SecondSection() {
     3: useScrollFadeIn("up", 0.9, 0),
     4: useScrollFadeIn("up", 0.9, 0.1),
     5: useScrollFadeIn("up", 0.9, 0.2),
-    6: useScrollFadeIn("up", 0.9, 0.3),
   };
   return (
     <>
@@ -132,6 +202,7 @@ function SecondSection() {
           </ReasonTextWrapper>
           <StaticsWrapper>
             <StaticsBox {...animatedItem[2]}>
+              <ContentTitle>와인 수입</ContentTitle>
               <Line data={wineInfoData} />
               수출입무역통계(관세청)
             </StaticsBox>
@@ -151,10 +222,13 @@ function SecondSection() {
               와인에 대한 다양한 고민을 해결해 드립니다!
             </SecrDesc>
           </SecrTextWrapper>
-          {/* <SecStaticsWrapper>
-            <SecStaticsBox {...animatedItem[5]}></SecStaticsBox>
-            <SecStaticsBox2 {...animatedItem[6]}></SecStaticsBox2>
-          </SecStaticsWrapper> */}
+          <SecStaticsWrapper>
+            <SecStaticsBox {...animatedItem[5]}>
+              <ContentTitle>맥주 와인 수입량</ContentTitle>
+              <Line data={growthData} options={growthOptions} />
+              맥주 와인 수입 통계(관세청)
+            </SecStaticsBox>
+          </SecStaticsWrapper>
         </SecReasonWrapper>
       </SecSection>
       <ThirdSection />
