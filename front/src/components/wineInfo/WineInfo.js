@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import * as Api from "../../api";
 import { Steps, Button } from "antd";
 import styled from "styled-components";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -83,6 +85,7 @@ function WineInfo() {
   const current = useRecoilValue(currentAtom);
   const [isLoaded, setIsLoaded] = useRecoilState(isLoadedAtom);
   const result = useRecoilValue(resultAtom);
+  const [bookmarkList, setBookmarkList] = useState([]);
   const steps = [
     {
       title: "인트로",
@@ -97,6 +100,13 @@ function WineInfo() {
       description: "어떤 맛을 선호하시나요?",
     },
   ];
+
+  useEffect(() => {
+    Api.get("bookmarklist").then((res) => {
+      const data = res.data.bookmark;
+      setBookmarkList(data);
+    });
+  }, []);
 
   return (
     <>
@@ -130,20 +140,35 @@ function WineInfo() {
           </>
         ) : (
           <ResultWrapper key={result.id} title={result.name}>
-            {result.map((result) => (
-              <Result
-                key={result.id}
-                wineId={result.id}
-                title={result.name}
-                type={result.type}
-                nation={result.nation}
-                local={result.local}
-                price={result.price}
-                abv={result.abv}
-                varieties={result.varieties}
-              />
-
-            ))}
+            {result.map((result) =>
+              bookmarkList.some((bookmark) => bookmark.wineId === result.id) ? (
+                <Result
+                  key={result.id}
+                  wineId={result.id}
+                  title={result.name}
+                  type={result.type}
+                  nation={result.nation}
+                  local={result.local}
+                  price={result.price}
+                  abv={result.abv}
+                  varieties={result.varieties}
+                  bookmarked={true}
+                />
+              ) : (
+                <Result
+                  key={result.id}
+                  wineId={result.id}
+                  title={result.name}
+                  type={result.type}
+                  nation={result.nation}
+                  local={result.local}
+                  price={result.price}
+                  abv={result.abv}
+                  varieties={result.varieties}
+                  bookmarked={false}
+                />
+              )
+            )}
             <Button onClick={() => setIsLoaded(false)}>돌아가기</Button>
           </ResultWrapper>
         )}
