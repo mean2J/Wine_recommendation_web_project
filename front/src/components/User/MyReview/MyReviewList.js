@@ -44,7 +44,7 @@ function MyReviewList() {
 
   useEffect(() => {
     getMyReviewList();
-  }, []);
+  }, [myReviewList]);
 
   return (
     <MyReviewListContainer>

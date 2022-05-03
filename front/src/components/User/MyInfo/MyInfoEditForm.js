@@ -70,12 +70,6 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          {/* <Form.Item
-            label="이메일"
-            name="email"
-          >
-            <Input email disabled={true} />
-          </Form.Item> */}
           <NameForm
             label="이름"
             name="name"

@@ -1,6 +1,8 @@
 import { Card, Row, Image, Rate } from "antd";
-
+import { useState } from "react";
 import styled from "styled-components";
+
+import DeleteModal from "./DeleteModal";
 
 const ReviewkItemContainer = styled(Card)`
   border: None;
@@ -36,9 +38,6 @@ const InfoWrapper = styled.div`
 
 const ReviewImg = styled(Image)`
   border-radius: 5px;
-
-  postion: abosulte;
-  top: 50%;
 `;
 
 const InfoSection = styled.div`
@@ -75,6 +74,12 @@ const BtnWrapper = styled.div`
 `;
 
 function ReviewItem({ reviewInfo }) {
+  const [isModal, setIsModal] = useState(false);
+
+  const showModal = () => {
+    setIsModal(true);
+  };
+
   return (
     <>
       <ReviewkItemContainer>
@@ -99,8 +104,17 @@ function ReviewItem({ reviewInfo }) {
             </div>
             <BtnWrapper>
               <button className="btn_fix">수정</button>
-              <button className="btn_delete">삭제</button>
+              <button className="btn_delete" onClick={showModal}>
+                삭제
+              </button>
             </BtnWrapper>
+            {isModal && (
+              <DeleteModal
+                isModal={isModal}
+                setIsModal={setIsModal}
+                reviewId={reviewInfo.id}
+              />
+            )}
           </InfoWrapper>
         </ReviewWrapper>
       </ReviewkItemContainer>
