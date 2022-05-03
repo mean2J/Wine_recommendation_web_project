@@ -24,22 +24,36 @@ const Heart = styled(HeartFilled)`
   }
 `;
 
-function BookmarkButton({ isBookmarked, setIsBookmarked, wineId }) {
+function BookmarkButton({
+  isResultPage,
+  isBookmarked,
+  setIsBookmarked,
+  wineId,
+  bookmarkList,
+  setBookmarkList,
+}) {
+  // 선택된 북마크를 해제하고 delete 요청
   const uncheckButton = async () => {
-    // 선택된 북마크를 해제하고 delete 요청
-    setIsBookmarked(!isBookmarked);
-    console.log("북마크 삭제");
+    // 필터링 결과 페이지일 경우
+    if (isResultPage) {
+      setIsBookmarked(!isBookmarked);
+    }
+
     // 북마크 삭제
     if (isBookmarked) {
       await Api.del(`bookmark/${wineId}`).then((res) => {
-        console.log(res);
+        const newState = bookmarkList.filter(
+          (item) => item.wineInfo.id !== wineId
+        );
+        setBookmarkList(newState);
       });
     }
   };
+
   // 북마크 체크 할 경우 색상이 칠해지면서 post 요청
   const checkButton = async () => {
     setIsBookmarked(!isBookmarked);
-    console.log("북마크 추가");
+
     // 북마크 추가
     if (!isBookmarked) {
       await Api.post("bookmark", { wineId }).then((res) => {

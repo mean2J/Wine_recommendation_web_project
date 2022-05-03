@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Api from "../api";
 import { UserStateContext } from "../App";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -10,7 +10,8 @@ import { Card, Tabs } from "antd";
 import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
-// import ReviewList from "./review/ReviewList";
+import MyReviewList from "./Review/MyReviewList";
+
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
@@ -21,7 +22,6 @@ const MyPageContainer = styled.div`
 `;
 
 const MyPageSection = styled(Card)`
-  position: absolute;
   width: 1200px;
   left: 360px;
   top: 130px;
@@ -41,7 +41,7 @@ const TitleText = styled.h2`
 
 const InfoWrapper = styled.div``;
 
-function MyPage() {
+function MyPage(props) {
   const navigate = useNavigate();
 
   const [mypageOwner, setMypageOwner] = useState(null);
@@ -71,6 +71,12 @@ function MyPage() {
   if (!isFetchCompleted) {
     return "로딩중입니다...";
   }
+  // test중
+
+  const onTabClick = (id) => {
+    localStorage.setItem("tabKey", id);
+    navigate(`/myPage/${id}`);
+  };
 
   return (
     <>
@@ -86,11 +92,13 @@ function MyPage() {
             <TitleText>마이 페이지</TitleText>
           </TitleWrapper>
           <InfoWrapper>
-            <Tabs defaultActiveKey="1">
+            <Tabs
+              defaultActiveKey={localStorage.getItem("tabKey")}
+              onChange={onTabClick}
+            >
               <TabPane
                 tab={<span style={{ fontSize: 18 }}>내 정보</span>}
                 key="1"
-                forceRender="true"
               >
                 {isEditing ? (
                   <MyInfoEditForm
@@ -112,7 +120,7 @@ function MyPage() {
                 tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
                 key="3"
               >
-                {/* <ReviewList /> */}
+                <MyReviewList />
               </TabPane>
             </Tabs>
           </InfoWrapper>

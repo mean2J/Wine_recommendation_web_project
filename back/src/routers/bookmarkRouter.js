@@ -73,7 +73,7 @@ bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) =>
     const maxBookmark = req.query.maxBookmark || 10; //default 10개
     const userId = req.currentUserId;
 
-    const finalPage = bookmarkService.getFinalPage(maxBookmark);
+    //const finalPage = bookmarkService.getFinalPage({userId, maxBookmark});
     const bookmarkList = await bookmarkService.getBookmarkListPage({
       userId,
       page,
@@ -83,7 +83,6 @@ bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) =>
     const body = {
       success: true,
       page: page,
-      finalPage: finalPage,
       bookmark: bookmarkList,
     };
 

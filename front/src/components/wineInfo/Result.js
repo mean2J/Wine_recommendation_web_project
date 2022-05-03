@@ -1,12 +1,13 @@
-import { Card, Rate } from "antd";
+import { BackTop, Card, Rate } from "antd";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
-import * as Api from "../../api";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 
 const Container = styled.div`
-  /* height: auto; */
+  &:first-child {
+    margin-top: 60px;
+  }
 `;
 
 const StyledCard = styled(Card)`
@@ -15,15 +16,17 @@ const StyledCard = styled(Card)`
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
   border-radius: 20px 20px 0 0;
   border: 0;
-  /* margin-bottom: 30px; */
   z-index: 0;
+  .ant-card-body {
+    padding: 16px;
+  }
 `;
 
 const ContentWrapper = styled.div`
   z-index: 10;
   display: flex;
   flex-direction: row;
-  padding-bottom: 16px;
+  /* padding-bottom: 16px; */
 `;
 
 const BottleImg = styled.div`
@@ -151,24 +154,26 @@ const VarietyInfo = styled.div`
   line-height: 24px;
 `;
 
-function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  useEffect(() => {
-    Api.get("bookmarklist").then((res) => {
-      const bookmarkList = res.data.bookmark;
-      const checked = bookmarkList.some(
-        (bookmark) => bookmark.wineId === wineId
-      );
-      setIsBookmarked(checked);
-    });
-  }, [wineId]);
+function Result({
+  wineId,
+  nation,
+  title,
+  type,
+  local,
+  price,
+  abv,
+  varieties,
+  bookmarked,
+}) {
+  const isResultPage = true; // 북마크 분기점
+  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
 
   return (
     <>
       <Container>
         <StyledCard>
           <BookmarkButton
+            isResultPage={isResultPage}
             isBookmarked={isBookmarked}
             setIsBookmarked={setIsBookmarked}
             wineId={wineId}
@@ -193,7 +198,7 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
               <RatingContents>
                 <RatingNum>4.5</RatingNum>
                 <RatingDetail>
-                  <Rate disabled defaultValue={2} />
+                  <Rate disabled defaultValue={4} />
                   <ReviewNum>1702개의 리뷰</ReviewNum>
                 </RatingDetail>
               </RatingContents>
@@ -203,6 +208,7 @@ function Result({ wineId, nation, title, type, local, price, abv, varieties }) {
         </StyledCard>
       </Container>
       <ReviewForm wineId={wineId}></ReviewForm>
+      <BackTop />
     </>
   );
 }

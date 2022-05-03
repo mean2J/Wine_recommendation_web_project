@@ -11,14 +11,12 @@ info:
     을 참고하세요.
   version: 1.0.0
 servers:
-  - url: 'localhost:5000/docs'
+  - url: 'localhost:5001/docs'
 tags:
   - name: users
     description: '유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등'
   - name: reviews
     description: '리뷰 작성, 조회, 수정, 삭제 등'
-  - name: bookmark
-    description: '북마크 생성, 조회, 삭제 등'
 paths:
   /users/signup:
     post:
@@ -624,9 +622,13 @@ paths:
                   type: string
                 content:
                   type: string
+                rating:
+                  type: number
+                  format: int32
             example:
               title: 리뷰 제목
               content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+              rating: 3
       responses:
         '201':
           description: 정상적으로 리뷰가 작성되었습니다.
@@ -668,6 +670,10 @@ paths:
                           name:
                             type: string
                             description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
                       createdAt:
                         type: string
                         format: date
@@ -684,6 +690,7 @@ paths:
                   wine:
                     id: 137198
                     name: 'Altair, Sideral'
+                  rating: 3
                   createdAt: 2022-04-29T07:46:27.333Z
   '/reviews/{reviewId}':
     get:
@@ -787,9 +794,13 @@ paths:
                   type: string
                 content:
                   type: string
+                rating:
+                  type: number
+                  format: int32
             example:
               title: 새로운 리뷰 제목
               content: 크리스마스를 위해 한 병 샀는데 좋았습니다
+              rating: 4
       responses:
         '201':
           description: 정상적으로 리뷰를 편집했습니다.
@@ -831,6 +842,10 @@ paths:
                           name:
                             type: string
                             description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
                       createdAt:
                         type: string
                         format: date
@@ -847,6 +862,7 @@ paths:
                   wine:
                     id: 137198
                     name: 'Altair, Sideral'
+                  rating: 4
                   createdAt: 2022-04-29T07:46:27.333Z
     delete:
       tags:
