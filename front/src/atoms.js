@@ -1,5 +1,10 @@
 import { atom } from "recoil";
 
+export const currentAtom = atom({
+  key: "current",
+  default: 0,
+});
+
 export const priceAtom = atom({
   key: "price",
   default: [0, 50000],
@@ -38,4 +43,14 @@ export const tanninAtom = atom({
 export const isCheckedAtom = atom({
   key: "isChecked",
   default: false,
+});
+
+export const isLoadedAtom = atom({
+  key: "isLoaded",
+  default: false,
+});
+
+export const resultAtom = atom({
+  key: "result",
+  default: {},
 });
