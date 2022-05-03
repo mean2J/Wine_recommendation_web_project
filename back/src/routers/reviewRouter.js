@@ -114,8 +114,12 @@ reviewRouter.get(
 
       const filteredReviews =
         reviews.map((review) => {
-          return removeFields(review, ["_id", "updatedAt", "__v"]);
+          const newReview = removeFields(review, ["_id", "updatedAt", "__v"]);
+          newReview.author = { id: author.id, name: author.name }
+
+          return newReview;
         });
+
 
       const body = {
         success: true,
