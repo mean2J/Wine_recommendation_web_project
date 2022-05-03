@@ -1,11 +1,20 @@
 import { Modal, message, Button } from "antd";
 import * as Api from "../../../api";
 
-function DeleteModal({ isModal, setIsModal, reviewId }) {
+function DeleteModal({
+  isModal,
+  setIsModal,
+  reviewId,
+  myReviewList,
+  setMyReviewList,
+}) {
   // 리뷰 삭제
   const handleDelete = async () => {
     await Api.del(`reviews/${reviewId}`);
     message.info("리뷰 삭제가 완료되었습니다.");
+    // 필터링
+    const filterData = myReviewList.filter((review) => review.id !== reviewId);
+    setMyReviewList(filterData);
     setIsModal(false);
   };
 

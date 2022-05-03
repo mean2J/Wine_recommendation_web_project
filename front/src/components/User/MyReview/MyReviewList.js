@@ -38,19 +38,24 @@ function MyReviewList() {
     let res = await Api.get(`reviews/authors/${userState.user.id}`);
     console.log("내 리뷰들 불러오기", res);
     const data = res.data.reviews;
-    console.log(data);
+
     setMyReviewList(data);
   };
 
   useEffect(() => {
     getMyReviewList();
-  }, [myReviewList]);
+  }, [setMyReviewList]);
 
   return (
     <MyReviewListContainer>
       {myReviewList.length ? (
         myReviewList.map((myReview, idx) => (
-          <MyReviewItem key={idx} reviewInfo={myReview} />
+          <MyReviewItem
+            key={myReview.id}
+            reviewInfo={myReview}
+            myReviewList={myReviewList}
+            setMyReviewList={setMyReviewList}
+          />
         ))
       ) : (
         <DefaultMessage>

@@ -1,4 +1,4 @@
-import { Card, Row, Image, Rate } from "antd";
+import { Card, Image, Rate, Button } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -73,7 +73,15 @@ const BtnWrapper = styled.div`
   right: 0;
 `;
 
-function ReviewItem({ reviewInfo }) {
+const MyReviewButton = styled(Button)`
+  font-weight: 400;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-right: 5px;
+`;
+
+function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
   const [isModal, setIsModal] = useState(false);
 
   const showModal = () => {
@@ -87,7 +95,7 @@ function ReviewItem({ reviewInfo }) {
           <ImgWrapper>
             <ReviewImg
               width={200}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mg0Z3jjdhhILbiweMfnMc4JSYlaf267GyA&usqp=CAU"
             />
           </ImgWrapper>
           <InfoWrapper>
@@ -103,16 +111,18 @@ function ReviewItem({ reviewInfo }) {
               <ContentWrapper>{reviewInfo.content}</ContentWrapper>
             </div>
             <BtnWrapper>
-              <button className="btn_fix">수정</button>
-              <button className="btn_delete" onClick={showModal}>
+              <MyReviewButton>수정</MyReviewButton>
+              <MyReviewButton onClick={showModal} style={{ color: "red" }}>
                 삭제
-              </button>
+              </MyReviewButton>
             </BtnWrapper>
             {isModal && (
               <DeleteModal
                 isModal={isModal}
                 setIsModal={setIsModal}
                 reviewId={reviewInfo.id}
+                myReviewList={myReviewList}
+                setMyReviewList={setMyReviewList}
               />
             )}
           </InfoWrapper>
