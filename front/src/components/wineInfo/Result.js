@@ -1,11 +1,13 @@
-import { Card, Rate } from "antd";
+import { BackTop, Card, Rate } from "antd";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
 import { useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 
 const Container = styled.div`
-  /* height: auto; */
+  &:first-child {
+    margin-top: 60px;
+  }
 `;
 
 const StyledCard = styled(Card)`
@@ -14,15 +16,17 @@ const StyledCard = styled(Card)`
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
   border-radius: 20px 20px 0 0;
   border: 0;
-  /* margin-bottom: 30px; */
   z-index: 0;
+  .ant-card-body {
+    padding: 16px;
+  }
 `;
 
 const ContentWrapper = styled.div`
   z-index: 10;
   display: flex;
   flex-direction: row;
-  padding-bottom: 16px;
+  /* padding-bottom: 16px; */
 `;
 
 const BottleImg = styled.div`
@@ -194,7 +198,7 @@ function Result({
               <RatingContents>
                 <RatingNum>4.5</RatingNum>
                 <RatingDetail>
-                  <Rate disabled defaultValue={2} />
+                  <Rate disabled defaultValue={4} />
                   <ReviewNum>1702개의 리뷰</ReviewNum>
                 </RatingDetail>
               </RatingContents>
@@ -204,6 +208,7 @@ function Result({
         </StyledCard>
       </Container>
       <ReviewForm wineId={wineId}></ReviewForm>
+      <BackTop />
     </>
   );
 }

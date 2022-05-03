@@ -1,9 +1,9 @@
-import { Button, Collapse, Input, List, Modal } from "antd";
+import { Button, Collapse, Divider, List} from "antd";
 import * as Api from "../../api";
 import { useState, useEffect, useCallback } from "react";
-import TextArea from "antd/lib/input/TextArea";
 import WineReview from "./WineReview";
 import styled from "styled-components";
+import ReviewCard from "./ReviewCard";
 
 const { Panel } = Collapse;
 
@@ -15,7 +15,7 @@ const StyledCollapse = styled(Collapse)`
   border: 0;
   margin-bottom: 30px;
   z-index: 0;
-  &:active {
+  .ant-collapse-item:last-child > .ant-collapse-content {
     border-radius: 0 0 20px 20px;
   }
 `;
@@ -34,19 +34,21 @@ function ReviewForm({ wineId }) {
   return (
     <StyledCollapse onChange={handleReview}>
       <Panel header="⭐리뷰 보기 / 작성⭐" key="1" style={{ border: "0" }}>
-        <WineReview wineId={wineId} />
+        <WineReview wineId={wineId} setReview={setReview} />
+        <Divider />
         <List
           itemLayout="horizontal"
           dataSource={review}
           renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta
-                key={item.id}
-                title={<p>{item.title}</p>}
-                description={<p>{item.content}</p>}
-                rating={<p>{item.rating}</p>}
-              />
-            </List.Item>
+            <>
+            <ReviewCard
+              key={item.id}
+              title={item.title}
+              content={item.content}
+              createdAt={item.createdAt}
+              rating={item.rating}
+            ></ReviewCard>
+            </>
           )}
         />
       </Panel>
