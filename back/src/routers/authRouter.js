@@ -5,6 +5,10 @@ import {validationErrorCatcher} from "../middlewares/errorMiddleware.js";
 import {UserService} from "../services/userService.js";
 import dayjs from "dayjs";
 import { issueJWT } from "../utils/utils.js";
+import axios from "axios";
+import {User} from "../db/index.js";
+import bcrypt from "bcrypt";
+import {v4 as uuidv4} from "uuid";
 
 const authRouter = Router();
 
@@ -195,41 +199,103 @@ authRouter.get("/auth/local/signout",
     res.status(200).json(body);
 });
 
-authRouter.get(
+authRouter.post(
   "/auth/google/signin",
-  passport.authenticate("googleStrategy", { scope: ["profile", "email"] })
-);
-
-authRouter.get(
-  "/auth/google/callback",
-  passport.authenticate("googleStrategy", {
-    session: false,
-    failureMessage: "구글 로그인에 실패했습니다."
-  }),
   async (req, res, next) => {
-    const user = req.user;
+    try {
+      const {token} = req.body;
+      const response = await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}`);
 
-    const date = dayjs().toISOString();
-    const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+      const {email, name} = response.data;
 
-    await UserService.updateUser(user.id, fieldToUpdate);
+      const userExists = await User.exists({ email: email });
 
-    const jwt = issueJWT(user);
+      if (!userExists) {
+        const hashedPassword = await bcrypt.hash(process.env.JWT_SECRET_KEY, 10);
 
-    const body = {
-      success: true,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        token: jwt.token,
-        expiresIn: jwt.expires
-      },
-    };
+        const id = uuidv4();
 
-    res.status(201).json(body);
+        const createdNewUser = await User.createUser({
+          id: id,
+          name: name,
+          email: email,
+          password: hashedPassword
+        });
+
+        const jwt = issueJWT(createdNewUser);
+
+        const body = {
+          success: true,
+          user: {
+            id: createdNewUser.id,
+            name: createdNewUser.name,
+            email: createdNewUser.password,
+            token: jwt.token,
+            expiresIn: jwt.expires
+          }
+        };
+
+        res.status(200).json(body);
+      }
+      else {
+        const user = await UserService.getUserByEmail(email);
+
+        const jwt = issueJWT(user);
+
+        const date = dayjs().toISOString();
+        const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+
+        await UserService.updateUser(user.id, fieldToUpdate);
+
+        const body = {
+          success: true,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.password,
+            token: jwt.token,
+            expiresIn: jwt.expires
+          }
+        };
+
+        res.status(200).json(body);
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 );
+//
+// authRouter.get(
+//   "/auth/google/callback",
+//   passport.authenticate("googleStrategy", {
+//     session: false,
+//     failureMessage: "구글 로그인에 실패했습니다."
+//   }),
+//   async (req, res, next) => {
+//     const user = req.user;
+//
+//     const date = dayjs().toISOString();
+//     const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+//
+//     await UserService.updateUser(user.id, fieldToUpdate);
+//
+//     const jwt = issueJWT(user);
+//
+//     const body = {
+//       success: true,
+//       user: {
+//         id: user.id,
+//         name: user.name,
+//         email: user.email,
+//         token: jwt.token,
+//         expiresIn: jwt.expires
+//       },
+//     };
+//
+//     res.status(201).json(body);
+//   }
+// );
 
 authRouter.get("/auth/protected",
   passport.authenticate("jwtStrategy", { session: false }),
