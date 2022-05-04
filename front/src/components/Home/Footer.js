@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
 
@@ -71,11 +70,8 @@ function Footer() {
             <span>로그인</span> 하고 사용해보세요
           </FooterTitle>
           <FooterDesc {...animatedItem[1]}>
-            본 서비스는 <span>코로나</span> 상황에서의 빠르고 많은 백신 접종과{" "}
-            <br />
-            유동성을 근거로, 사람들이 <span>와인</span>을 즐기는데에 도움을{" "}
-            <br />
-            주고자 제안된 서비스입니다.
+            사용자의 입맛에 맛는 <span>와인</span>을 추천하고, <br />
+            <span>와인</span>을 즐기는데에 도움을 주고자 제안한 서비스 입니다.
           </FooterDesc>
           <FooterBtn {...animatedItem[2]}>추천 받아보기</FooterBtn>
         </FooterWrapper>

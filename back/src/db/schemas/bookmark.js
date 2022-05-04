@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 const {Schema, model} = mongoose;
 
-const bookmarkSchema = new Schema({
+const BookmarkSchema = new Schema({
   //북마크 id : uuid
   id: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    index: true
   },
   //로그인한 유저의 아이디
   userId: {
@@ -23,6 +25,6 @@ const bookmarkSchema = new Schema({
 }
 );
 
-const bookmarkModel = model("Bookmark", bookmarkSchema);
+const BookmarkModel = model("Bookmark", BookmarkSchema);
 
-export {bookmarkModel};
+export {BookmarkModel};

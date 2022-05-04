@@ -13,6 +13,8 @@ const MyInfoContainer = styled(Card)`
   background: #f8f9fa;
   border-radius: 15px;
   border: none;
+
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const Name = styled.div`

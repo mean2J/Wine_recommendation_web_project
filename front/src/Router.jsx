@@ -15,6 +15,7 @@ function RouterFile() {
         <Route path="/" exact element={<Main />} />
         <Route path="/wine" element={<WineInfo />} />
         <Route path="/myPage" element={<MyPage/>} />
+        <Route path="/myPage/:tabId" element={<MyPage/>} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/search/:id" element={<SearchWine />} />
       </Routes>

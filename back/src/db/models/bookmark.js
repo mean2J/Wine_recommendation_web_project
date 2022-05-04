@@ -1,11 +1,11 @@
-import {bookmarkModel} from "../schemas/bookmark.js";
+import {BookmarkModel} from "../schemas/bookmark.js";
 
 class Bookmark {
 /**
  * Bookmark 객체 생성
  */
   static async createBookmark(Bookmark) {
-    const newBookmark = await bookmarkModel.create(Bookmark);
+    const newBookmark = await BookmarkModel.create(Bookmark);
     return newBookmark;
   }
 
@@ -13,7 +13,7 @@ class Bookmark {
  * BookmarkId(=id)로 bookmark 리스트에 존재하는지 확인
  */
   static async findBookmarkById(BookmarkId) {
-    const bookmark = await bookmarkModel.findOne({id: BookmarkId});
+    const bookmark = await BookmarkModel.findOne({id: BookmarkId}).lean();
     return bookmark;
   }
 
@@ -21,7 +21,7 @@ class Bookmark {
  * {userId,wineId}로 해당와인이 bookmark 리스트에 존재하는지 확인
  */
   static async findBookmarkByWineId({userId,wineId}) {
-    const bookmark = await bookmarkModel.findOne({userId,wineId});
+    const bookmark = await BookmarkModel.findOne({userId,wineId}).lean();
     return bookmark;
   }
 
@@ -29,9 +29,10 @@ class Bookmark {
  * userId로 bookmark 리스트 찾아서 반환
  */
   static async findBookmarkByUserId(userId) {
-    const bookmarkListAll = await bookmarkModel.find({userId});
+    const bookmarkListAll = await BookmarkModel.find({userId}).lean();
     return bookmarkListAll;
   }
+
 
 /**
  * {userId, page, maxBookmark}
@@ -40,8 +41,8 @@ class Bookmark {
   static async findBookmarkByUserIdPage({userId, page, maxBookmark}) {
     
     const bookmarkListPage =
-    await bookmarkModel
-    .find({userId}) //userID로 bookmark 기록을 찾아서
+    await BookmarkModel
+    .find({userId}).lean() //userID로 bookmark 기록을 찾아서
     .sort({createdAt: -1}) //createAt 기준으로 정렬
     .limit(maxBookmark) //한페이지에서 확인할 수 있는 bookmark의 수 
     .skip((page - 1) * maxBookmark) //페이지에 따른 skip 기준
@@ -55,7 +56,7 @@ class Bookmark {
  * {userId,wineId}와 매칭되는 document 하나를 삭제
  */
   static async deleteBookmarkById({userId,wineId}) {
-    const deleteResult = await bookmarkModel.deleteOne({userId,wineId});
+    const deleteResult = await BookmarkModel.deleteOne({userId,wineId});
     const isDataDeleted = (deleteResult.deletedCount === 1);
     return isDataDeleted;
   }
@@ -65,7 +66,7 @@ class Bookmark {
  * 
  */
    static async deleteBookmarkAllByUserId({userId}) {
-    await bookmarkModel.deleteMany({userId});
+    await BookmarkModel.deleteMany({userId});
   }
 
 }
