@@ -169,6 +169,8 @@ function Result({
   acidity,
   body,
   tannin,
+  rating,
+  ratingCnt,
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
@@ -207,10 +209,10 @@ function Result({
             </InfoColumn>
             <RatingWrapper>
               <RatingContents>
-                <RatingNum>4.5</RatingNum>
+                <RatingNum>{rating}</RatingNum>
                 <RatingDetail>
                   <Rate disabled defaultValue={4} />
-                  <ReviewNum>1702개의 리뷰</ReviewNum>
+                  <ReviewNum>{ratingCnt}개의 리뷰</ReviewNum>
                 </RatingDetail>
               </RatingContents>
               <RatingPrice>가격: \{price}</RatingPrice>
