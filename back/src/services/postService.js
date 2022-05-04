@@ -1,8 +1,7 @@
 import {Post} from "../db/index.js";
-import {Comment} from "../db/index.js";
 import { v4 as uuidv4 } from 'uuid';
 
-class postService {
+class PostService {
   /**
    * Community : post 생성
    */
@@ -23,8 +22,6 @@ class postService {
    */
   static async getPost(postId) {
     const post = await Post.findPostById(postId);
-    const commentList = await Comment.findCommentListByPostId(postId);
-    post.commentList = commentList;
     return post; 
   }
 
@@ -89,4 +86,4 @@ class postService {
 
 }
 
-export {postService};
+export {PostService};
