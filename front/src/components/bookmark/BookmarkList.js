@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useCallback, createContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import BookmarkItem from "./BookmarkItem";
 import styled from "styled-components";
 import * as Api from "../../api";
 import { Row, Card } from "antd";
-
-export const BookmarkListContext = createContext();
-export const SetBookmarkContext = createContext();
 
 const BookmarkListContainer = styled(Row)`
   background-color: #f8f9fa;
@@ -91,24 +88,26 @@ function BookmarkList() {
   }, [bookmarkList, setBookmarkList, target, isLoaded, onIntersect, page]);
 
   return (
-    <BookmarkListContainer>
-      {bookmarkList.length ? (
-        bookmarkList.map((bookmark, idx) => (
-          <BookmarkItem
-            key={idx}
-            wineInfo={bookmark.wineInfo}
-            bookmarkList={bookmarkList} // test
-            setBookmarkList={setBookmarkList} // test
-          />
-        ))
-      ) : (
-        <DefaultMessage>
-          <div>북마크 한 와인이 없습니다.</div>
-          <div>관심있는 와인을 저장 해보세요 🍷</div>
-        </DefaultMessage>
-      )}
-      <div ref={setTarget}></div>
-    </BookmarkListContainer>
+    <>
+      <BookmarkListContainer>
+        {bookmarkList.length ? (
+          bookmarkList.map((bookmark, idx) => (
+            <BookmarkItem
+              key={idx}
+              wineInfo={bookmark.wineInfo}
+              bookmarkList={bookmarkList} // test
+              setBookmarkList={setBookmarkList} // test
+            />
+          ))
+        ) : (
+          <DefaultMessage>
+            <div>북마크 한 와인이 없습니다.</div>
+            <div>관심있는 와인을 저장 해보세요 🍷</div>
+          </DefaultMessage>
+        )}
+        <div ref={setTarget}></div>
+      </BookmarkListContainer>
+    </>
   );
 }
 

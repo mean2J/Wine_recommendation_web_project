@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import BookmarkItem from "./BookmarkItem";
+import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
-import * as Api from "../../api";
+import * as Api from "../../../api";
 import { Row, Card } from "antd";
 
 const MyReviewListContainer = styled(Row)`
@@ -29,15 +29,33 @@ const DefaultMessage = styled(Card)`
   background-color: #f8f9fa;
 `;
 
-function MyReviewList() {
+function MyReviewList({ currentUserId }) {
   const [myReviewList, setMyReviewList] = useState([]);
+
+  const getMyReviewList = useCallback(async () => {
+    if (currentUserId) {
+      let res = await Api.get(`reviews/authors/${currentUserId}`);
+      const data = res.data.reviews;
+
+      setMyReviewList(data);
+    }
+  }, [currentUserId]);
+
+  useEffect(() => {
+    getMyReviewList();
+  }, [getMyReviewList]);
 
   return (
     <MyReviewListContainer>
       {myReviewList.length ? (
-        myReviewList.map((myReview, idx) => (
-          <div>idx</div>
-          // <BookmarkItem key={idx} wineInfo={bookmark.wineInfo} />
+        myReviewList.map((myReview) => (
+          <MyReviewItem
+            key={myReview.id}
+            reviewInfo={myReview}
+            myReviewList={myReviewList}
+            setMyReviewList={setMyReviewList}
+            currentUserId={currentUserId}
+          />
         ))
       ) : (
         <DefaultMessage>
