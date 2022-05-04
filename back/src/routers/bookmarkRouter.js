@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BookmarkService } from "../services/BookmarkService.js";
+import { BookmarkService } from "../services/bookmarkService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 
 
