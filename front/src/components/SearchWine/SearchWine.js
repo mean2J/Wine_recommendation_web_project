@@ -1,12 +1,11 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
 import { Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
 import SearchResult from "./SearchResult";
-import { UserStateContext } from "../../App";
 
 const StyledPagination = styled(Pagination)`
   display: flex;
