@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { passport } from "../auths/passport/index.js";
-import { OAuth2Client } from "google-auth-library";
 import {body, matchedData} from "express-validator";
 import {validationErrorCatcher} from "../middlewares/errorMiddleware.js";
 import {UserService} from "../services/userService.js";
@@ -12,7 +11,6 @@ import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
 
 const authRouter = Router();
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 authRouter.post(
   "/auth/local/signup",
