@@ -107,8 +107,6 @@ function WineInfo() {
       setBookmarkList(data);
     });
   }, []);
-  console.log("📌bookmarklist", bookmarkList);
-  console.log("🧨result", result);
 
   return (
     <>
