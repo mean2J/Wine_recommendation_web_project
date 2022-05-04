@@ -20,19 +20,6 @@ class SearchService {
       isNone = true;
       return { isNone, wines, totalPage };
     }
-    for (let i = 0; i < wines.length; i++) {
-      const wine = wines[i];
-      const wineId = wine.id;
-
-      const { ratingCnt, rating } =
-        await ReviewService.getAverageRatingByWineId(wineId);
-
-      if (wine.price == 9000000) {
-        wine.price = 0;
-      }
-      wine["ratingCnt"] = ratingCnt;
-      wine["rating"] = rating.toFixed(1);
-    }
 
     return { isNone, wines, totalPage };
   }
