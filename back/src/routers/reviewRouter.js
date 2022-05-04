@@ -239,7 +239,7 @@ reviewRouter.delete(
   }
 );
 
-//와인 별점 정보 전송
+//와인 별점 정보 전송 rating, ratingCnt
 reviewRouter.get(
   "/reviews/rating/:wineId",
   loginRequired,
