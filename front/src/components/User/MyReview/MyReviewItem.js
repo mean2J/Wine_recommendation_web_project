@@ -11,7 +11,7 @@ const ReviewkItemContainer = styled(Card)`
   border-radius: 15px;
   background-color: #ffffff;
 
-  width: 751px;
+  width: 900px;
   height: auto;
 
   margin-top: 20px;
@@ -42,6 +42,20 @@ const ReviewImg = styled(Image)`
   border-radius: 5px;
 `;
 
+const HeadSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+`;
+
+const StyledRate = styled(Rate)`
+  display: flex;
+  justify-content: flex-end;
+
+  position: absolute;
+  right: 0;
+`;
+
 const InfoSection = styled.div`
   display: flex;
   justify-content: space-between;
@@ -57,6 +71,11 @@ const Date = styled.div`
   color: #c4c4c4;
   padding-top: 5px;
   margin-left: 230px;
+
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 0;
 `;
 
 const WineName = styled.h3`
@@ -129,14 +148,21 @@ function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
           ) : (
             <InfoWrapper>
               <div className="review_wrapper">
-                <WineName>{wineName}</WineName>
+                <HeadSection>
+                  <WineName>{wineName}</WineName>
+                  <StyledRate
+                    defaultValue={reviewInfo.rating}
+                    disabled={"true"}
+                  />
+                </HeadSection>
                 <InfoSection>
-                  <Rate defaultValue={reviewInfo.rating} disabled={"true"} />
+                  {/* <Rate defaultValue={reviewInfo.rating} disabled={"true"} /> */}
+                  <ReviewTitle>{reviewInfo.title}</ReviewTitle>
                   <Date className="diary_date">
                     {reviewInfo.createdAt.slice(0, 10)}
                   </Date>
                 </InfoSection>
-                <ReviewTitle>{reviewInfo.title}</ReviewTitle>
+                {/* <ReviewTitle>{reviewInfo.title}</ReviewTitle> */}
                 <ContentWrapper>{reviewInfo.content}</ContentWrapper>
               </div>
               <BtnWrapper>
