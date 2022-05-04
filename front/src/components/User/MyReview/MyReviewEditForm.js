@@ -14,7 +14,7 @@ const ReviewEditContainer = styled(Card)`
   width: 751px;
   height: auto;
 
-  margin-top: 20px;
+  margin-top: 0px;
   margin-bottom: 20px;
 `;
 
@@ -24,7 +24,7 @@ const StyledInput = styled(Input)`
 
 const StyledArea = styled(TextArea)`
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 const StyledRate = styled(Rate)`
@@ -45,7 +45,7 @@ const BtnWrapper = styled.div`
 
 const MyInfoButton = styled(Button)`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 5px;
   margin-right: 15px;
 `;

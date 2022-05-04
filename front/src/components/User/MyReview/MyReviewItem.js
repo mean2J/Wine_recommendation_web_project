@@ -11,11 +11,12 @@ const ReviewkItemContainer = styled(Card)`
   border-radius: 15px;
   background-color: #ffffff;
 
-  width: 900px;
+  width: 800px;
   height: auto;
 
   margin-top: 20px;
-  margin-left: 80px;
+  margin-left: 30px;
+  margin-right: 30px;
   margin-bottom: 20px;
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
 `;
@@ -65,7 +66,7 @@ const InfoSection = styled.div`
 
 const ReviewTitle = styled.div`
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
   color: #1e1e1e;
 `;
 
@@ -82,7 +83,7 @@ const Date = styled.div`
 
 const WineName = styled.h3`
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 21px;
   margin-top: 3px;
   margin-bottom: 10px;
@@ -91,6 +92,8 @@ const WineName = styled.h3`
 `;
 const ContentWrapper = styled.div`
   margin-bottom: 40px;
+  font-size: 13px;
+  color: gray;
 `;
 const BtnWrapper = styled.div`
   display: flex;
@@ -103,10 +106,15 @@ const BtnWrapper = styled.div`
 
 const MyReviewButton = styled(Button)`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 5px;
   margin-top: 20px;
   margin-right: 5px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 `;
 
 function ReviewItem({
@@ -140,7 +148,7 @@ function ReviewItem({
         <ReviewWrapper>
           <ImgWrapper>
             <ReviewImg
-              width={200}
+              width={150}
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mg0Z3jjdhhILbiweMfnMc4JSYlaf267GyA&usqp=CAU"
             />
           </ImgWrapper>

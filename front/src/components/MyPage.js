@@ -22,7 +22,7 @@ const MyPageContainer = styled.div`
 `;
 
 const MyPageSection = styled(Card)`
-  width: 1200px;
+  width: 1000px;
   left: 260px;
 
   background: #ffffff;
@@ -37,7 +37,7 @@ const MyPageSection = styled(Card)`
 const TitleWrapper = styled.div``;
 
 const TitleText = styled.h2`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 500;
 `;
 
@@ -102,7 +102,7 @@ function MyPage(props) {
               onChange={onTabClick}
             >
               <TabPane
-                tab={<span style={{ fontSize: 18 }}>내 정보</span>}
+                tab={<span style={{ fontSize: 15 }}>내 정보</span>}
                 key="1"
               >
                 {isMyInfoEditing ? (
@@ -119,13 +119,13 @@ function MyPage(props) {
                 )}
               </TabPane>
               <TabPane
-                tab={<span style={{ fontSize: 18 }}>북마크</span>}
+                tab={<span style={{ fontSize: 15 }}>북마크</span>}
                 key="2"
               >
                 <BookmarkList />
               </TabPane>
               <TabPane
-                tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
+                tab={<span style={{ fontSize: 15 }}>나의 리뷰</span>}
                 key="3"
               >
                 <MyReviewList currentUserId={currentUserId} />

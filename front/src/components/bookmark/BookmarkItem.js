@@ -10,7 +10,7 @@ const BookmarkContainer = styled(Card)`
   border: None;
   border-radius: 10px;
   margin-right: 20px;
-  margin-left: 33px;
+  margin-left: 27px;
   margin-top: 30px;
   margin-bottom: 30px;
 
@@ -21,20 +21,20 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 const contentStyle = {
-  height: "400px",
-  width: "300px",
+  height: "350px",
+  width: "240px",
   color: "black",
   textAlign: "center",
   background: "white",
 };
 
 const Name = styled.div`
-  margin-top: 20px;
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 15px;
   font-weight: 450;
 `;
 
