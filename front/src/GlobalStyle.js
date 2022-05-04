@@ -1,7 +1,6 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://webfontworld.github.io/SCoreDream/SCoreDream.css');
 @font-face {
     font-family: 'SCoreDream';
     font-weight: 100; 
