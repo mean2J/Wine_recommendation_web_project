@@ -2,7 +2,7 @@ import {Bookmark} from "../db/index.js";
 import {Wine} from "../db/index.js";
 import {v4 as uuidv4} from "uuid";
 
-class bookmarkService {
+class BookmarkService {
   static async addBookmark({userId, wineId}) {
     const bookmark = await Bookmark.findBookmarkByWineId({userId, wineId});
     const wineInfo = await Wine.findWineById(wineId);
@@ -35,10 +35,10 @@ class bookmarkService {
     return Bookmark.findBookmarkById(BookmarkId);
   }
 
-  static async getFinalPage(maxBookmark) {
-    const finalPage = await Bookmark.findFinalPage(maxBookmark);
-    return finalPage;
-  }
+  // static async getFinalPage({userId, maxBookmark}) {
+  //   const finalPage = await Bookmark.findFinalPage({userId, maxBookmark});
+  //   return finalPage;
+  // }
 
   static async getBookmarkList(userId) {
     const bookmarkList = await Bookmark.findBookmarkByUserId(userId);
@@ -99,7 +99,6 @@ class bookmarkService {
         wineInfo: wineInfo,
       };
       bookmarkWineList[i] = bookmarkWine;
-      console.log(bookmarkWineList);
     }
     return bookmarkWineList;
   }
@@ -119,4 +118,4 @@ class bookmarkService {
   }
 }
 
-export {bookmarkService};
+export {BookmarkService};

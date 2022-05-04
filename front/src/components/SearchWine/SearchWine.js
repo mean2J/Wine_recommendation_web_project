@@ -1,10 +1,20 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import Result from "../wineInfo/Result";
 import { Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import styled from "styled-components";
+import SearchResult from "./SearchResult";
+
+const StyledPagination = styled(Pagination)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 100px;
+  background-color: #f8f9fa;
+`;
 
 function SearchWine() {
   const location = useLocation();
@@ -45,7 +55,7 @@ function SearchWine() {
 
       <div key={result.id} title={result.name}>
         {result.map((result) => (
-          <Result
+          <SearchResult
             key={result.id}
             wineId={result.id}
             title={result.name}
@@ -57,7 +67,7 @@ function SearchWine() {
             varieties={result.varieties}
           />
         ))}
-        <Pagination
+        <StyledPagination
           simple
           current={currentPage}
           defaultCurrent={1}
