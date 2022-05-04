@@ -50,10 +50,13 @@ function MyPage(props) {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const [isMyInfoEditing, setIsMyInfoEditing] = useState(false);
   const userState = useContext(UserStateContext);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   const fetchMypageOwner = async (ownerId) => {
     const res = await Api.get("users");
     const ownerData = res.data.user;
+
+    setCurrentUserId(ownerData.id);
 
     setMypageOwner(ownerData);
   };
@@ -125,7 +128,7 @@ function MyPage(props) {
                 tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
                 key="3"
               >
-                <MyReviewList />
+                <MyReviewList currentUserId={currentUserId} />
               </TabPane>
             </Tabs>
           </InfoWrapper>

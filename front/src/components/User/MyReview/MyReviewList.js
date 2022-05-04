@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
-import { UserStateContext } from "../../../App";
+import React, { useState, useEffect, useCallback } from "react";
 import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
 import * as Api from "../../../api";
@@ -30,16 +29,17 @@ const DefaultMessage = styled(Card)`
   background-color: #f8f9fa;
 `;
 
-function MyReviewList() {
-  const userState = useContext(UserStateContext);
+function MyReviewList({ currentUserId }) {
   const [myReviewList, setMyReviewList] = useState([]);
 
   const getMyReviewList = useCallback(async () => {
-    let res = await Api.get(`reviews/authors/${userState.user.id}`);
-    const data = res.data.reviews;
+    if (currentUserId) {
+      let res = await Api.get(`reviews/authors/${currentUserId}`);
+      const data = res.data.reviews;
 
-    setMyReviewList(data);
-  }, [userState.user.id]);
+      setMyReviewList(data);
+    }
+  }, [currentUserId]);
 
   useEffect(() => {
     getMyReviewList();
