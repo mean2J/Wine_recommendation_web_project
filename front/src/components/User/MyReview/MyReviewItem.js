@@ -157,13 +157,11 @@ function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
                   />
                 </HeadSection>
                 <InfoSection>
-                  {/* <Rate defaultValue={reviewInfo.rating} disabled={"true"} /> */}
                   <ReviewTitle>{reviewInfo.title}</ReviewTitle>
                   <Date className="diary_date">
                     {reviewInfo.createdAt.slice(0, 10)}
                   </Date>
                 </InfoSection>
-                {/* <ReviewTitle>{reviewInfo.title}</ReviewTitle> */}
                 <ContentWrapper>{reviewInfo.content}</ContentWrapper>
               </div>
               <BtnWrapper>
