@@ -1,5 +1,5 @@
 import { Card, Image, Rate, Button } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import * as Api from "../../../api";
 
@@ -115,14 +115,14 @@ function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
 
   const [Info, setInfo] = useState(reviewInfo);
 
-  const getWineName = async () => {
+  const getWineName = useCallback(async () => {
     const res = await Api.get(`wines/${reviewInfo.wine}`);
     setWineName(res.data.name);
-  };
+  }, [reviewInfo.wine]);
 
   useEffect(() => {
     getWineName();
-  }, []);
+  }, [getWineName]);
 
   const showModal = () => {
     setIsModal(true);

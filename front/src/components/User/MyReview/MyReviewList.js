@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { UserStateContext } from "../../../App";
 import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
@@ -34,16 +34,16 @@ function MyReviewList() {
   const userState = useContext(UserStateContext);
   const [myReviewList, setMyReviewList] = useState([]);
 
-  const getMyReviewList = async () => {
+  const getMyReviewList = useCallback(async () => {
     let res = await Api.get(`reviews/authors/${userState.user.id}`);
     const data = res.data.reviews;
 
     setMyReviewList(data);
-  };
+  }, [userState.user.id]);
 
   useEffect(() => {
     getMyReviewList();
-  }, [setMyReviewList]);
+  }, [getMyReviewList]);
 
   return (
     <MyReviewListContainer>
