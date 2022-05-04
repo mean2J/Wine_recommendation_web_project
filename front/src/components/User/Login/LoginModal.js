@@ -89,7 +89,7 @@ function LoginModal({ isModal, onClose }) {
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const handleOk = async (e) => {
     try {
-      const res = await Api.post("users/signin", {
+      const res = await Api.post("auth/local/signin", {
         email,
         password,
       });
@@ -98,7 +98,7 @@ function LoginModal({ isModal, onClose }) {
       // JWT 토큰은 유저 정보의 token임.
       const jwtToken = user.user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", jwtToken);
+      sessionStorage.setItem("userToken", jwtToken.split(" ")[1]);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
