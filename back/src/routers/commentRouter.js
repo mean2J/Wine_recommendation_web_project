@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { commentService } from "../services/commentService.js";
+import { CommentService } from "../services/commentService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, validationResult } from "express-validator";
@@ -28,11 +28,10 @@ async (req, res, next) => {
 
     const author = user.name;
 
-    const postId = req.body.postId;
-    const content = req.body.content;
+    const {postId, content} = req.body;
 
 
-    const newComment = await commentService.addComment({
+    const newComment = await CommentService.addComment({
       postId,
       userId,
       author,
@@ -57,7 +56,7 @@ commentRouter.get("/commentlist/:postId", loginRequired, async (req, res, next) 
   try {
     const postId = req.params.postId;
     console.log("req.params.id",postId );
-    const commentList = await commentService.getCommentList(postId);
+    const commentList = await CommentService.getCommentList(postId);
 
     const body = {
         success: true,
@@ -85,7 +84,7 @@ commentRouter.put("/comment/:id", loginRequired, async (req, res, next) => {
 
       const toUpdate = { title, content };
 
-      const updateComment = await commentService.setComment({ commentId, toUpdate });
+      const updateComment = await CommentService.setComment({ commentId, toUpdate });
 
       const body = {
         success: true,
@@ -105,7 +104,7 @@ commentRouter.put("/comment/:id", loginRequired, async (req, res, next) => {
 commentRouter.delete("/comment/:id", loginRequired, async (req, res, next) => {
   try {
     const commentId = req.params.id;
-    const isDeleted = await commentService.deleteComment(commentId);
+    const isDeleted = await CommentService.deleteComment(commentId);
 
     res.status(200).json(isDeleted);
   } catch (error) {
