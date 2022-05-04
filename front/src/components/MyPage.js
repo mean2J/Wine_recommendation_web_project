@@ -11,7 +11,6 @@ import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
 import MyReviewList from "./User/MyReview/MyReviewList";
-import MyReviewEditForm from "./User/MyReview/MyReviewEditForm";
 
 const { TabPane } = Tabs;
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserStateContext } from "../../../App";
 import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
@@ -30,7 +30,7 @@ const DefaultMessage = styled(Card)`
   background-color: #f8f9fa;
 `;
 
-function MyReviewList({ isEditing, setIsEditing }) {
+function MyReviewList() {
   const userState = useContext(UserStateContext);
   const [myReviewList, setMyReviewList] = useState([]);
 
