@@ -64,8 +64,9 @@ const InfoSection = styled.div`
 `;
 
 const ReviewTitle = styled.div`
-  font-weight: 550;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #1e1e1e;
 `;
 
 const Date = styled.div`
@@ -81,12 +82,12 @@ const Date = styled.div`
 
 const WineName = styled.h3`
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 21px;
   margin-top: 3px;
   margin-bottom: 10px;
 
-  color: #000000;
+  color: #1e1e1e;
 `;
 const ContentWrapper = styled.div`
   margin-bottom: 40px;

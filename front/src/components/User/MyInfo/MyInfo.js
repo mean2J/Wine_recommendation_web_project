@@ -38,8 +38,8 @@ const Email = styled.div`
 
 const Description = styled.div`
   font-weight: 300;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.8);
+  font-size: 14px;
+  color: gray;
 
   margin-left: 23px;
 `;
