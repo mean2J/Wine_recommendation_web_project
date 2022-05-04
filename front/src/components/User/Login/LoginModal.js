@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { DispatchContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
+import GoogleLoginButton from "./GoogleLogin";
 
 const Notice = styled.p`
   font-size: 12px;
@@ -190,14 +191,8 @@ function LoginModal({ isModal, onClose }) {
             <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
           </Form.Item>
         </Form>
-        <button onClick={responseGoogle}>구글 로그인</button>
-        <GoogleLogin
-          clientId={clientID}
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={"single_host_origin"}
-        />
+        {/*<button onClick={}>구글 로그인</button>*/}
+        <GoogleLoginButton />
       </Modal>
     </>
   );
