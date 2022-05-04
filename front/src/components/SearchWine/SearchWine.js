@@ -26,6 +26,8 @@ function SearchWine() {
   const [result, setResult] = useState([]);
   const currentPage = Number(page);
   const [totalPage, setTotalPage] = useState(0);
+  // 내 북마크 확인 용
+  const [wineIdList, setWineIdList] = useState([]);
 
   const handleSearch = useCallback(async () => {
     const res = await Api.get(
@@ -35,9 +37,21 @@ function SearchWine() {
     setTotalPage(res.data.totalPage * 10);
   }, [page, perPage, searchInp]);
 
+  /**
+   * 내 북마크 확인
+   */
+  const handleBookmarks = useCallback(async () => {
+    const res = await Api.get("bookmarklist");
+    // 북마크의 와인 아이디 리스트
+    const data = res.data.bookmark.map((bookmark) => bookmark.wineInfo.id);
+    console.log("data", data);
+    setWineIdList(data);
+  }, []);
+
   useEffect(() => {
+    handleBookmarks();
     handleSearch();
-  }, [handleSearch]);
+  }, [handleSearch, handleBookmarks]);
 
   const handlePageChange = (value) => {
     navigate(
@@ -52,7 +66,6 @@ function SearchWine() {
           <title>와인 검색 "{searchInp}"</title>
         </Helmet>
       </HelmetProvider>
-
       <div key={result.id} title={result.name}>
         {result.map((result) => (
           <SearchResult
@@ -65,6 +78,7 @@ function SearchWine() {
             price={result.price}
             abv={result.abv}
             varieties={result.varieties}
+            bookmarked={wineIdList.includes(result.id)}
           />
         ))}
         <StyledPagination
