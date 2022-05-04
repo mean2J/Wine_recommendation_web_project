@@ -104,6 +104,23 @@ class UserService {
     return user;
   }
 
+  static async getUserByEmail(email) {
+    // db에 유저 존재 여부 확인
+    const userExists = await User.exists({ email: email });
+
+    if (!userExists) {
+      const error = new Error(
+        "해당 유저 이메일로 가입된 내역이 없습니다. 다시 한 번 확인해 주세요."
+      );
+      error.status = 404;
+      throw error;
+    }
+
+    const user = await User.findUserByEmail(email);
+
+    return user;
+  }
+
   static async updateUser(userId, fieldToUpdate) {
     const idExists = await User.exists({ id: userId });
 
@@ -136,6 +153,11 @@ class UserService {
     }
 
     await User.deleteUser(userId);
+  }
+
+  static async exists(filter) {
+    const itExists = await User.exists(filter);
+    return itExists;
   }
 }
 

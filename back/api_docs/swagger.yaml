@@ -20,6 +20,7 @@ tags:
     description: 유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등
   - name: reviews
     description: 리뷰 작성, 조회, 수정, 삭제 등
+  - name: auth
 
 paths:
   /users/signup:
@@ -44,6 +45,12 @@ paths:
     $ref: "./bookmark/bookmarklist.yaml"
   /bookmark/{wineId}:
     $ref: "./bookmark/bookmark-wineid.yaml"
+  /auth/local/signup:
+    $ref: "./auth/auth-local-signup.yaml"
+  /auth/local/signin:
+    $ref: "./auth/auth-local-signin.yaml"
+  /auth/google/signin:
+    $ref: "./auth/auth-google-signin.yaml"
 
 components:
   securitySchemes:

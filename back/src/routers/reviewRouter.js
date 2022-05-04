@@ -31,7 +31,7 @@ reviewRouter.post(
     try {
       const fieldToPost = matchedData(req);
       const { wineId } = req.params;
-      const userId = req.currentUserId;
+      const userId = req.user.id;
 
       const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
@@ -168,7 +168,7 @@ reviewRouter.put(
   body("rating").exists({ checkNull: true }).isInt({ min: 0, max: 5 }),
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const { reviewId } = req.params;
       const fieldToUpdate = matchedData(req);
 
@@ -216,7 +216,7 @@ reviewRouter.delete(
   loginRequired,
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const { reviewId } = req.params;
 
       const review = await ReviewService.getReviewById(reviewId);
