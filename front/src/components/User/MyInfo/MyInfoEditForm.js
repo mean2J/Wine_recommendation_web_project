@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { Card, Form, Input, Button } from "antd";
 import * as Api from "../../../api";
 import styled from "styled-components";

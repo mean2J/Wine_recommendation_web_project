@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ReviewService } from "../services/reviewService.js";
-import { WineService } from "../services/WineService.js";
+import { WineService } from "../services/wineService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, matchedData } from "express-validator";
@@ -114,8 +114,12 @@ reviewRouter.get(
 
       const filteredReviews =
         reviews.map((review) => {
-          return removeFields(review, ["_id", "updatedAt", "__v"]);
+          const newReview = removeFields(review, ["_id", "updatedAt", "__v"]);
+          newReview.author = { id: author.id, name: author.name }
+
+          return newReview;
         });
+
 
       const body = {
         success: true,

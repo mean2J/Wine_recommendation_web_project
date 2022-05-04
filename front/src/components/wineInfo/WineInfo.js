@@ -152,6 +152,10 @@ function WineInfo() {
                   price={result.price}
                   abv={result.abv}
                   varieties={result.varieties}
+                  sweet={result.sweet}
+                  acidity={result.acidity}
+                  body={result.body}
+                  tannin={result.tannin}
                   bookmarked={true}
                 />
               ) : (
@@ -165,6 +169,10 @@ function WineInfo() {
                   price={result.price}
                   abv={result.abv}
                   varieties={result.varieties}
+                  sweet={result.sweet}
+                  acidity={result.acidity}
+                  body={result.body}
+                  tannin={result.tannin}
                   bookmarked={false}
                 />
               )

@@ -76,7 +76,7 @@ class WineService {
     const wine = await Wine.findWineById(id);
 
     return wine;
-  }
+  } 
 }
 
 export { WineService };

@@ -1,6 +1,6 @@
 import {Stat} from "../db/index.js";
 
-class statService {
+class StatService {
 
   static async getStatById(statId) {
     const stat = await Stat.findStatByStatId({statId});
@@ -14,4 +14,4 @@ class statService {
 
 }
 
-export {statService};
+export {StatService};

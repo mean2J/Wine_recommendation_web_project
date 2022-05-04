@@ -1,11 +1,46 @@
-import { Button, Tag, Input, Rate } from "antd";
+import { Button, Tag, Input, Rate, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import * as Api from "../../api";
 
-const desc = ["1", "2", "3", "4", "5"];
+const desc = ["1점", "2점", "3점", "4점", "5점"];
 
-function WineReview({ wineId }) {
+const FormWrapper = styled.div`
+  width: 100%;
+  align-items: center;
+  border-radius: 16px;
+  padding: 16px;
+`;
+
+const StyledInp = styled(Input)`
+  border-radius: 15px;
+  margin: 10px 0 10px 0;
+`;
+const StyledArea = styled(TextArea)`
+  border-radius: 15px;
+`;
+
+const StyledBtn = styled(Button)`
+  font-weight: 400;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-right: 15px;
+  color: #c365fd;
+  &:hover {
+    color: #c365fd;
+    border-color: #c365fd;
+  }
+`;
+
+const StarLabel = styled.span`
+  color: #ffd32a;
+  margin-right: 10px;
+  font-size: 16px;
+`;
+
+function WineReview({ wineId, setReview }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
@@ -13,26 +48,27 @@ function WineReview({ wineId }) {
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const response = await Api.post(`reviews/${wineId}`, {
-    //     reviewTitle,
-    //     reviewContent,
-    //     reviewRating,
-    //   });
-    //   if (response.status === 200) {
-    //     console.log(response.data);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    const res = await Api.post(`reviews/${wineId}`, {
-      title,
-      content,
-      rating,
-    });
-    console.log(res.data);
-    // const res = await Api.get(`/reviews/${reviewId}`);
-    setWriting(false);
+    if (!rating && !title && !content) {
+      message.error("폼을 모두 작성해주세요.");
+    } else if (!rating) {
+      message.error("레이팅을 작성해주세요.");
+    } else if (!title && !content) {
+      message.error("제목을 작성해주세요.");
+    } else if (!content) {
+      message.error("내용을 작성해주세요.");
+    } else {
+      await Api.post(`reviews/${wineId}`, {
+        title,
+        content,
+        rating,
+      });
+      setWriting(false);
+      setTitle("");
+      setContent("");
+      setRating(0);
+    }
+    const res = await Api.get(`reviews/wines/${wineId}`);
+    setReview(res.data.reviews);
   };
   const handleActive = () => {
     setWriting(true);
@@ -45,32 +81,32 @@ function WineReview({ wineId }) {
   return (
     <>
       {writing ? (
-        <>
+        <FormWrapper>
           <span>
+            <StarLabel>리뷰 남기기 </StarLabel>
             <Rate tooltips={desc} onChange={handleChange} value={rating} />
             {rating ? (
               <span className="ant-rate-text">{desc[rating - 1]}</span>
-            ) : (
-              ""
-            )}
+            ) : null}
           </span>
           <form onSubmit={handleReviewSubmit}>
-            <Input
+            <StyledInp
               placeholder="제목을 입력해주세요."
               allowClear
               onChange={(e) => setTitle(e.target.value)}
             />
             <br />
-            <TextArea
+            <StyledArea
               placeholder="내용을 입력해주세요."
               allowClear
+              autoSize={{ minRows: 2, maxRows: 6 }}
               onChange={(e) => setContent(e.target.value)}
             />
-            <Button htmlType="submit">제출</Button>
+            <StyledBtn htmlType="submit">제출</StyledBtn>
           </form>
-        </>
+        </FormWrapper>
       ) : (
-        <button onClick={handleActive}>리뷰 작성</button>
+        <StyledBtn onClick={handleActive}>리뷰 작성</StyledBtn>
       )}
     </>
   );

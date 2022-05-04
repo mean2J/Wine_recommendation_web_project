@@ -85,7 +85,7 @@ function Header() {
     navigate("/");
   };
   const [isModal, setIsModal] = useState(false);
-  const getModalBoolean = (e) => {
+  const onClose = (e) => {
     setIsModal(e);
   };
   const showModal = () => {
@@ -137,9 +137,7 @@ function Header() {
                 <NavLoginItems onClick={logout}>로그아웃</NavLoginItems>
               </>
             )}
-            {isModal && (
-              <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
-            )}
+            {isModal && <LoginModal isModal={isModal} onClose={onClose} />}
           </NavLogin>
         </NavContainer>
       </Navbar>
