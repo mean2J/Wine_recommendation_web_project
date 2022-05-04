@@ -16,20 +16,22 @@ const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
   overflow-x: hidden;
-  overflow-y: auto;
+  // overflow-y: auto;
   height: 100vh;
   background-color: #f8f9fa;
 `;
 
 const MyPageSection = styled(Card)`
   width: 1200px;
-  left: 360px;
-  top: 130px;
+  left: 260px;
 
   background: #ffffff;
   border: 1px solid rgba(196, 196, 196, 0.5);
   box-sizing: border-box;
   border-radius: 20px;
+
+  margin-top: 130px;
+  margin-bottom: 100px;
 `;
 
 const TitleWrapper = styled.div``;

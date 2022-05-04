@@ -88,24 +88,26 @@ function BookmarkList() {
   }, [bookmarkList, setBookmarkList, target, isLoaded, onIntersect, page]);
 
   return (
-    <BookmarkListContainer>
-      {bookmarkList.length ? (
-        bookmarkList.map((bookmark, idx) => (
-          <BookmarkItem
-            key={idx}
-            wineInfo={bookmark.wineInfo}
-            bookmarkList={bookmarkList} // test
-            setBookmarkList={setBookmarkList} // test
-          />
-        ))
-      ) : (
-        <DefaultMessage>
-          <div>북마크 한 와인이 없습니다.</div>
-          <div>관심있는 와인을 저장 해보세요 🍷</div>
-        </DefaultMessage>
-      )}
-      <div ref={setTarget}></div>
-    </BookmarkListContainer>
+    <>
+      <BookmarkListContainer>
+        {bookmarkList.length ? (
+          bookmarkList.map((bookmark, idx) => (
+            <BookmarkItem
+              key={idx}
+              wineInfo={bookmark.wineInfo}
+              bookmarkList={bookmarkList} // test
+              setBookmarkList={setBookmarkList} // test
+            />
+          ))
+        ) : (
+          <DefaultMessage>
+            <div>북마크 한 와인이 없습니다.</div>
+            <div>관심있는 와인을 저장 해보세요 🍷</div>
+          </DefaultMessage>
+        )}
+        <div ref={setTarget}></div>
+      </BookmarkListContainer>
+    </>
   );
 }
 

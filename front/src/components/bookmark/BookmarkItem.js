@@ -41,28 +41,30 @@ const Name = styled.div`
 function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
   const [isBookmarked, setIsBookmarked] = useState(true);
   return (
-    <BookmarkContainer style={contentStyle}>
-      <HeaderWrapper>
-        <BookmarkInfoType type={wineInfo.type} />
-        <BookmarkButton
-          bookmarkList={bookmarkList}
-          setBookmarkList={setBookmarkList}
-          isBookmarked={isBookmarked}
-          setIsBookmarked={setIsBookmarked}
-          wineId={wineInfo.id}
-        />
-      </HeaderWrapper>
-      <Name>{wineInfo.name}</Name>
-      <br />
-      <br />
-      <BookmarkInfoRate name={"당도"} value={wineInfo.sweet} />
-      <br />
-      <BookmarkInfoRate name={"산도"} value={wineInfo.acidity} />
-      <br />
-      <BookmarkInfoRate name={"바디"} value={wineInfo.body} />
-      <br />
-      <BookmarkInfoRate name={"탄닌"} value={wineInfo.tannin} />
-    </BookmarkContainer>
+    <>
+      <BookmarkContainer style={contentStyle}>
+        <HeaderWrapper>
+          <BookmarkInfoType type={wineInfo.type} />
+          <BookmarkButton
+            bookmarkList={bookmarkList}
+            setBookmarkList={setBookmarkList}
+            isBookmarked={isBookmarked}
+            setIsBookmarked={setIsBookmarked}
+            wineId={wineInfo.id}
+          />
+        </HeaderWrapper>
+        <Name>{wineInfo.name}</Name>
+        <br />
+        <br />
+        <BookmarkInfoRate name={"당도"} value={wineInfo.sweet} />
+        <br />
+        <BookmarkInfoRate name={"산도"} value={wineInfo.acidity} />
+        <br />
+        <BookmarkInfoRate name={"바디"} value={wineInfo.body} />
+        <br />
+        <BookmarkInfoRate name={"탄닌"} value={wineInfo.tannin} />
+      </BookmarkContainer>
+    </>
   );
 }
 
