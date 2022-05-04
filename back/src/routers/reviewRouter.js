@@ -252,7 +252,7 @@ reviewRouter.get(
 
       const body = {
         success: true,
-        rating,
+        rating: rating.toFixed(1),
         ratingCnt,
       };
 
