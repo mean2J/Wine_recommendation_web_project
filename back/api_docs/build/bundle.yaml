@@ -1102,9 +1102,9 @@ paths:
                         type: number
                         description: wineId 넘버
         '400':
-          description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
-        '404':
           description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
+        '404':
+          description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
         default:
           description: Unexpected error
   /bookmarklist:
@@ -1158,7 +1158,7 @@ paths:
       responses:
         '200':
           description: 와인 북마크가 해제되었습니다.
-        '404':
+        '400':
           description: 북마크하지 않은 와인은 해제할 수 없습니다.
         default:
           description: Unexpected error
