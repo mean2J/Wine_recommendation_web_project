@@ -153,7 +153,8 @@ function LoginModal({ isModal, onClose }) {
         <LoginModalText>
           와인셀러는 세계 최고의 와인 추천 서비스입니다.
         </LoginModalText>
-        <Form form={form} onFinish={handleOk} onFinishFailed={handleCancel}>
+
+        <Form form={form}>
           <Form.Item name="email" style={{ marginBottom: "5px" }}>
             <Input
               placeholder="이메일"

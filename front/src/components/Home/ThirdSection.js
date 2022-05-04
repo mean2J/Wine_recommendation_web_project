@@ -117,6 +117,7 @@ const flavorMeanData = {
   ],
 };
 const flavorRadarOptions = {
+  maintainAspectRatio: true,
   scale: {
     r: {
       min: 0,
@@ -135,12 +136,12 @@ const flavorRadarOptions = {
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
-  height: 190vh;
+  height: 140vh;
 `;
 
 const Titlewrapper = styled.div`
   padding-top: 100px;
-  padding-bottom: 120px;
+  padding-bottom: 100px;
 `;
 
 const FeatureTitle = styled.span`
@@ -167,7 +168,7 @@ const InnerWrapper = styled.div`
   margin-left: -30px;
   margin-top: -77px;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const Contents = styled.div`
@@ -176,19 +177,17 @@ const Contents = styled.div`
 
 const ContentTitle = styled.span`
   font-weight: 500;
-  font-size: 34px;
-  line-height: 28px;
+  font-size: 32px;
+  line-height: 20px;
   display: flex;
   justify-content: center;
   color: #fd6585;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 `;
 
 const ContentDesc = styled.div`
   position: relative;
-  width: 55vh;
-  height: 100%;
-  margin: 0 10px;
+  margin: 0 100px;
 `;
 
 export function ThirdSection() {
@@ -210,13 +209,23 @@ export function ThirdSection() {
           <Contents>
             <ContentTitle>원산지</ContentTitle>
             <ContentDesc>
-              <PolarArea data={nationData} />
+              <PolarArea
+                data={nationData}
+                width={240}
+                height={240}
+                options={{ maintainAspectRatio: true }}
+              />
             </ContentDesc>
           </Contents>
           <Contents>
             <ContentTitle>가격</ContentTitle>
             <ContentDesc>
-              <Doughnut data={priceData} />
+              <Doughnut
+                data={priceData}
+                width={240}
+                height={240}
+                options={{ maintainAspectRatio: true }}
+              />
             </ContentDesc>
           </Contents>
           <Contents>
@@ -224,7 +233,8 @@ export function ThirdSection() {
             <ContentDesc>
               <Bar
                 data={typeData}
-                height={300}
+                width={240}
+                height={240}
                 options={{ maintainAspectRatio: true }}
               />
             </ContentDesc>
@@ -232,7 +242,12 @@ export function ThirdSection() {
           <Contents>
             <ContentTitle>맛</ContentTitle>
             <ContentDesc>
-              <Radar data={flavorMeanData} options={flavorRadarOptions} />
+              <Radar
+                data={flavorMeanData}
+                width={240}
+                height={240}
+                options={flavorRadarOptions}
+              />
             </ContentDesc>
           </Contents>
         </InnerWrapper>

@@ -14,14 +14,14 @@ import LoginModal from "../Login/LoginModal";
 const IntroDesc = styled.p`
   font-weight: 200;
   font-size: 15px;
-  display: flex;
   color: #000000;
   cursor: pointer;
   margin-bottom: 5px;
+  text-align: right;
 `;
 
 const Notice = styled.p`
-  font-size: 12px;
+  font-size: 18px;
   color: #ff0000;
 `;
 
@@ -105,8 +105,9 @@ function SignUpForm() {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+        size="large"
       >
-        <Form.Item name="email" style={{ marginBottom: "5px" }}>
+        <Form.Item name="email" style={{ marginBottom: "5px", width: "400px" }}>
           <Input
             placeholder="이메일"
             style={{ borderRadius: "5px" }}
