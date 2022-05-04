@@ -107,6 +107,8 @@ function WineInfo() {
       setBookmarkList(data);
     });
   }, []);
+  console.log("📌bookmarklist", bookmarkList);
+  console.log("🧨result", result);
 
   return (
     <>
@@ -141,7 +143,9 @@ function WineInfo() {
         ) : (
           <ResultWrapper key={result.id} title={result.name}>
             {result.map((result) =>
-              bookmarkList.some((bookmark) => bookmark.wineId === result.id) ? (
+              bookmarkList.some(
+                (bookmark) => bookmark.wineInfo.id === result.id
+              ) ? (
                 <Result
                   key={result.id}
                   wineId={result.id}

@@ -172,6 +172,7 @@ function Result({
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+  console.log("추천 페이지 Result.js", isBookmarked);
 
   return (
     <>
