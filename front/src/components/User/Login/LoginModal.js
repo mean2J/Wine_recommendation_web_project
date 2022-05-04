@@ -10,6 +10,8 @@ import {
 import styled from "styled-components";
 import { DispatchContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
+import GoogleLogin from "react-google-login";
+import GoogleLoginButton from "./GoogleLogin";
 
 const Notice = styled.p`
   font-size: 12px;
@@ -59,9 +61,11 @@ const RegisterButton = styled.button`
 function LoginModal({ isModal, onClose }) {
   const navigate = useNavigate();
 
+  const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
+
   const dispatch = useContext(DispatchContext);
   const [form] = Form.useForm();
   //모달창을 닫기위해 상위 컴포넌트에 값을 전달하는 함수
@@ -85,7 +89,7 @@ function LoginModal({ isModal, onClose }) {
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const handleOk = async (e) => {
     try {
-      const res = await Api.post("users/signin", {
+      const res = await Api.post("auth/local/signin", {
         email,
         password,
       });
@@ -94,7 +98,7 @@ function LoginModal({ isModal, onClose }) {
       // JWT 토큰은 유저 정보의 token임.
       const jwtToken = user.user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", jwtToken);
+      sessionStorage.setItem("userToken", jwtToken.split(" ")[1]);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
@@ -102,7 +106,6 @@ function LoginModal({ isModal, onClose }) {
       onOpen(false);
       navigate("/", { replace: true });
       message.info("로그인이 완료되었습니다.");
-      console.log("1");
     } catch (err) {
       message.info("로그인에 실패하였습니다.");
       console.log("로그인에 실패하였습니다.\n", err);
@@ -117,6 +120,27 @@ function LoginModal({ isModal, onClose }) {
     onOpen(false);
     document.location.href = "/SignUp";
   };
+
+  const responseGoogle = async (response) => {
+    console.log(response);
+
+    Api.get("auth/google/signin")
+      .then((response) => {
+        const user = response.data;
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: user,
+        });
+        onOpen(false);
+        navigate("/", { replace: true });
+        message.info("로그인이 완료되었습니다.");
+      })
+      .catch((err) => {
+        message.info("로그인에 실패하였습니다.");
+        console.log("로그인에 실패하였습니다.\n", err);
+      });
+  };
+
   return (
     <>
       <Modal
@@ -167,6 +191,8 @@ function LoginModal({ isModal, onClose }) {
             <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
           </Form.Item>
         </Form>
+        {/*<button onClick={}>구글 로그인</button>*/}
+        <GoogleLoginButton />
       </Modal>
     </>
   );

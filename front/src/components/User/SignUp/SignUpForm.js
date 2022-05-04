@@ -76,7 +76,7 @@ function SignUpForm() {
     console.log("Success:", values);
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("users/signup", {
+      await Api.post("auth/local/signup", {
         email: values.email,
         password: values.password,
         name: values.name,
