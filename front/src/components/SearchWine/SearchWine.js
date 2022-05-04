@@ -65,8 +65,6 @@ function SearchWine() {
             price={result.price}
             abv={result.abv}
             varieties={result.varieties}
-            rating={result.rating}
-            ratingCnt={result.ratingCnt}
           />
         ))}
         <StyledPagination
