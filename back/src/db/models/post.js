@@ -1,11 +1,11 @@
-import {postModel} from "../schemas/post.js";
+import {PostModel} from "../schemas/post.js";
 
 class Post {
   /**
    * Post 객체 생성
    */
   static async createPost(Post) {
-    const newPost = await postModel.create(Post);
+    const newPost = await PostModel.create(Post);
     return newPost;
   }
 
@@ -13,7 +13,7 @@ class Post {
    * PostId(=id)로 해당 post 찾아서 리턴
    */
   static async findPostById(postId) {
-    const post = await postModel.findOne({id: postId}).lean();
+    const post = await PostModel.findOne({id: postId}).lean();
     return post;
   }
 
@@ -23,8 +23,8 @@ class Post {
    */
   static async findFinalPage({category, maxPost}) {
     const totalPost = (category === null) 
-    ? await postModel.countDocuments()
-    : await postModel.countDocuments({category});
+    ? await PostModel.countDocuments()
+    : await PostModel.countDocuments({category});
     const finalPage = Math.ceil(totalPost / maxPost);
     return finalPage;
   }
@@ -34,24 +34,23 @@ class Post {
    * 각 category(or 전체보기)의 post 리스트를 maxPost 단위로 페이징하여 반환
    */
   static async findPostPage({category, page, maxPost}) {
-    let postListPage = [];
 
     if (category == null) {
-      postListPage = await postModel
+      return PostModel
         .find({}) //모든 post 게시글을
         .sort({createdAt: -1}) //createAt 기준으로 정렬
         .limit(maxPost) //한페이지에서 확인할 수 있는 post의 수
         .skip((page - 1) * maxPost) //페이지에 따른 skip 기준
-        .exec();
+        .lean();
     } else {
-      postListPage = await postModel
+      return PostModel
         .find({category}) //category로 post 게시글을 구분하고
         .sort({createdAt: -1}) //createAt 기준으로 정렬
         .limit(maxPost) //한페이지에서 확인할 수 있는 post의 수
         .skip((page - 1) * maxPost) //페이지에 따른 skip 기준
-        .exec();
+        .lean();
     }
-    return postListPage;
+
   }
 
   /**
@@ -62,7 +61,7 @@ class Post {
     const update = {[fieldToUpdate]: newValue};
     const option = {returnOriginal: false};
 
-    const updatedPost = await postModel.findOneAndUpdate(
+    const updatedPost = await PostModel.findOneAndUpdate(
       filter,
       update,
       option
@@ -74,7 +73,7 @@ class Post {
    * postId 와 매칭되는 데이터 삭제
    */
   static async deletePostById(postId) {
-    const deleteResult = await postModel.deleteOne({id: postId});
+    const deleteResult = await PostModel.deleteOne({id: postId});
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
   }

@@ -1,20 +1,18 @@
-import {commentModel} from "../schemas/comment.js";
-import {postModel} from "../schemas/post.js";
+import {CommentModel} from "../schemas/comment.js";
 
 class Comment {
   static async createComment(Comment) {
-    const newComment = await commentModel.create(Comment);
+    const newComment = await CommentModel.create(Comment);
     return newComment;
   }
 
   static async findCommentById(commentId) {
-    const commentList = await commentModel.findOne({id:commentId});
-    return commentList;
+    const comment = await CommentModel.findOne({id:commentId}).lean();
+    return comment;
   }
 
   static async findCommentListByPostId(postId) {
-    const commentList = await commentModel.find({postId});
-    console.log(commentList);
+    const commentList = await CommentModel.find({postId}).lean();
     return commentList;
   }
 
@@ -23,7 +21,7 @@ class Comment {
     const update = {[fieldToUpdate]: newValue};
     const option = {returnOriginal: false};
 
-    const updatedComment = await commentModel.findOneAndUpdate(
+    const updatedComment = await CommentModel.findOneAndUpdate(
       filter,
       update,
       option
@@ -32,7 +30,7 @@ class Comment {
   }
 
   static async deleteCommentById(commentId) {
-    const deleteResult = await commentModel.deleteOne({id: commentId});
+    const deleteResult = await CommentModel.deleteOne({id: commentId});
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
   }

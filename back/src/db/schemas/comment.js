@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 const {Schema, model} = mongoose;
 
-const commentSchema = new Schema(
+const CommentSchema = new Schema(
   {
     id: {
       type: String,
       required: true,
+      unique: true,
+      index: true
     },
     postId: {
       type: String,
@@ -30,6 +32,6 @@ const commentSchema = new Schema(
   }
 );
 
-const commentModel = model("Comment", commentSchema);
+const CommentModel = model("Comment", CommentSchema);
 
-export {commentModel};
+export {CommentModel};
