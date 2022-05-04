@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { UserStateContext } from "../../../App";
 import "antd/dist/antd.css";
 import { Card, Form, Input, Button, Rate } from "antd";
 import * as Api from "../../../api";
@@ -57,8 +56,8 @@ function MyReviewEditForm({
   Info,
   setInfo,
   setMyReviewList,
+  currentUserId,
 }) {
-  const userState = useContext(UserStateContext);
   const [title, setTitle] = useState(Info.title);
   const [content, setContent] = useState(Info.content);
   const [rating, setRating] = useState(Info.rating);
@@ -71,7 +70,7 @@ function MyReviewEditForm({
         rating,
       });
 
-      let updated = await Api.get(`reviews/authors/${userState.user.id}`);
+      let updated = await Api.get(`reviews/authors/${currentUserId}`);
       const data = updated.data.reviews;
       setMyReviewList(data);
 

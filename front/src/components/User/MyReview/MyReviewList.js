@@ -54,6 +54,7 @@ function MyReviewList({ currentUserId }) {
             reviewInfo={myReview}
             myReviewList={myReviewList}
             setMyReviewList={setMyReviewList}
+            currentUserId={currentUserId}
           />
         ))
       ) : (

@@ -109,7 +109,12 @@ const MyReviewButton = styled(Button)`
   margin-right: 5px;
 `;
 
-function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
+function ReviewItem({
+  reviewInfo,
+  myReviewList,
+  setMyReviewList,
+  currentUserId,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [wineName, setWineName] = useState("");
@@ -146,6 +151,7 @@ function ReviewItem({ reviewInfo, myReviewList, setMyReviewList }) {
               Info={Info}
               setInfo={setInfo}
               setMyReviewList={setMyReviewList}
+              currentUserId={currentUserId}
             />
           ) : (
             <InfoWrapper>
