@@ -11,7 +11,7 @@ const bookmarkRouter = Router();
  */
 bookmarkRouter.post("/bookmark", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
     const { wineId } = req.body;
 
     const newBookmark = await bookmarkService.addBookmark({
@@ -49,7 +49,7 @@ bookmarkRouter.get("/bookmark/:id", loginRequired, async (req, res, next) => {
  */
 bookmarkRouter.get("/bookmarklist", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
 
     const bookmarkList = await bookmarkService.getBookmarkList(userId);
 
@@ -71,7 +71,7 @@ bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) =>
   try {
     const page = req.query.page || 1; // default 1페이지
     const maxBookmark = req.query.maxBookmark || 10; //default 10개
-    const userId = req.currentUserId;
+    const userId = req.user.id;
 
     const finalPage = bookmarkService.getFinalPage(maxBookmark);
     const bookmarkList = await bookmarkService.getBookmarkListPage({
@@ -98,7 +98,7 @@ bookmarkRouter.get("/bookmarklistpage", loginRequired, async (req, res, next) =>
  */
 bookmarkRouter.delete("/bookmark/:wineid", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
     const wineId = req.params.wineid;
     const isDeleted = await bookmarkService.deleteBookmark({ userId, wineId });
 
@@ -113,7 +113,7 @@ bookmarkRouter.delete("/bookmark/:wineid", loginRequired, async (req, res, next)
  */
 bookmarkRouter.delete("/bookmarklist/alldelete", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
     const isDeleted = await bookmarkService.deleteAllBookmark({ userId });
 
     res.status(200).send("allDelete");
