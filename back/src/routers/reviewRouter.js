@@ -18,14 +18,8 @@ reviewRouter.post(
     .bail()
     .isString()
     .trim(),
-  body("content")
-    .notEmpty()
-    .withMessage("본문 내용은 필수입니다.")
-    .bail(),
-  body("rating")
-    .notEmpty()
-    .withMessage("별점 정보가 없습니다.")
-    .bail(),
+  body("content").notEmpty().withMessage("본문 내용은 필수입니다.").bail(),
+  body("rating").notEmpty().withMessage("별점 정보가 없습니다.").bail(),
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -36,7 +30,11 @@ reviewRouter.post(
       const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
 
-      const review = await ReviewService.addReview({ ...fieldToPost, author: userId, wine: wineId });
+      const review = await ReviewService.addReview({
+        ...fieldToPost,
+        author: userId,
+        wine: wineId,
+      });
 
       // response로 돌려줄 값만 담음
       const authorBody = { id: author.id, name: author.name };
@@ -48,12 +46,12 @@ reviewRouter.post(
         author: authorBody,
         wine: wineBody,
         rating: review.rating,
-        createdAt: review.createdAt
+        createdAt: review.createdAt,
       };
 
       const body = {
         success: true,
-        review: reviewBody
+        review: reviewBody,
       };
 
       res.status(201).json(body);
@@ -79,17 +77,17 @@ reviewRouter.get(
       const authorBody = { id: author.id, name: author.name };
       const wineBody = { id: wine.id, name: wine.name };
 
-      const filteredReview = removeFields(review, [
-        "_id",
-        "updatedAt",
-        "__v"
-      ]);
+      const filteredReview = removeFields(review, ["_id", "updatedAt", "__v"]);
 
-      const reviewBody = { ...filteredReview, author: authorBody, wine: wineBody }
+      const reviewBody = {
+        ...filteredReview,
+        author: authorBody,
+        wine: wineBody,
+      };
 
       const body = {
         success: true,
-        review: reviewBody
+        review: reviewBody,
       };
 
       res.status(200).json(body);
@@ -123,7 +121,7 @@ reviewRouter.get(
 
       const body = {
         success: true,
-        reviews: filteredReviews
+        reviews: filteredReviews,
       };
 
       res.status(200).json(body);
@@ -143,14 +141,13 @@ reviewRouter.get(
       // 전달받은 wineId로 리뷰 목록을 가져옴
       const reviews = await ReviewService.getReviewsByWineId(wineId);
 
-      const filteredReviews =
-        reviews.map((review) => {
-          return removeFields(review, ["_id", "updatedAt", "__v"]);
-        });
+      const filteredReviews = reviews.map((review) => {
+        return removeFields(review, ["_id", "updatedAt", "__v"]);
+      });
 
       const body = {
         success: true,
-        reviews: filteredReviews
+        reviews: filteredReviews,
       };
 
       res.status(200).json(body);
@@ -182,12 +179,15 @@ reviewRouter.put(
         throw error;
       }
 
-      const updatedReview = await ReviewService.updateReview(reviewId, fieldToUpdate);
+      const updatedReview = await ReviewService.updateReview(
+        reviewId,
+        fieldToUpdate
+      );
 
       const filteredReview = removeFields(updatedReview, [
         "_id",
         "updatedAt",
-        "__v"
+        "__v",
       ]);
 
       const author = await UserService.getUserById(review.author);
@@ -197,7 +197,11 @@ reviewRouter.put(
       const authorBody = { id: author.id, name: author.name };
       const wineBody = { id: wine.id, name: wine.name };
 
-      const reviewBody = { ...filteredReview, author: authorBody, wine: wineBody }
+      const reviewBody = {
+        ...filteredReview,
+        author: authorBody,
+        wine: wineBody,
+      };
 
       const body = {
         success: true,
@@ -234,6 +238,30 @@ reviewRouter.delete(
       res
         .status(200)
         .json({ success: true, message: "성공적으로 삭제되었습니다." });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//와인 별점 정보 전송 rating, ratingCnt
+reviewRouter.get(
+  "/reviews/rating/:wineId",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const { wineId } = req.params;
+
+      const { ratingCnt, rating } =
+        await ReviewService.getAverageRatingByWineId(wineId);
+
+      const body = {
+        success: true,
+        rating: rating.toFixed(1),
+        ratingCnt,
+      };
+
+      res.status(200).json(body);
     } catch (error) {
       next(error);
     }
