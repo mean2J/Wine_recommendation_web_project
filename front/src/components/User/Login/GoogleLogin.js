@@ -1,20 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as Api from "../../../api";
 import GoogleLogin from "react-google-login";
+import { DispatchContext } from "../../../App";
+import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
-function GoogleLoginButton() {
-  const clientID = "1093874473034-hdtcj2u53ldea72k8m0vsd1q1cr2imng.apps.googleusercontent.com";
+function GoogleLoginButton({ onOpen }) {
+  const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext);
 
   const onSuccess = async (response) => {
     const { tokenId } = response;
-    const googleResponse = await Api.post("auth/google/signin", { token: tokenId });
+    await Api.post("auth/google/signin", {
+      token: tokenId,
+    })
+      .then((response) => {
+        const user = response.data;
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: user,
+        });
+        navigate("/", { replace: true });
+        modalClose(false);
+        message.info("로그인이 완료되었습니다.");
+      })
+      .catch((err) => {
+        message.info("로그인에 실패하였습니다.");
+        console.log("로그인에 실패하였습니다.\n", err);
+      });
+  };
 
-    console.log(googleResponse);
-  }
+  const modalClose = (e) => {
+    onOpen(e);
+  };
 
   const onFailure = (error) => {
     console.log(error);
-  }
+  };
 
   return (
     <div>

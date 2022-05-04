@@ -10,7 +10,6 @@ import {
 import styled from "styled-components";
 import { DispatchContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
-import GoogleLogin from "react-google-login";
 import GoogleLoginButton from "./GoogleLogin";
 
 const Notice = styled.p`
@@ -58,10 +57,13 @@ const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
+const SNSLogin = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 function LoginModal({ isModal, onClose }) {
   const navigate = useNavigate();
-
-  const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -89,7 +91,7 @@ function LoginModal({ isModal, onClose }) {
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const handleOk = async (e) => {
     try {
-      const res = await Api.post("users/signin", {
+      const res = await Api.post("auth/local/signin", {
         email,
         password,
       });
@@ -119,26 +121,6 @@ function LoginModal({ isModal, onClose }) {
   const handleSignUp = () => {
     onOpen(false);
     document.location.href = "/SignUp";
-  };
-
-  const responseGoogle = async (response) => {
-    console.log(response);
-
-    Api.get("auth/google/signin")
-      .then((response) => {
-        const user = response.data;
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: user,
-        });
-        onOpen(false);
-        navigate("/", { replace: true });
-        message.info("로그인이 완료되었습니다.");
-      })
-      .catch((err) => {
-        message.info("로그인에 실패하였습니다.");
-        console.log("로그인에 실패하였습니다.\n", err);
-      });
   };
 
   return (
@@ -192,8 +174,9 @@ function LoginModal({ isModal, onClose }) {
             <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
           </Form.Item>
         </Form>
-        {/*<button onClick={}>구글 로그인</button>*/}
-        <GoogleLoginButton />
+        <SNSLogin>
+          <GoogleLoginButton onOpen={onOpen} />
+        </SNSLogin>
       </Modal>
     </>
   );
