@@ -50,12 +50,18 @@ async (req, res, next) => {
 });
 
 /*
- * Community : Post 조회
+ * Community : Post 조회(요청시마다 view +1)
  */
 postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
   try {
     const postId = req.params.id;
-    const post = await PostService.getPost(postId);
+    const post =
+    await PostService.getPost(postId)
+    .then((post)=>{
+      post.view++;
+      post.save();
+      return post;
+    })
 
     const body = {
         success: true,
