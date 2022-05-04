@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { postService } from "../services/postService.js";
+import { PostService } from "../services/postService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, validationResult } from "express-validator";
-//import { postModel } from "../db/schemas/post.js";
 
 const postRouter = Router();
 
@@ -27,17 +26,14 @@ async (req, res, next) => {
     const userId = req.currentUserId;
     //로그인 유저의 정보 -> author이름 정보 필요
     const user = await UserService.getUserById(userId);
-
-    const category = req.body.category;
+    
     const author = user.name;
-    const title = req.body.title;
-    const content = req.body.content;
+    const {category, title, content} = req.body;   
 
-
-    const newPost = await postService.addPost({
+    const newPost = await PostService.addPost({
       userId,
-      category,
       author,
+      category,
       title,
       content
     })
@@ -59,7 +55,7 @@ async (req, res, next) => {
 postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
   try {
     const postId = req.params.id;
-    const post = await postService.getPost(postId);
+    const post = await PostService.getPost(postId);
 
     const body = {
         success: true,
@@ -80,10 +76,10 @@ postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
 postRouter.get("/postlist", loginRequired, async (req, res, next) => {
   try {
     const category = req.query.category || null //입력 없으면 null값
-    const page = req.query.page || 1; // default 1페이지
-    const maxPost = req.query.maxPost || 10; //default 10개
-    const finalPage = await postService.getFinalPage({category, maxPost});
-    const postList = await postService.getPostListPage({
+    const page = +req.query.page || 1; // default 1페이지
+    const maxPost = +req.query.maxPost || 10; //default 10개
+    const finalPage = await PostService.getFinalPage({category, maxPost});
+    const postList = await PostService.getPostListPage({
       category,
       page,
       maxPost,
@@ -91,7 +87,6 @@ postRouter.get("/postlist", loginRequired, async (req, res, next) => {
 
     const body = {
       success: true,
-      category: category,
       page: page,
       finalPage: finalPage,
       postList: postList,
@@ -116,7 +111,7 @@ postRouter.put("/post/:id", loginRequired, async (req, res, next) => {
 
       const toUpdate = { title, content };
 
-      const updatePost = await postService.setPost({ postId, toUpdate });
+      const updatePost = await PostService.setPost({ postId, toUpdate });
 
       const body = {
         success: true,
@@ -136,7 +131,7 @@ postRouter.put("/post/:id", loginRequired, async (req, res, next) => {
 postRouter.delete("/post/:id", loginRequired, async (req, res, next) => {
   try {
     const postId = req.params.id;
-    const isDeleted = await postService.deletePost(postId);
+    const isDeleted = await PostService.deletePost(postId);
 
     res.status(200).json(isDeleted);
   } catch (error) {
