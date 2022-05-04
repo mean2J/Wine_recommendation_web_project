@@ -15,6 +15,7 @@ const ReviewkItemContainer = styled(Card)`
   height: auto;
 
   margin-top: 20px;
+  margin-left: 80px;
   margin-bottom: 20px;
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
 `;

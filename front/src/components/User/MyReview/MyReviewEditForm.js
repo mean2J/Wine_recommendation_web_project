@@ -17,7 +17,6 @@ const ReviewEditContainer = styled(Card)`
 
   margin-top: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
 `;
 
 const StyledInput = styled(Input)`
@@ -26,6 +25,23 @@ const StyledInput = styled(Input)`
 
 const StyledArea = styled(TextArea)`
   border-radius: 15px;
+  margin-bottom: 20px;
+`;
+
+const StyledRate = styled(Rate)`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  margin-right: 70px;
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
 `;
 
 const MyInfoButton = styled(Button)`
@@ -91,7 +107,7 @@ function MyReviewEditForm({
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Rate defaultValue={rating} onChange={handleChange} />
+          <StyledRate defaultValue={rating} onChange={handleChange} />
           <Form.Item
             label="제목"
             name="title"
@@ -120,16 +136,17 @@ function MyReviewEditForm({
               onChange={(e) => setContent(e.target.value)}
             />
           </Form.Item>
-          <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
-            수정하기
-          </MyInfoButton>
-          <MyInfoButton
-            style={{ color: "red" }}
-            onClick={() => setIsEditing(false)}
-          >
-            취소하기
-          </MyInfoButton>
-          <Form.Item></Form.Item>
+          <BtnWrapper>
+            <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
+              수정하기
+            </MyInfoButton>
+            <MyInfoButton
+              style={{ color: "red" }}
+              onClick={() => setIsEditing(false)}
+            >
+              취소하기
+            </MyInfoButton>
+          </BtnWrapper>
         </Form>
       </ReviewEditContainer>
     </>
