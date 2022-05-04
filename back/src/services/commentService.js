@@ -1,8 +1,7 @@
 import {Comment} from "../db/index.js";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from "uuid";
 
-
-class commentService {
+class CommentService {
   /**
    * Community : comment 생성
    */
@@ -18,7 +17,15 @@ class commentService {
   }
 
   /**
-   * Community : 해당 post에 속한 comment 읽기
+   * Community : commentId로 comment 읽기
+   */
+  static async getComment(commentId) {
+    const comment = await Comment.findCommentById(commentId);
+    return comment;
+  }
+
+  /**
+   * Community : postId로 commentList 읽기
    */
   static async getCommentList(postId) {
     const commentList = await Comment.findCommentListByPostId(postId);
@@ -64,4 +71,4 @@ class commentService {
   }
 }
 
-export {commentService};
+export {CommentService};
