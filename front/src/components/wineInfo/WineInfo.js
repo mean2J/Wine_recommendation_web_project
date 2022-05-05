@@ -156,8 +156,6 @@ function WineInfo() {
                   acidity={result.acidity}
                   body={result.body}
                   tannin={result.tannin}
-                  rating={result.rating}
-                  ratingCnt={result.ratingCnt}
                   bookmarked={true}
                 />
               ) : (
@@ -175,8 +173,6 @@ function WineInfo() {
                   acidity={result.acidity}
                   body={result.body}
                   tannin={result.tannin}
-                  rating={result.rating}
-                  ratingCnt={result.ratingCnt}
                   bookmarked={false}
                 />
               )

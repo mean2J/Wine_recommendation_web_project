@@ -26,12 +26,15 @@ function SearchWine() {
   const [result, setResult] = useState([]);
   const currentPage = Number(page);
   const [totalPage, setTotalPage] = useState(0);
+  const [isNone, setIsNone] = useState(Boolean);
 
   const handleSearch = useCallback(async () => {
     const res = await Api.get(
       `search/wines?text=${searchInp}&page=${page}&perPage=${perPage}`
     );
     setResult(res.data.wines);
+    setIsNone(res.data.isNone);
+
     setTotalPage(res.data.totalPage * 10);
   }, [page, perPage, searchInp]);
 

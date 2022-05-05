@@ -3,6 +3,7 @@ import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
 import { useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
+import Rating from "./Rating";
 
 const Container = styled.div`
   &:first-child {
@@ -52,35 +53,6 @@ const RatingWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: auto;
-`;
-
-const RatingContents = styled.div`
-  padding-bottom: 15px;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-`;
-
-const RatingNum = styled.div`
-  font-size: 40px;
-  line-height: 48px;
-  font-weight: 400;
-  margin-right: 8px;
-`;
-
-const RatingDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 100%;
-  padding-right: 8px;
-`;
-
-const ReviewNum = styled.div`
-  max-width: 100%;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 400;
 `;
 
 const RatingPrice = styled.div`
@@ -178,7 +150,8 @@ function SearchResult({
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
-
+  const [rating, setRatingVal] = useState(0);
+  const [ratingCnt, setRatingCnt] = useState(0);
   return (
     <>
       <Container>
@@ -206,19 +179,23 @@ function SearchResult({
               </VarietyWrapper>
             </InfoColumn>
             <RatingWrapper>
-              <RatingContents>
-                <RatingNum>4.5</RatingNum>
-                <RatingDetail>
-                  <Rate disabled defaultValue={4} />
-                  <ReviewNum>1702개의 리뷰</ReviewNum>
-                </RatingDetail>
-              </RatingContents>
+              <Rating
+                wineId={wineId}
+                rating={rating}
+                ratingCnt={ratingCnt}
+                setRatingVal={setRatingVal}
+                setRatingCnt={setRatingCnt}
+              />
               <RatingPrice>가격: \{price}</RatingPrice>
             </RatingWrapper>
           </ContentWrapper>
         </StyledCard>
         <ReviewFormWrapper>
-          <ReviewForm wineId={wineId}></ReviewForm>
+          <ReviewForm
+            wineId={wineId}
+            setRatingVal={setRatingVal}
+            setRatingCnt={setRatingCnt}
+          ></ReviewForm>
         </ReviewFormWrapper>
       </Container>
 

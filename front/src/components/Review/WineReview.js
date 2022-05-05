@@ -40,7 +40,7 @@ const StarLabel = styled.span`
   font-size: 16px;
 `;
 
-function WineReview({ wineId, setReview }) {
+function WineReview({ wineId, setReview, setRatingVal, setRatingCnt }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
@@ -69,7 +69,8 @@ function WineReview({ wineId, setReview }) {
       } else {
         message.success("리뷰가 등록되었습니다.");
         setReview(res.data.reviews);
-        // console.log(SearchRes);
+        setRatingVal(SearchRes.data.rating);
+        setRatingCnt(SearchRes.data.ratingCnt);
       }
 
       setWriting(false);

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 import WineChart from "./WineChart";
+import Rating from "../SearchWine/Rating";
 
 const Container = styled.div`
   &:first-child {
@@ -169,11 +170,13 @@ function Result({
   acidity,
   body,
   tannin,
-  rating,
-  ratingCnt,
+  // rating,
+  // ratingCnt,
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+  const [rating, setRatingVal] = useState(0);
+  const [ratingCnt, setRatingCnt] = useState(0);
 
   return (
     <>
@@ -208,19 +211,25 @@ function Result({
               </VarietyWrapper>
             </InfoColumn>
             <RatingWrapper>
-              <RatingContents>
-                <RatingNum>{rating}</RatingNum>
-                <RatingDetail>
-                  <Rate disabled defaultValue={4} />
-                  <ReviewNum>{ratingCnt}개의 리뷰</ReviewNum>
-                </RatingDetail>
-              </RatingContents>
+              <Rating
+                wineId={wineId}
+                rating={rating}
+                ratingCnt={ratingCnt}
+                setRatingVal={setRatingVal}
+                setRatingCnt={setRatingCnt}
+              />
               <RatingPrice>가격: \{price}</RatingPrice>
             </RatingWrapper>
           </ContentWrapper>
         </StyledCard>
       </Container>
-      <ReviewForm wineId={wineId}></ReviewForm>
+      <ReviewForm
+        wineId={wineId}
+        rating={rating}
+        ratingCnt={ratingCnt}
+        setRatingVal={setRatingVal}
+        setRatingCnt={setRatingCnt}
+      ></ReviewForm>
       <BackTop />
     </>
   );
