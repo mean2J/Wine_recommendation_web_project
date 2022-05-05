@@ -15,7 +15,7 @@ const ReviewEditContainer = styled(Card)`
   height: auto;
 
   margin-top: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 
   @media screen and (max-width: 1024px) {
     display: relative;

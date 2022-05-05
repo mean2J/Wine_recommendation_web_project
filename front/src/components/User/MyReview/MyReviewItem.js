@@ -125,6 +125,7 @@ const WineName = styled.h3`
   line-height: 21px;
   margin-top: 7px;
   margin-bottom: 10px;
+  position: relative;
 
   color: #1e1e1e;
   @media screen and (max-width: 1024px) {
