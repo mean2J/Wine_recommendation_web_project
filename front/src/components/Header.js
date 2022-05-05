@@ -128,6 +128,9 @@ function Header() {
           <NavItems>
             <Link to={`/wine`}>와인 추천 받아보기🍷</Link>
           </NavItems>
+          <NavItems>
+            <Link to={`/community`}>커뮤니티💬</Link>
+          </NavItems>
           <NavLogin>
             {!isLogin ? (
               <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
