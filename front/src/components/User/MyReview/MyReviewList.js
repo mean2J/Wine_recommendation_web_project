@@ -30,20 +30,69 @@ const DefaultMessage = styled(Card)`
 `;
 
 function MyReviewList({ currentUserId }) {
+  const [page, setPage] = useState(1);
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const isLoadedRef = React.useRef();
+  const pageRef = React.useRef();
+  const limit = 3;
   const [myReviewList, setMyReviewList] = useState([]);
 
   const getMyReviewList = useCallback(async () => {
     if (currentUserId) {
-      let res = await Api.get(`reviews/authors/${currentUserId}`);
+      setIsLoaded(true);
+      isLoadedRef.current = true;
+
+      let res = await Api.get(
+        `reviews/authors/${currentUserId}?page=${pageRef.current}&limit=${limit}`
+      );
       const data = res.data.reviews;
 
-      setMyReviewList(data);
+      if (data.length > 0) {
+        setMyReviewList((prevState) => [...prevState, ...data]);
+        setPage((page) => page + 1);
+        pageRef.current = pageRef.current + 1;
+        setIsLoaded(false);
+        isLoadedRef.current = false;
+      } else {
+        setIsLoaded(false);
+        isLoadedRef.current = false;
+      }
     }
   }, [currentUserId]);
+
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded && isLoadedRef.current === false) {
+        observer.unobserve(entry.target);
+        await getMyReviewList();
+        observer.observe(entry.target);
+      }
+    },
+    [isLoaded]
+  );
 
   useEffect(() => {
     getMyReviewList();
   }, [getMyReviewList]);
+
+  useEffect(() => {
+    let observer;
+
+    if (target) {
+      if (isLoadedRef.current === undefined) {
+        isLoadedRef.current = isLoaded;
+      }
+      if (pageRef.current === undefined) {
+        pageRef.current = page;
+      }
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [myReviewList, setMyReviewList, target, isLoaded, onIntersect, page]);
 
   return (
     <MyReviewListContainer>
@@ -63,7 +112,7 @@ function MyReviewList({ currentUserId }) {
           <div>와인에 대한 리뷰를 작성해보세요 💬</div>
         </DefaultMessage>
       )}
-      {/* <div ref={setTarget}></div> */}
+      <div ref={setTarget}></div>
     </MyReviewListContainer>
   );
 }
