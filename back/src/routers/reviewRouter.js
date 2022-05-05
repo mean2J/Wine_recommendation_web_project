@@ -3,7 +3,7 @@ import { ReviewService } from "../services/reviewService.js";
 import { WineService } from "../services/wineService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
-import { body, query, matchedData } from "express-validator";
+import { body, matchedData } from "express-validator";
 import { removeFields } from "../utils/utils.js";
 import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 
@@ -102,15 +102,6 @@ reviewRouter.get(
 reviewRouter.get(
   "/reviews/authors/:userId",
   loginRequired,
-  query("page")
-    .isInt({ min: 1 })
-    .withMessage("페이지값은 1 이상의 정수여야 합니다.")
-    .bail(),
-  query("limit")
-    .isInt({ min: 1 })
-    .withMessage("페이지당 표시 수는 1 이상의 정수여야 합니다.")
-    .bail(),
-  validationErrorCatcher,
   async (req, res, next) => {
     try {
       const { userId } = req.params;
@@ -147,15 +138,6 @@ reviewRouter.get(
 reviewRouter.get(
   "/reviews/wines/:wineId",
   loginRequired,
-  query("page")
-    .isInt({ min: 1 })
-    .withMessage("페이지값은 1 이상의 정수여야 합니다.")
-    .bail(),
-  query("limit")
-    .isInt({ min: 1 })
-    .withMessage("페이지당 표시 수는 1 이상의 정수여야 합니다.")
-    .bail(),
-  validationErrorCatcher,
   async (req, res, next) => {
     try {
       const { wineId } = req.params;
