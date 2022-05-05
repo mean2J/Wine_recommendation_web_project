@@ -117,7 +117,7 @@ function StpesBtn() {
     };
     await Api.post("wines/recommend", Inputs).then((res) => {
       if (res.data.isRandom === true) {
-        message.success("범위가 어쩌고.. 랜덤으로 불러왔어요.");
+        message.success("범위에 맞는 데이터가 없어, 가장 근접한 결과를 불러왔어요.");
         setResult(res.data.wines);
         setIsLoaded(true);
       } else {

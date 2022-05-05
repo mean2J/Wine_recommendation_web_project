@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import { Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
@@ -34,7 +34,6 @@ function SearchWine() {
     );
     setResult(res.data.wines);
     setIsNone(res.data.isNone);
-
     setTotalPage(res.data.totalPage * 10);
   }, [page, perPage, searchInp]);
 
@@ -46,38 +45,58 @@ function SearchWine() {
     navigate(
       `/search/wines?text=${searchInp}&page=${value}&perPage=${perPage}`
     );
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
     <>
-      <HelmetProvider>
-        <Helmet>
-          <title>와인 검색 "{searchInp}"</title>
-        </Helmet>
-      </HelmetProvider>
-
-      <div key={result.id} title={result.name}>
-        {result.map((result) => (
-          <SearchResult
-            key={result.id}
-            wineId={result.id}
-            title={result.name}
-            type={result.type}
-            nation={result.nation}
-            local={result.local}
-            price={result.price}
-            abv={result.abv}
-            varieties={result.varieties}
-          />
-        ))}
-        <StyledPagination
-          simple
-          current={currentPage}
-          defaultCurrent={1}
-          onChange={handlePageChange}
-          total={totalPage}
+      {isNone ? (
+        <Empty
+          description={"검색 결과가 없어요. 다시 검색해 주시겠어요?"}
+          style={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         />
-      </div>
+      ) : (
+        <>
+          <HelmetProvider>
+            <Helmet>
+              <title>와인 검색 "{searchInp}"</title>
+            </Helmet>
+          </HelmetProvider>
+
+          <div key={result.id} title={result.name}>
+            {result.map((result) => (
+              <SearchResult
+                key={result.id}
+                wineId={result.id}
+                title={result.name}
+                type={result.type}
+                nation={result.nation}
+                local={result.local}
+                price={result.price}
+                abv={result.abv}
+                varieties={result.varieties}
+              />
+            ))}
+            <StyledPagination
+              simple
+              current={currentPage}
+              defaultCurrent={1}
+              onChange={handlePageChange}
+              total={totalPage}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 }
