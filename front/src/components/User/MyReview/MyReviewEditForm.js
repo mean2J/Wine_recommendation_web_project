@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { Card, Form, Input, Button, Rate } from "antd";
 import * as Api from "../../../api";
 import styled from "styled-components";
@@ -24,10 +24,6 @@ const ReviewEditContainer = styled(Card)`
   @media screen and (max-width: 768px) {
     width: 100%;
   }
-`;
-
-const StyledForm = styled(Form.item)`
-  display: relative;
 `;
 
 const StyledInput = styled(Input)`
@@ -150,7 +146,7 @@ function MyReviewEditForm({
           autoComplete="off"
         >
           <StyledRate defaultValue={rating} onChange={handleChange} />
-          <StyledForm
+          <Form.Item
             label="제목"
             name="title"
             rules={[
@@ -161,8 +157,8 @@ function MyReviewEditForm({
             ]}
           >
             <StyledInput onChange={(e) => setTitle(e.target.value)} />
-          </StyledForm>
-          <StyledForm
+          </Form.Item>
+          <Form.Item
             label="내용"
             name="content"
             rules={[
@@ -177,7 +173,7 @@ function MyReviewEditForm({
               autoSize={{ minRows: 3, maxRows: 6 }}
               onChange={(e) => setContent(e.target.value)}
             />
-          </StyledForm>
+          </Form.Item>
           <BtnWrapper>
             <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
               수정하기
