@@ -15,6 +15,15 @@ const BookmarkContainer = styled(Card)`
   margin-bottom: 30px;
 
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    margin-left: 65px;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    margin-left: 25px;
+  }
 `;
 
 const HeaderWrapper = styled.div`

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { Card, Form, Input, Button, Rate } from "antd";
 import * as Api from "../../../api";
 import styled from "styled-components";
@@ -16,15 +16,36 @@ const ReviewEditContainer = styled(Card)`
 
   margin-top: 0px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledInput = styled(Input)`
   border-radius: 15px;
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const StyledArea = styled(TextArea)`
   border-radius: 15px;
   margin-bottom: 8px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const StyledRate = styled(Rate)`
@@ -32,6 +53,14 @@ const StyledRate = styled(Rate)`
   justify-content: flex-end;
   margin-bottom: 20px;
   margin-right: 70px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-right: 0px;
+    font-size: 18px;
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -48,6 +77,16 @@ const MyInfoButton = styled(Button)`
   font-size: 13px;
   border-radius: 5px;
   margin-right: 15px;
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    margin-right: 3px;
+    padding: 0px 5px;
+  }
 `;
 
 function MyReviewEditForm({
