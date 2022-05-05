@@ -240,27 +240,24 @@ reviewRouter.delete(
 );
 
 //와인 별점 정보 전송 rating, ratingCnt
-reviewRouter.get(
-  "/reviews/rating/:wineId",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      const { wineId } = req.params;
+reviewRouter.get("/reviews/rating/:wineId", async (req, res, next) => {
+  try {
+    const { wineId } = req.params;
 
-      const { ratingCnt, rating } =
-        await ReviewService.getAverageRatingByWineId(wineId);
+    const { ratingCnt, rating } = await ReviewService.getAverageRatingByWineId(
+      wineId
+    );
 
-      const body = {
-        success: true,
-        rating: rating.toFixed(1),
-        ratingCnt,
-      };
+    const body = {
+      success: true,
+      rating: Number(rating.toFixed(1)),
+      ratingCnt,
+    };
 
-      res.status(200).json(body);
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json(body);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 export { reviewRouter };
