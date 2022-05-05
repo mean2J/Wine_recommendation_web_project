@@ -37,8 +37,13 @@ const MyPageSection = styled(Card)`
   margin-top: 130px;
   margin-bottom: 100px;
 
-  @media screen and (max-width: 500px) {
-    width: 100px;
+  @media screen and (max-width: 1024px) {
+    width: 500px;
+    left: 200px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 350px;
+    left: 80px;
   }
 `;
 

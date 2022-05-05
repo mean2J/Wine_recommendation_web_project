@@ -8,15 +8,27 @@ const { TextArea } = Input;
 
 const MyInfoEditContainer = styled(Card)`
   width: 642px;
-  margin-left: 260px;
+  margin-left: 150px;
   margin-top: 40px;
   margin-bottom: 40px;
+  margin-right: 130px;
 
   background: #f8f9fa;
   border-radius: 15px;
   border: none;
 
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    width: 100%;
+    margin-left: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 
 const NameForm = styled(Form.Item)`
@@ -31,11 +43,30 @@ const StyledArea = styled(TextArea)`
   border-radius: 15px;
 `;
 
+const BtnWrapper = styled.div`
+  @media screen and (max-width: 1024px) {
+    display: relative;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+  }
+`;
+
 const MyInfoButton = styled(Button)`
   font-weight: 400;
   font-size: 14px;
   border-radius: 5px;
   margin-right: 15px;
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    margin-right: 3px;
+    padding: 0px 5px;
+  }
 `;
 
 function MyInfoEditForm({ user, setUser, setIsEditing }) {
@@ -108,15 +139,17 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 15, span: 16 }}>
-            <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
-              수정하기
-            </MyInfoButton>
-            <MyInfoButton
-              style={{ color: "red" }}
-              onClick={() => setIsEditing(false)}
-            >
-              취소하기
-            </MyInfoButton>
+            <BtnWrapper>
+              <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
+                수정하기
+              </MyInfoButton>
+              <MyInfoButton
+                style={{ color: "red" }}
+                onClick={() => setIsEditing(false)}
+              >
+                취소하기
+              </MyInfoButton>
+            </BtnWrapper>
           </Form.Item>
         </Form>
       </MyInfoEditContainer>
