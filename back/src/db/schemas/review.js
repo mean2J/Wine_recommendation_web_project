@@ -6,7 +6,7 @@ const ReviewSchema = new Schema({
       type: String,
       index: true,
       unique: true,
-      required: false
+      required: true
     },
     title: {
       type: String,
@@ -14,6 +14,7 @@ const ReviewSchema = new Schema({
     },
     author: {
       type: String,
+      index: true,
       required: true
     },
     content: {

@@ -3,7 +3,7 @@ import { ReviewService } from "../services/reviewService.js";
 import { WineService } from "../services/wineService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
-import { body, matchedData } from "express-validator";
+import { body, query, matchedData } from "express-validator";
 import { removeFields } from "../utils/utils.js";
 import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 
@@ -31,7 +31,7 @@ reviewRouter.post(
     try {
       const fieldToPost = matchedData(req);
       const { wineId } = req.params;
-      const userId = req.currentUserId;
+      const userId = req.user.id;
 
       const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
@@ -102,15 +102,26 @@ reviewRouter.get(
 reviewRouter.get(
   "/reviews/authors/:userId",
   loginRequired,
+  query("page")
+    .isInt({ min: 1 })
+    .withMessage("페이지값은 1 이상의 정수여야 합니다.")
+    .bail(),
+  query("limit")
+    .isInt({ min: 1 })
+    .withMessage("페이지당 표시 수는 1 이상의 정수여야 합니다.")
+    .bail(),
+  validationErrorCatcher,
   async (req, res, next) => {
     try {
       const { userId } = req.params;
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 5;
 
       // 전달받은 userId로 작성자 정보를 가져옴
       const author = await UserService.getUserById(userId);
 
       // 작성자 정보로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByAuthorId(author.id);
+      const reviews = await ReviewService.getReviewsByAuthorId(author.id, {page, limit});
 
       const filteredReviews =
         reviews.map((review) => {
@@ -136,12 +147,23 @@ reviewRouter.get(
 reviewRouter.get(
   "/reviews/wines/:wineId",
   loginRequired,
+  query("page")
+    .isInt({ min: 1 })
+    .withMessage("페이지값은 1 이상의 정수여야 합니다.")
+    .bail(),
+  query("limit")
+    .isInt({ min: 1 })
+    .withMessage("페이지당 표시 수는 1 이상의 정수여야 합니다.")
+    .bail(),
+  validationErrorCatcher,
   async (req, res, next) => {
     try {
       const { wineId } = req.params;
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 5;
 
       // 전달받은 wineId로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByWineId(wineId);
+      const reviews = await ReviewService.getReviewsByWineId(wineId, {page, limit});
 
       const filteredReviews =
         reviews.map((review) => {
@@ -163,12 +185,19 @@ reviewRouter.get(
 reviewRouter.put(
   "/reviews/:reviewId",
   loginRequired,
-  body("title").exists({ checkNull: true }).isString().trim(),
-  body("content").exists({ checkNull: true }).isString(),
-  body("rating").exists({ checkNull: true }).isInt({ min: 0, max: 5 }),
+  body("title")
+    .exists({ checkNull: true })
+    .isString()
+    .trim(),
+  body("content")
+    .exists({ checkNull: true })
+    .isString(),
+  body("rating")
+    .exists({ checkNull: true })
+    .isInt({ min: 0, max: 5 }),
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const { reviewId } = req.params;
       const fieldToUpdate = matchedData(req);
 
@@ -216,7 +245,7 @@ reviewRouter.delete(
   loginRequired,
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const { reviewId } = req.params;
 
       const review = await ReviewService.getReviewById(reviewId);

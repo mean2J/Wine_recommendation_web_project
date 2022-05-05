@@ -6,7 +6,7 @@ import WithdrawalModal from "./WithdrawalModal";
 
 const MyInfoContainer = styled(Card)`
   width: 642px;
-  margin-left: 260px;
+  margin-left: 150px;
   margin-top: 40px;
   margin-bottom: 40px;
 
@@ -38,15 +38,15 @@ const Email = styled.div`
 
 const Description = styled.div`
   font-weight: 300;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.8);
+  font-size: 14px;
+  color: gray;
 
   margin-left: 23px;
 `;
 
 const MyInfoButton = styled(Button)`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 5px;
   margin-top: 20px;
   margin-right: 15px;
