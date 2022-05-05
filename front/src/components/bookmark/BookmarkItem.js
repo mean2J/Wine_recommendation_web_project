@@ -5,6 +5,7 @@ import { Card } from "antd";
 import BookmarkButton from "./BookmarkButton";
 import BookmarkInfoRate from "./BookmarkInfoRate"; // 테스트 중
 import BookmarkInfoType from "./BookmarkInfoType";
+import BookmarkInfoBtn from "./BookmarkInfoBtn";
 
 const BookmarkContainer = styled(Card)`
   border: None;
@@ -47,6 +48,12 @@ const Name = styled.div`
   font-weight: 450;
 `;
 
+const InfoBtnWrapper = styled.div`
+  position: absolute;
+  bottom: 3px;
+  right: 10px;
+`;
+
 function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
   const [isBookmarked, setIsBookmarked] = useState(true);
   return (
@@ -64,7 +71,6 @@ function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
         </HeaderWrapper>
         <Name>{wineInfo.name}</Name>
         <br />
-        <br />
         <BookmarkInfoRate name={"당도"} value={wineInfo.sweet} />
         <br />
         <BookmarkInfoRate name={"산도"} value={wineInfo.acidity} />
@@ -72,6 +78,9 @@ function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {
         <BookmarkInfoRate name={"바디"} value={wineInfo.body} />
         <br />
         <BookmarkInfoRate name={"탄닌"} value={wineInfo.tannin} />
+        <InfoBtnWrapper>
+          <BookmarkInfoBtn wineName={wineInfo.name} />
+        </InfoBtnWrapper>
       </BookmarkContainer>
     </>
   );
