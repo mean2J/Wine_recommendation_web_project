@@ -19,7 +19,7 @@ const MyReviewListContainer = styled(Row)`
   }
   @media screen and (max-width: 768px) {
     display: relative;
-    width: 100%;
+    width: 80%;
   }
 `;
 

@@ -16,15 +16,40 @@ const ReviewEditContainer = styled(Card)`
 
   margin-top: 0px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const StyledForm = styled(Form.item)`
+  display: relative;
 `;
 
 const StyledInput = styled(Input)`
   border-radius: 15px;
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const StyledArea = styled(TextArea)`
   border-radius: 15px;
   margin-bottom: 8px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const StyledRate = styled(Rate)`
@@ -32,6 +57,14 @@ const StyledRate = styled(Rate)`
   justify-content: flex-end;
   margin-bottom: 20px;
   margin-right: 70px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-right: 0px;
+    font-size: 18px;
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -48,6 +81,16 @@ const MyInfoButton = styled(Button)`
   font-size: 13px;
   border-radius: 5px;
   margin-right: 15px;
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    margin-right: 3px;
+    padding: 0px 5px;
+  }
 `;
 
 function MyReviewEditForm({
@@ -107,7 +150,7 @@ function MyReviewEditForm({
           autoComplete="off"
         >
           <StyledRate defaultValue={rating} onChange={handleChange} />
-          <Form.Item
+          <StyledForm
             label="제목"
             name="title"
             rules={[
@@ -118,8 +161,8 @@ function MyReviewEditForm({
             ]}
           >
             <StyledInput onChange={(e) => setTitle(e.target.value)} />
-          </Form.Item>
-          <Form.Item
+          </StyledForm>
+          <StyledForm
             label="내용"
             name="content"
             rules={[
@@ -134,7 +177,7 @@ function MyReviewEditForm({
               autoSize={{ minRows: 3, maxRows: 6 }}
               onChange={(e) => setContent(e.target.value)}
             />
-          </Form.Item>
+          </StyledForm>
           <BtnWrapper>
             <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
               수정하기
