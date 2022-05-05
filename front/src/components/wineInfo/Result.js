@@ -172,6 +172,8 @@ function Result({
   tannin,
   // rating,
   // ratingCnt,
+  bookmarkList,
+  setBookmarkList,
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
@@ -197,6 +199,8 @@ function Result({
             isBookmarked={isBookmarked}
             setIsBookmarked={setIsBookmarked}
             wineId={wineId}
+            bookmarkList={bookmarkList}
+            setBookmarkList={setBookmarkList}
           />
           <ContentWrapper>
             <BottleImg></BottleImg>

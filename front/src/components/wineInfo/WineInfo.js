@@ -167,6 +167,8 @@ function WineInfo() {
                   body={result.body}
                   tannin={result.tannin}
                   bookmarked={true}
+                  bookmarkList={bookmarkList}
+                  setBookmarkList={setBookmarkList}
                 />
               ) : (
                 <Result
@@ -184,6 +186,8 @@ function WineInfo() {
                   body={result.body}
                   tannin={result.tannin}
                   bookmarked={false}
+                  bookmarkList={bookmarkList}
+                  setBookmarkList={setBookmarkList}
                 />
               )
             )}

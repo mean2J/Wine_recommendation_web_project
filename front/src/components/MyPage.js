@@ -15,8 +15,6 @@ import MyReviewList from "./User/MyReview/MyReviewList";
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
-  // overflow-x: hidden;
-  // overflow-y: auto;
   display: flex;
   position: relative;
   height: auto;

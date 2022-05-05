@@ -43,7 +43,6 @@ function BookmarkButton({
     if (isResultPage) {
       setIsBookmarked(!isBookmarked);
     }
-
     // 북마크 삭제
     if (isBookmarked) {
       await Api.del(`bookmark/${wineId}`).then((res) => {
@@ -63,9 +62,7 @@ function BookmarkButton({
 
       // 북마크 추가
       if (!isBookmarked) {
-        await Api.post("bookmark", { wineId }).then((res) => {
-          console.log(res);
-        });
+        await Api.post("bookmark", { wineId }).then((res) => {});
       }
     } else {
       message.warning("회원가입 시 해당 와인을 북마크 할 수 있습니다.");

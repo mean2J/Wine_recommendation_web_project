@@ -147,6 +147,8 @@ function SearchResult({
   abv,
   varieties,
   bookmarked,
+  bookmarkList,
+  setBookmarkList,
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
@@ -164,6 +166,8 @@ function SearchResult({
             isResultPage={isResultPage}
             isBookmarked={isBookmarked}
             setIsBookmarked={setIsBookmarked}
+            bookmarkList={bookmarkList}
+            setBookmarkList={setBookmarkList}
             wineId={wineId}
           />
           <ContentWrapper>
