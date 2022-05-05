@@ -23,7 +23,7 @@ class PostService {
    * Community : post 읽기
    */
   static async getPost(postId) {
-    const post = await Post.findPostById(postId)
+    const post = await Post.findPostById(postId);
     return post; 
   }
 

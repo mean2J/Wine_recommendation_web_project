@@ -21,7 +21,7 @@ async (req, res, next) => {
       throw errors;
     }
     //로그인한 유저의 고유id 
-    const userId = req.currentUserId;
+    const userId = req.user.id
     //로그인 유저의 정보 -> author이름 정보 필요
     //const post= await postService.getPost(postId);
     const user = await UserService.getUserById(userId);
