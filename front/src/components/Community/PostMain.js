@@ -8,7 +8,7 @@ function PostMain() {
       <div>?</div>
       <div>?</div>
       <div>?</div>
-      <div>dummydata example</div>
+      <div>임시</div>
       <PostList />
     </>
   );
