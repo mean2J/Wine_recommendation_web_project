@@ -11,6 +11,15 @@ const BookmarkListContainer = styled(Row)`
   margin-right: 40px;
 
   border-radius: 6px;
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    width: 90%;
+    margin-left: 0px;
+  }
 `;
 
 const DefaultMessage = styled(Card)`
