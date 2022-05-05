@@ -21,6 +21,14 @@ class SearchService {
       return { isNone, wines, totalPage };
     }
 
+    for (let i = 0; i < wines.length; i++) {
+      const wine = wines[i];
+
+      if (wine.price == 9000000) {
+        wine.price = 0;
+      }
+    }
+
     return { isNone, wines, totalPage };
   }
 }
