@@ -61,10 +61,14 @@ class ReviewService {
   static async getAverageRatingByWineId(wineId) {
     const ratings = await Review.getRatings(wineId);
     const ratingCnt = ratings.length;
-    const rating =
+    let rating =
       ratings.reduce((res, { rating }) => {
         return (res += rating);
       }, 0) / ratings.length;
+
+    if (!rating) {
+      rating = 0;
+    }
     return { ratingCnt, rating };
   }
 
