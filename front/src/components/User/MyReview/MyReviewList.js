@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
 import * as Api from "../../../api";
-import { Row, Card } from "antd";
+import { Row, Card, BackTop } from "antd";
 
 const MyReviewListContainer = styled(Row)`
   background-color: #f8f9fa;
@@ -113,6 +113,7 @@ function MyReviewList({ currentUserId }) {
         </DefaultMessage>
       )}
       <div ref={setTarget}></div>
+      <BackTop />
     </MyReviewListContainer>
   );
 }

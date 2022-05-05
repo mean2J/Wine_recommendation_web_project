@@ -15,13 +15,17 @@ import MyReviewList from "./User/MyReview/MyReviewList";
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
-  overflow-x: hidden;
+  // overflow-x: hidden;
   // overflow-y: auto;
-  height: 100vh;
+  display: flex;
+  position: relative;
+  height: auto;
   background-color: #f8f9fa;
 `;
 
 const MyPageSection = styled(Card)`
+  display: flex;
+
   width: 1000px;
   left: 260px;
 

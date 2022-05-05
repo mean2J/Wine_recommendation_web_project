@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import BookmarkItem from "./BookmarkItem";
 import styled from "styled-components";
 import * as Api from "../../api";
-import { Row, Card } from "antd";
+import { Row, Card, BackTop } from "antd";
 
 const BookmarkListContainer = styled(Row)`
   background-color: #f8f9fa;
@@ -105,6 +105,7 @@ function BookmarkList() {
             <div>관심있는 와인을 저장 해보세요 🍷</div>
           </DefaultMessage>
         )}
+        <BackTop />
         <div ref={setTarget}></div>
       </BookmarkListContainer>
     </>
