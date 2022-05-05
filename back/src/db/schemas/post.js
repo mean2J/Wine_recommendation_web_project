@@ -13,7 +13,7 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
-  //커뮤니티 post 카테고리(ex.와인리뷰, 와인정보, 와인뉴스)
+  //커뮤니티 post 카테고리(ex.와인추천, 와인상식, 와인샵, 가격정보 등)
   category: {
     type: String,
     required: true
@@ -33,9 +33,6 @@ const PostSchema = new Schema({
   view: {
     type:Number,
     default:0
-  },
-  numId:{
-    type:Number
   }
 
 },
