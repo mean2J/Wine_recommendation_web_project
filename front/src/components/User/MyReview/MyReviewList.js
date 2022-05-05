@@ -92,12 +92,8 @@ function MyReviewList({ currentUserId }) {
         observer.observe(entry.target);
       }
     },
-    [isLoaded]
+    [isLoaded, getMyReviewList]
   );
-
-  useEffect(() => {
-    getMyReviewList();
-  }, [getMyReviewList]);
 
   useEffect(() => {
     let observer;
