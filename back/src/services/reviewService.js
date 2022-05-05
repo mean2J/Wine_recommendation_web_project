@@ -42,7 +42,7 @@ class ReviewService {
     return reviews;
   }
 
-  static async getReviewsByWineId(wineId, query) {
+  static async getReviewsByWineId(wineId) {
     // db에 와인이 있는지 체크
     const wineExists = await Wine.exists({id: wineId});
 
@@ -52,7 +52,7 @@ class ReviewService {
       throw error;
     }
 
-    const reviews = await Review.findReviewByWineId(wineId, query);
+    const reviews = await Review.findReviewByWineId(wineId);
 
     return reviews;
   }
