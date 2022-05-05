@@ -28,6 +28,7 @@ function SearchWine() {
   const [totalPage, setTotalPage] = useState(0);
   // 내 북마크 확인 용
   const [wineIdList, setWineIdList] = useState([]);
+  const [bookmarkList, setBookmarkList] = useState([]);
   // const userState = useContext(UserStateContext);
 
   const handleSearch = useCallback(async () => {
@@ -45,7 +46,7 @@ function SearchWine() {
     const res = await Api.get("bookmarklist");
     // 북마크의 와인 아이디 리스트
     const data = res.data.bookmark.map((bookmark) => bookmark.wineInfo.id);
-    console.log("data", data);
+    setBookmarkList(res.data.bookmark);
     setWineIdList(data);
   }, []);
 
@@ -80,6 +81,8 @@ function SearchWine() {
             abv={result.abv}
             varieties={result.varieties}
             bookmarked={wineIdList.includes(result.id)}
+            bookmarkList={bookmarkList}
+            setBookmarkList={setBookmarkList}
           />
         ))}
         <StyledPagination
