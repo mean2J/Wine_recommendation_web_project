@@ -31,7 +31,7 @@ class User {
     const filter = { id: userId };
     const option = { returnOriginal: false };
 
-    option.timestamps = fieldToUpdate["updateTimestamp"] === undefined;
+    option.timestamps = !fieldToUpdate.hasOwnProperty("updateTimestamp");
 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
