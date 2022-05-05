@@ -36,6 +36,10 @@ const MyPageSection = styled(Card)`
 
   margin-top: 130px;
   margin-bottom: 100px;
+
+  @media screen and (max-width: 500px) {
+    width: 100px;
+  }
 `;
 
 const TitleWrapper = styled.div``;
