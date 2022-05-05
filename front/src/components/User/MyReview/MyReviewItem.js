@@ -19,6 +19,15 @@ const ReviewkItemContainer = styled(Card)`
   margin-right: 30px;
   margin-bottom: 20px;
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 25px;
+    width: 100%;
+  }
 `;
 
 const ReviewWrapper = styled.div`
@@ -34,6 +43,10 @@ const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const InfoWrapper = styled.div`
@@ -56,6 +69,15 @@ const StyledRate = styled(Rate)`
 
   position: absolute;
   right: 0;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+    top: 30px;
+  }
+  @media screen and (max-width: 768px) {
+    position: relative;
+    font-size: 14px;
+  }
 `;
 
 const InfoSection = styled.div`
@@ -68,32 +90,55 @@ const ReviewTitle = styled.div`
   font-weight: 500;
   font-size: 15px;
   color: #1e1e1e;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const Date = styled.div`
   color: #c4c4c4;
-  padding-top: 5px;
+  font-size: 12px;
+  padding-top: 3px;
   margin-left: 230px;
 
   display: flex;
   justify-content: flex-end;
   position: absolute;
   right: 0;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 10px;
+    top: 55px;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const WineName = styled.h3`
   font-weight: 600;
   font-size: 18px;
   line-height: 21px;
-  margin-top: 3px;
+  margin-top: 7px;
   margin-bottom: 10px;
 
   color: #1e1e1e;
+  @media screen and (max-width: 1024px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 13px;
+  }
 `;
 const ContentWrapper = styled.div`
   margin-bottom: 40px;
   font-size: 13px;
   color: gray;
+  width: 100%;
 `;
 const BtnWrapper = styled.div`
   display: flex;
