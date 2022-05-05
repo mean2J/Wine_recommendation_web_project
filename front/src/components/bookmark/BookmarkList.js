@@ -24,7 +24,8 @@ const BookmarkListContainer = styled(Row)`
 
 const DefaultMessage = styled(Card)`
   margin-top: 40px;
-  margin-left: 320px;
+  margin-left: 200px;
+  margin-right: 200px;
   margin-bottom: 40px;
 
   padding: 50px 50px 50px 50px;
@@ -36,6 +37,17 @@ const DefaultMessage = styled(Card)`
   border: None;
   border-radius: 6px;
   background-color: #f8f9fa;
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    margin-left: 0px;
+    margin-right: 0px;
+
+    font-size: 15px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 function BookmarkList() {
