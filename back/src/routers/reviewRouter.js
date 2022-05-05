@@ -141,11 +141,9 @@ reviewRouter.get(
   async (req, res, next) => {
     try {
       const { wineId } = req.params;
-      const page = req.query.page || 1;
-      const limit = req.query.limit || 5;
 
       // 전달받은 wineId로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByWineId(wineId, {page, limit});
+      const reviews = await ReviewService.getReviewsByWineId(wineId);
 
       const filteredReviews =
         reviews.map((review) => {

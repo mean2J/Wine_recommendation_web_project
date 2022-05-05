@@ -39,12 +39,9 @@ class Review {
     return reviews;
   }
 
-  static async findReviewByWineId(wineId, query) {
+  static async findReviewByWineId(wineId) {
     const reviews = await ReviewModel
       .find({ wine: wineId })
-      .sort({createdAt: -1})
-      .limit(query.limit)
-      .skip((query.page - 1) * query.limit)
       .lean();
 
     return reviews;
