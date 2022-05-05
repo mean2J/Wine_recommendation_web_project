@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import BookmarkItem from "./BookmarkItem";
+import MyReviewItem from "./MyReviewItem";
 import styled from "styled-components";
-import * as Api from "../../api";
+import * as Api from "../../../api";
 import { Row, Card, BackTop } from "antd";
 
-const BookmarkListContainer = styled(Row)`
+const MyReviewListContainer = styled(Row)`
   background-color: #f8f9fa;
   margin-top: 30px;
   margin-left: 40px;
@@ -14,11 +14,12 @@ const BookmarkListContainer = styled(Row)`
 
   @media screen and (max-width: 1024px) {
     display: relative;
+    width: 100%;
+    margin-left: 0px;
   }
   @media screen and (max-width: 768px) {
     display: relative;
-    width: 90%;
-    margin-left: 0px;
+    width: 80%;
   }
 `;
 
@@ -40,54 +41,58 @@ const DefaultMessage = styled(Card)`
 
   @media screen and (max-width: 1024px) {
     display: relative;
-    margin-left: 0px;
+    margin-left: 40px;
     margin-right: 0px;
 
     font-size: 15px;
   }
   @media screen and (max-width: 768px) {
     font-size: 10px;
+    margin-left: 0px;
   }
 `;
 
-function BookmarkList() {
+function MyReviewList({ currentUserId }) {
   const [page, setPage] = useState(1);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const isLoadedRef = React.useRef();
   const pageRef = React.useRef();
-  const [bookmarkList, setBookmarkList] = useState([]); // 북마크 리스트 데이터
-  const maxCount = 3;
+  const limit = 3;
+  const [myReviewList, setMyReviewList] = useState([]);
 
-  const getList = async () => {
-    setIsLoaded(true);
-    isLoadedRef.current = true;
+  const getMyReviewList = useCallback(async () => {
+    if (currentUserId) {
+      setIsLoaded(true);
+      isLoadedRef.current = true;
 
-    let res = await Api.get(
-      `bookmarklistpage?page=${pageRef.current}&maxBookmark=${maxCount}` // page 수정중
-    );
-    const data = res.data.bookmark;
-    if (data.length > 0) {
-      setBookmarkList((prevState) => [...prevState, ...data]);
-      setPage((page) => page + 1);
-      pageRef.current = pageRef.current + 1;
-      setIsLoaded(false);
-      isLoadedRef.current = false;
-    } else {
-      setIsLoaded(false);
-      isLoadedRef.current = false;
+      let res = await Api.get(
+        `reviews/authors/${currentUserId}?page=${pageRef.current}&limit=${limit}`
+      );
+      const data = res.data.reviews;
+
+      if (data.length > 0) {
+        setMyReviewList((prevState) => [...prevState, ...data]);
+        setPage((page) => page + 1);
+        pageRef.current = pageRef.current + 1;
+        setIsLoaded(false);
+        isLoadedRef.current = false;
+      } else {
+        setIsLoaded(false);
+        isLoadedRef.current = false;
+      }
     }
-  };
+  }, [currentUserId]);
 
   const onIntersect = useCallback(
     async ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded && isLoadedRef.current === false) {
         observer.unobserve(entry.target);
-        await getList();
+        await getMyReviewList();
         observer.observe(entry.target);
       }
     },
-    [isLoaded]
+    [isLoaded, getMyReviewList]
   );
 
   useEffect(() => {
@@ -106,31 +111,30 @@ function BookmarkList() {
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [bookmarkList, setBookmarkList, target, isLoaded, onIntersect, page]);
+  }, [myReviewList, setMyReviewList, target, isLoaded, onIntersect, page]);
 
   return (
-    <>
-      <BookmarkListContainer>
-        {bookmarkList.length ? (
-          bookmarkList.map((bookmark, idx) => (
-            <BookmarkItem
-              key={idx}
-              wineInfo={bookmark.wineInfo}
-              bookmarkList={bookmarkList} // test
-              setBookmarkList={setBookmarkList} // test
-            />
-          ))
-        ) : (
-          <DefaultMessage>
-            <div>북마크 한 와인이 없습니다.</div>
-            <div>관심있는 와인을 저장 해보세요 🍷</div>
-          </DefaultMessage>
-        )}
-        <BackTop />
-        <div ref={setTarget}></div>
-      </BookmarkListContainer>
-    </>
+    <MyReviewListContainer>
+      {myReviewList.length ? (
+        myReviewList.map((myReview) => (
+          <MyReviewItem
+            key={myReview.id}
+            reviewInfo={myReview}
+            myReviewList={myReviewList}
+            setMyReviewList={setMyReviewList}
+            currentUserId={currentUserId}
+          />
+        ))
+      ) : (
+        <DefaultMessage>
+          <div>작성한 리뷰가 없습니다.</div>
+          <div>와인에 대한 리뷰를 작성해보세요 💬</div>
+        </DefaultMessage>
+      )}
+      <div ref={setTarget}></div>
+      <BackTop />
+    </MyReviewListContainer>
   );
 }
 
-export default BookmarkList;
+export default MyReviewList;

@@ -24,9 +24,12 @@ class Review {
     return review;
   }
 
-  static async findReviewByAuthorId(authorId) {
+  static async findReviewByAuthorId(authorId, query) {
     const reviews = await ReviewModel
       .find({ author: authorId })
+      .sort({createdAt: -1})
+      .limit(query.limit)
+      .skip((query.page - 1) * query.limit)
       .lean();
     return reviews;
   }
@@ -40,6 +43,7 @@ class Review {
     const reviews = await ReviewModel
       .find({ wine: wineId })
       .lean();
+
     return reviews;
   }
 

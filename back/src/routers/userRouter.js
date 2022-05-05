@@ -113,7 +113,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
 
 userRouter.get("/users", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
 
     const user = await UserService.getUserById(userId);
     const filteredUser = removeFields(user, ["_id", "password", "__v"]);
@@ -137,7 +137,7 @@ userRouter.put(
   body("description").exists({ checkNull: true }).isString(),
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const fieldToUpdate = matchedData(req);
 
       const user = await UserService.updateUser(userId, fieldToUpdate);
@@ -157,7 +157,7 @@ userRouter.put(
 
 userRouter.delete("/users", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
 
     await UserService.deleteUser(userId);
 

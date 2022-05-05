@@ -149,7 +149,9 @@ function WineInfo() {
               돌아가기
             </Button>
             {result.map((result) =>
-              bookmarkList.some((bookmark) => bookmark.wineId === result.id) ? (
+              bookmarkList.some(
+                (bookmark) => bookmark.wineInfo.id === result.id
+              ) ? (
                 <Result
                   key={result.id}
                   wineId={result.id}

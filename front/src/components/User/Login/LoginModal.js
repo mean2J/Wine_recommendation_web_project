@@ -10,6 +10,7 @@ import {
 import styled from "styled-components";
 import { DispatchContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
+import GoogleLoginButton from "./GoogleLogin";
 
 const Notice = styled.p`
   font-size: 12px;
@@ -56,12 +57,17 @@ const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
+const SNSLogin = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 function LoginModal({ isModal, onClose }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
+
   const dispatch = useContext(DispatchContext);
   const [form] = Form.useForm();
   //모달창을 닫기위해 상위 컴포넌트에 값을 전달하는 함수
@@ -85,7 +91,7 @@ function LoginModal({ isModal, onClose }) {
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const handleOk = async (e) => {
     try {
-      const res = await Api.post("users/signin", {
+      const res = await Api.post("auth/local/signin", {
         email,
         password,
       });
@@ -94,7 +100,7 @@ function LoginModal({ isModal, onClose }) {
       // JWT 토큰은 유저 정보의 token임.
       const jwtToken = user.user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", jwtToken);
+      sessionStorage.setItem("userToken", jwtToken.split(" ")[1]);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
@@ -102,7 +108,6 @@ function LoginModal({ isModal, onClose }) {
       onOpen(false);
       navigate("/", { replace: true });
       message.info("로그인이 완료되었습니다.");
-      console.log("1");
     } catch (err) {
       message.info("로그인에 실패하였습니다.");
       console.log("로그인에 실패하였습니다.\n", err);
@@ -117,6 +122,7 @@ function LoginModal({ isModal, onClose }) {
     onOpen(false);
     document.location.href = "/SignUp";
   };
+
   return (
     <>
       <Modal
@@ -130,7 +136,8 @@ function LoginModal({ isModal, onClose }) {
         <LoginModalText>
           와인셀러는 세계 최고의 와인 추천 서비스입니다.
         </LoginModalText>
-        <Form form={form} onFinish={handleOk} onFinishFailed={handleCancel}>
+
+        <Form form={form}>
           <Form.Item name="email" style={{ marginBottom: "5px" }}>
             <Input
               placeholder="이메일"
@@ -167,6 +174,9 @@ function LoginModal({ isModal, onClose }) {
             <RegisterButton onClick={handleSignUp}>회원가입</RegisterButton>
           </Form.Item>
         </Form>
+        <SNSLogin>
+          <GoogleLoginButton onOpen={onOpen} />
+        </SNSLogin>
       </Modal>
     </>
   );

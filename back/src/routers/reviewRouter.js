@@ -25,7 +25,7 @@ reviewRouter.post(
     try {
       const fieldToPost = matchedData(req);
       const { wineId } = req.params;
-      const userId = req.currentUserId;
+      const userId = req.user.id;
 
       const author = await UserService.getUserById(userId);
       const wine = await WineService.getWineById({ id: wineId });
@@ -103,12 +103,14 @@ reviewRouter.get(
   async (req, res, next) => {
     try {
       const { userId } = req.params;
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 5;
 
       // 전달받은 userId로 작성자 정보를 가져옴
       const author = await UserService.getUserById(userId);
 
       // 작성자 정보로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByAuthorId(author.id);
+      const reviews = await ReviewService.getReviewsByAuthorId(author.id, {page, limit});
 
       const filteredReviews =
         reviews.map((review) => {
@@ -160,12 +162,19 @@ reviewRouter.get(
 reviewRouter.put(
   "/reviews/:reviewId",
   loginRequired,
-  body("title").exists({ checkNull: true }).isString().trim(),
-  body("content").exists({ checkNull: true }).isString(),
-  body("rating").exists({ checkNull: true }).isInt({ min: 0, max: 5 }),
+  body("title")
+    .exists({ checkNull: true })
+    .isString()
+    .trim(),
+  body("content")
+    .exists({ checkNull: true })
+    .isString(),
+  body("rating")
+    .exists({ checkNull: true })
+    .isInt({ min: 0, max: 5 }),
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const { reviewId } = req.params;
       const fieldToUpdate = matchedData(req);
 
@@ -220,7 +229,7 @@ reviewRouter.delete(
   loginRequired,
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const { reviewId } = req.params;
 
       const review = await ReviewService.getReviewById(reviewId);

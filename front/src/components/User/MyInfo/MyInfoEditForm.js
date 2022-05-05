@@ -7,28 +7,70 @@ import styled from "styled-components";
 const { TextArea } = Input;
 
 const MyInfoEditContainer = styled(Card)`
+  width: 642px;
+  margin-left: 150px;
   margin-top: 40px;
-  margin-left: 140px;
-  margin-right: 140px;
   margin-bottom: 40px;
+  margin-right: 130px;
 
   background: #f8f9fa;
   border-radius: 15px;
   border: none;
+
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    width: 100%;
+    margin-left: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 
-const NameForm = styled(Form.Item)``;
+const NameForm = styled(Form.Item)`
+  margin-top: 40px;
+`;
+
+const NameInput = styled(Input)`
+  border-radius: 15px;
+`;
+
+const StyledArea = styled(TextArea)`
+  border-radius: 15px;
+`;
+
+const BtnWrapper = styled.div`
+  @media screen and (max-width: 1024px) {
+    display: relative;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+  }
+`;
 
 const MyInfoButton = styled(Button)`
   font-weight: 400;
   font-size: 14px;
   border-radius: 5px;
   margin-right: 15px;
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    margin-right: 3px;
+    padding: 0px 5px;
+  }
 `;
 
 function MyInfoEditForm({ user, setUser, setIsEditing }) {
   const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
   const [description, setDescription] = useState(user.description);
 
   const onFinish = async (values) => {
@@ -41,8 +83,6 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
       });
       const updateUser = res.data.user;
       setUser(updateUser);
-
-      console.log("수정된 정보 업데이트", updateUser);
 
       setIsEditing(false);
     } catch (err) {
@@ -59,10 +99,9 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
       <MyInfoEditContainer>
         <Form
           name="basic"
-          labelCol={{ span: 8 }}
+          labelCol={{ span: 5 }}
           wrapperCol={{ span: 16 }}
           initialValues={{
-            email: email,
             name: name,
             description: description,
           }}
@@ -70,12 +109,6 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          {/* <Form.Item
-            label="이메일"
-            name="email"
-          >
-            <Input email disabled={true} />
-          </Form.Item> */}
           <NameForm
             label="이름"
             name="name"
@@ -86,7 +119,7 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
               },
             ]}
           >
-            <Input onChange={(e) => setName(e.target.value)} />
+            <NameInput onChange={(e) => setName(e.target.value)} />
           </NameForm>
           <Form.Item
             label="소개"
@@ -98,24 +131,25 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
               },
             ]}
           >
-            <TextArea
-              showCount
+            <StyledArea
               maxLength={100}
-              style={{ height: 120 }}
+              autoSize={{ minRows: 3, maxRows: 6 }}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
-              수정하기
-            </MyInfoButton>
-            <MyInfoButton
-              style={{ color: "red" }}
-              onClick={() => setIsEditing(false)}
-            >
-              취소하기
-            </MyInfoButton>
+          <Form.Item wrapperCol={{ offset: 15, span: 16 }}>
+            <BtnWrapper>
+              <MyInfoButton htmlType="submit" style={{ color: "#c365fd" }}>
+                수정하기
+              </MyInfoButton>
+              <MyInfoButton
+                style={{ color: "red" }}
+                onClick={() => setIsEditing(false)}
+              >
+                취소하기
+              </MyInfoButton>
+            </BtnWrapper>
           </Form.Item>
         </Form>
       </MyInfoEditContainer>

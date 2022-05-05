@@ -40,7 +40,7 @@ const RegisterWrapper = styled.div`
 const TitleText = styled.h1`
   margin-top: 45px;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 38px;
   line-height: 30px;
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@ const TitleText = styled.h1`
 const TitleDesc = styled.p`
   margin-bottom: 20px;
   font-weight: 200;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 45px;
   display: flex;
   align-items: center;

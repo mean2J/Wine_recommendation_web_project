@@ -6,7 +6,7 @@ import WithdrawalModal from "./WithdrawalModal";
 
 const MyInfoContainer = styled(Card)`
   width: 642px;
-  margin-left: 260px;
+  margin-left: 150px;
   margin-top: 40px;
   margin-bottom: 40px;
 
@@ -15,6 +15,17 @@ const MyInfoContainer = styled(Card)`
   border: none;
 
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    margin-left: 57px;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    margin-left: 1px;
+    width: 100%;
+  }
 `;
 
 const Name = styled.div`
@@ -38,15 +49,15 @@ const Email = styled.div`
 
 const Description = styled.div`
   font-weight: 300;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.8);
+  font-size: 14px;
+  color: gray;
 
   margin-left: 23px;
 `;
 
 const MyInfoButton = styled(Button)`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 5px;
   margin-top: 20px;
   margin-right: 15px;
@@ -54,6 +65,15 @@ const MyInfoButton = styled(Button)`
 
 const ButtonsWrapper = styled.div`
   margin-left: 370px;
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    margin-left: 30px;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    margin-top: 5px;
+  }
 `;
 
 function MyInfo({ user, setIsEditing }) {

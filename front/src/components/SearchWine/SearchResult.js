@@ -1,7 +1,7 @@
 import { BackTop, Card, Rate } from "antd";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 import Rating from "./Rating";
 
@@ -152,6 +152,10 @@ function SearchResult({
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
   const [rating, setRatingVal] = useState(0);
   const [ratingCnt, setRatingCnt] = useState(0);
+
+  useEffect(() => {
+    setIsBookmarked(bookmarked);
+  }, [bookmarked]);
   return (
     <>
       <Container>

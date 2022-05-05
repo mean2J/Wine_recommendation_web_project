@@ -28,7 +28,7 @@ class ReviewService {
     return review;
   }
 
-  static async getReviewsByAuthorId(authorId) {
+  static async getReviewsByAuthorId(authorId, query) {
     // db에 작성자가 있는지 체크
     const authorExists = await User.exists({ id: authorId });
 
@@ -38,7 +38,7 @@ class ReviewService {
       throw error;
     }
 
-    const reviews = await Review.findReviewByAuthorId(authorId);
+    const reviews = await Review.findReviewByAuthorId(authorId, query);
 
     return reviews;
   }
