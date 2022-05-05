@@ -1,6 +1,5 @@
 import { Review, User, Wine } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
-import {ReviewModel} from "../db/schemas/review.js";
 
 class ReviewService {
   static async addReview(review) {
@@ -28,7 +27,7 @@ class ReviewService {
     return review
   }
 
-  static async getReviewsByAuthorId(authorId) {
+  static async getReviewsByAuthorId(authorId, query) {
     // db에 작성자가 있는지 체크
     const authorExists = await User.exists({id: authorId});
 
@@ -38,12 +37,12 @@ class ReviewService {
       throw error;
     }
 
-    const reviews = await Review.findReviewByAuthorId(authorId);
+    const reviews = await Review.findReviewByAuthorId(authorId, query);
 
     return reviews;
   }
 
-  static async getReviewsByWineId(wineId) {
+  static async getReviewsByWineId(wineId, query) {
     // db에 와인이 있는지 체크
     const wineExists = await Wine.exists({id: wineId});
 
@@ -53,7 +52,7 @@ class ReviewService {
       throw error;
     }
 
-    const reviews = await Review.findReviewByWineId(wineId);
+    const reviews = await Review.findReviewByWineId(wineId, query);
 
     return reviews;
   }
