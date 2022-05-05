@@ -136,7 +136,7 @@ const flavorRadarOptions = {
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
-  height: 140vh;
+  height: 150vh;
 `;
 
 const Titlewrapper = styled.div`

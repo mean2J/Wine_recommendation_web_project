@@ -10,32 +10,34 @@ import { Card, Tabs } from "antd";
 import MyInfoEditForm from "./User/MyInfo/MyInfoEditForm";
 import MyInfo from "./User/MyInfo/MyInfo";
 import BookmarkList from "./bookmark/BookmarkList";
-import MyReviewList from "./Review/MyReviewList";
+import MyReviewList from "./User/MyReview/MyReviewList";
 
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
   overflow-x: hidden;
-  overflow-y: auto;
+  // overflow-y: auto;
   height: 100vh;
   background-color: #f8f9fa;
 `;
 
 const MyPageSection = styled(Card)`
-  width: 1200px;
-  left: 360px;
-  top: 130px;
+  width: 1000px;
+  left: 260px;
 
   background: #ffffff;
   border: 1px solid rgba(196, 196, 196, 0.5);
   box-sizing: border-box;
   border-radius: 20px;
+
+  margin-top: 130px;
+  margin-bottom: 100px;
 `;
 
 const TitleWrapper = styled.div``;
 
 const TitleText = styled.h2`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 500;
 `;
 
@@ -46,12 +48,15 @@ function MyPage(props) {
 
   const [mypageOwner, setMypageOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isMyInfoEditing, setIsMyInfoEditing] = useState(false);
   const userState = useContext(UserStateContext);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   const fetchMypageOwner = async (ownerId) => {
     const res = await Api.get("users");
     const ownerData = res.data.user;
+
+    setCurrentUserId(ownerData.id);
 
     setMypageOwner(ownerData);
   };
@@ -71,8 +76,8 @@ function MyPage(props) {
   if (!isFetchCompleted) {
     return "로딩중입니다...";
   }
-  // test중
 
+  // 마이페이지 url
   const onTabClick = (id) => {
     localStorage.setItem("tabKey", id);
     navigate(`/myPage/${id}`);
@@ -97,30 +102,33 @@ function MyPage(props) {
               onChange={onTabClick}
             >
               <TabPane
-                tab={<span style={{ fontSize: 18 }}>내 정보</span>}
+                tab={<span style={{ fontSize: 15 }}>내 정보</span>}
                 key="1"
               >
-                {isEditing ? (
+                {isMyInfoEditing ? (
                   <MyInfoEditForm
                     user={mypageOwner}
                     setUser={setMypageOwner}
-                    setIsEditing={setIsEditing}
+                    setIsEditing={setIsMyInfoEditing}
                   />
                 ) : (
-                  <MyInfo user={mypageOwner} setIsEditing={setIsEditing} />
+                  <MyInfo
+                    user={mypageOwner}
+                    setIsEditing={setIsMyInfoEditing}
+                  />
                 )}
               </TabPane>
               <TabPane
-                tab={<span style={{ fontSize: 18 }}>북마크</span>}
+                tab={<span style={{ fontSize: 15 }}>북마크</span>}
                 key="2"
               >
                 <BookmarkList />
               </TabPane>
               <TabPane
-                tab={<span style={{ fontSize: 18 }}>나의 리뷰</span>}
+                tab={<span style={{ fontSize: 15 }}>나의 리뷰</span>}
                 key="3"
               >
-                <MyReviewList />
+                <MyReviewList currentUserId={currentUserId} />
               </TabPane>
             </Tabs>
           </InfoWrapper>

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BookmarkService } from "../services/BookmarkService.js";
+import { BookmarkService } from "../services/bookmarkService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 
 const bookmarkRouter = Router();
@@ -119,6 +119,7 @@ bookmarkRouter.delete(
 /*
  * 북마크 모두삭제
  */
+<<<<<<< HEAD
 bookmarkRouter.delete(
   "/bookmarklist/alldelete",
   loginRequired,
@@ -126,6 +127,12 @@ bookmarkRouter.delete(
     try {
       const userId = req.user.id;
       const isDeleted = await bookmarkService.deleteAllBookmark({ userId });
+=======
+bookmarkRouter.delete("/bookmarklist/alldelete", loginRequired, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const isDeleted = await BookmarkService.deleteAllBookmark({ userId });
+>>>>>>> b15796219f0c4707d5df33aaec78ddce88c3c3e1
 
       res.status(200).send("allDelete");
     } catch (error) {

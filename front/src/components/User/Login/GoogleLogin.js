@@ -21,6 +21,9 @@ function GoogleLoginButton({ onOpen }) {
           type: "LOGIN_SUCCESS",
           payload: user,
         });
+        const jwtToken = user.user.token;
+        // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
+        sessionStorage.setItem("userToken", jwtToken.split(" ")[1]);
         navigate("/", { replace: true });
         modalClose(false);
         message.info("로그인이 완료되었습니다.");

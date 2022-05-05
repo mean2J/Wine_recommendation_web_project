@@ -1,7 +1,7 @@
 import { BackTop, Card, Rate } from "antd";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 import WineChart from "./WineChart";
 
@@ -172,6 +172,10 @@ function Result({
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+
+  useEffect(() => {
+    setIsBookmarked(bookmarked);
+  }, [bookmarked]);
 
   return (
     <>
