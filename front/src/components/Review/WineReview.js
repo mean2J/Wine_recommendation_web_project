@@ -40,7 +40,7 @@ const StarLabel = styled.span`
   font-size: 16px;
 `;
 
-function WineReview({ wineId, setReview }) {
+function WineReview({ wineId, setReview, setRatingVal, setRatingCnt }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
@@ -62,13 +62,22 @@ function WineReview({ wineId, setReview }) {
         content,
         rating,
       });
+      const res = await Api.get(`reviews/wines/${wineId}`);
+      const SearchRes = await Api.get(`reviews/rating/${wineId}`);
+      if (!res && !SearchRes) {
+        message.loading("등록 중...");
+      } else {
+        message.success("리뷰가 등록되었습니다.");
+        setReview(res.data.reviews);
+        setRatingVal(SearchRes.data.rating);
+        setRatingCnt(SearchRes.data.ratingCnt);
+      }
+
       setWriting(false);
       setTitle("");
       setContent("");
       setRating(0);
     }
-    const res = await Api.get(`reviews/wines/${wineId}`);
-    setReview(res.data.reviews);
   };
   const handleActive = () => {
     setWriting(true);

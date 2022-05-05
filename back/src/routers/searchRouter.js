@@ -10,11 +10,13 @@ searchRouter.get("/search/wines", async (req, res, next) => {
     const page = req.query.page;
     const perPage = req.query.perPage;
 
-    const { wines, totalPage } = await SearchService.getWineByNamePaged({
-      name,
-      page,
-      perPage,
-    });
+    const { isNone, wines, totalPage } = await SearchService.getWineByNamePaged(
+      {
+        name,
+        page,
+        perPage,
+      }
+    );
 
     if (wines.errorMessage) {
       throw new Error(wines.errorMessage);
@@ -23,6 +25,7 @@ searchRouter.get("/search/wines", async (req, res, next) => {
       success: true,
       totalPage: totalPage,
       page: page,
+      isNone: isNone,
       wines: wines,
     };
     res.status(200).json(body);

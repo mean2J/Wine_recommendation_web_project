@@ -6,14 +6,24 @@ import { isCheckedAtom, nationAtom, priceAtom, typeAtom } from "../../atoms";
 const { Option } = Select;
 
 const Nations = [
-  "칠레 Chile",
   "프랑스 France",
-  "미국 U.S.A",
   "이탈리아 Italy",
-  "기타 국가 Others",
+  "미국 U.S.A",
+  "칠레 Chile",
   "스페인 Spain",
   "호주 Australia",
+  "기타 국가 Others",
 ];
+
+const marks = {
+  100000: "10만원",
+  200000: "20만원",
+  300000: "30만원",
+  400000: "40만원",
+  500000: "50만원",
+};
+
+const Types = ["Red", "White", "Rose", "Sparkling"];
 
 const TypeWrapper = styled.div`
   display: flex;
@@ -40,14 +50,14 @@ const SliderWrapper = styled.div`
 `;
 
 const PriceText = styled.span`
-margin-right: 20px;
+  margin-right: 20px;
 `;
 
 const CheckboxWrapper = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 `;
 
 const SelectWrapper = styled.div`
@@ -62,7 +72,6 @@ const NationWrapper = styled.div`
 `;
 
 const WineTypeWarpper = styled.div``;
-const Types = ["Red", "White", "Rose", "Sparkling"];
 
 function WineType({ price, nation, type, isChecked }) {
   const setPrice = useSetRecoilState(priceAtom);
@@ -89,6 +98,7 @@ function WineType({ price, nation, type, isChecked }) {
           <SliderWrapper>
             <Slider
               range
+              marks={marks}
               tipFormatter={formatter}
               max={500000}
               min={0}
