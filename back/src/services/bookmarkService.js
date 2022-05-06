@@ -3,17 +3,20 @@ import {Wine} from "../db/index.js";
 import {v4 as uuidv4} from "uuid";
 
 class BookmarkService {
+  /**
+   * bookmark 생성
+   */
   static async addBookmark({userId, wineId}) {
     const bookmark = await Bookmark.findBookmarkByWineId({userId, wineId});
     const wineInfo = await Wine.findWineById(wineId);
-    if (bookmark) {
+    if (bookmark) {//북마크 리스트에 정보가 있으면
       const error = new Error(
         "이미 북마크한 와인입니다."
         );
       error.status = 400;
       throw error;
     }
-    if (!wineInfo) {
+    if (!wineInfo) {//와인 정보가 존재하지 않으면
       const error = new Error(
         "존재하지 않는 와인입니다."
         );
@@ -31,15 +34,24 @@ class BookmarkService {
     return createdNewBookmark;
   }
 
+  /**
+   * bookmark 조회
+   */
   static async getBookmark(BookmarkId) {
     return Bookmark.findBookmarkById(BookmarkId);
   }
 
-  // static async getFinalPage({userId, maxBookmark}) {
-  //   const finalPage = await Bookmark.findFinalPage({userId, maxBookmark});
-  //   return finalPage;
-  // }
+  /**
+   * bookmark : paging 리스트의 마지막 페이지 번호 구하기
+   */
+  static async getFinalPage({userId, maxBookmark}) {
+    const finalPage = await Bookmark.findFinalPage({userId, maxBookmark});
+    return finalPage;
+  }
 
+  /**
+   * 전체 bookmark 리스트 조회
+   */
   static async getBookmarkList(userId) {
     const bookmarkList = await Bookmark.findBookmarkByUserId(userId);
 
@@ -78,6 +90,9 @@ class BookmarkService {
     return bookmarkWineList;
   }
 
+  /**
+   * Paging bookmark 리스트 조회
+   */
   static async getBookmarkListPage({userId, page, maxBookmark}) {
     const bookmarkList = await Bookmark.findBookmarkByUserIdPage({
       userId,
@@ -103,6 +118,9 @@ class BookmarkService {
     return bookmarkWineList;
   }
 
+  /**
+   * bookmark 삭제
+   */
   static async deleteBookmark({userId, wineId}) {
     const isDataDeleted = await Bookmark.deleteBookmarkById({userId, wineId});
     if (isDataDeleted === false) {

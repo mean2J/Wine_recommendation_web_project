@@ -74,16 +74,19 @@ bookmarkRouter.get(
       const maxBookmark = req.query.maxBookmark || 10; //default 10개
       const userId = req.user.id;
 
-      //const finalPage = BookmarkService.getFinalPage({userId, maxBookmark});
+      const finalPage = await BookmarkService.getFinalPage({userId, maxBookmark});
       const bookmarkList = await BookmarkService.getBookmarkListPage({
         userId,
         page,
         maxBookmark,
       });
 
+
+
       const body = {
         success: true,
         page: page,
+        finalPage: finalPage,
         bookmark: bookmarkList,
       };
 

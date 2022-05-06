@@ -1437,6 +1437,352 @@ paths:
                   email: mokoko@gmail.com
                   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                   expiredIn: 1d
+  /wines/recommend:
+    post:
+      tags:
+        - wines
+      summary: 사용자 선택 속성에 따라 필터링된 와인 리스트를 전송한다
+      description: |
+        사용자가 선택한 와인 속성을 전달받고, 송석에 따라 필터링된 와인 추천 리스트를 전달한다
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nation
+                - type
+                - sweet
+                - acidity
+                - body
+                - tannin
+                - price
+                - isChecked
+              properties:
+                nation:
+                  type: string
+                  description: 생산국
+                type:
+                  type: string
+                  description: 와인 타입
+                sweet:
+                  type: array
+                  description: sweet
+                acidity:
+                  type: array
+                  description: acidity
+                body:
+                  type: array
+                  description: body
+                tannin:
+                  type: array
+                  description: tannin
+                price:
+                  type: number
+                  description: price
+                isChecked:
+                  type: Boolean
+                  description: 가격 정보 없음 선택 여부
+            example:
+              nation: 이탈리아 Italy
+              type: White
+              sweet:
+                - 1
+                - 4
+              acidity:
+                - 1
+                - 4
+              body:
+                - 1
+                - 4
+              tannin:
+                - 1
+                - 4
+              price:
+                - 10000
+                - 50000
+              isChecked: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRandom: Boolean
+                  wines:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: ObjectId
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                      nation:
+                        type: string
+                        description: 생산국
+                      local:
+                        type: string
+                        description: 생산 지역
+                      varieties:
+                        type: string
+                        description: 품종
+                      wine_type:
+                        type: string
+                        description: 와인 타입
+                      abv:
+                        type: string
+                        description: 알코올 도수
+                      sweet:
+                        type: number
+                        description: sweet
+                      acidity:
+                        type: number
+                        description: acidity
+                      body:
+                        type: number
+                        description: body
+                      tannin:
+                        type: number
+                        description: tannin
+                      price:
+                        type: number
+                        description: price
+                      imageUrl:
+                        type: string
+                        description: 이미지 주소
+              example:
+                isRandom: 'false,'
+                wines:
+                  - _id: 6274c6481063b16ef06af404
+                    id: 139589
+                    name: 'Baroncini, Rosaspina'
+                    nation: 이탈리아 Italy
+                    local: '토스카나 Toscana, -'
+                    varieties: 'Vernaccia, - , -'
+                    type: White
+                    abv: 11.5
+                    sweet: 1
+                    acidity: 3
+                    body: 2
+                    tannin: 1
+                    price: 15000
+                    ImageURL: images.vivino.com/thumbs/qdDqUA4oQVqkkgYRCRwfZA_375x500.jpg
+                  - _id: 6274c64f1063b16ef06b11c6
+                    id: 150990
+                    name: M by villa M
+                    nation: 이탈리아 Italy
+                    local: '피에몬테 Piemonte, -'
+                    varieties: 'Moscato, - , -'
+                    type: White
+                    abv: 3
+                    sweet: 4
+                    acidity: 1
+                    body: 2
+                    tannin: 1
+                    price: 20000
+                    ImageURL: images.vivino.com/thumbs/gmTnkreyTiSR7QcCE8c7xg_pb_300x300.png
+  '/wines/{id}':
+    get:
+      tags:
+        - wines
+      summary: 와인 아이디로 특정 와인을 찾는다
+      description: |
+        쿼리로 와인 아이디를 전달받아, 해당 아이디의 와인 정보를 전송한다
+      parameters:
+        - name: id
+          in: path
+          description: 와인 아이디
+          required: true
+          type: number
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ObjectId
+                  id:
+                    type: number
+                    description: 와인 아이디
+                  name:
+                    type: string
+                    description: 와인 이름
+                  nation:
+                    type: string
+                    description: 생산국
+                  local:
+                    type: string
+                    description: 생산 지역
+                  varieties:
+                    type: string
+                    description: 품종
+                  type:
+                    type: string
+                    description: 와인 타입
+                  abv:
+                    type: string
+                    description: 알코올 도수
+                  sweet:
+                    type: number
+                    description: sweet
+                  acidity:
+                    type: number
+                    description: acidity
+                  body:
+                    type: number
+                    description: body
+                  tannin:
+                    type: number
+                    description: tannin
+                  price:
+                    type: number
+                    description: price
+                  imageUrl:
+                    type: string
+                    description: 이미지 주소
+              example:
+                _id: 6274c6461063b16ef06aeea2
+                id: 137197
+                name: Altair
+                nation: 칠레 Chile
+                local: '라펠 밸리 Rapel Valley, -'
+                varieties: 'Cabernet Sauvignon, Carmenere, Merlot'
+                type: Red
+                abv: 14~15
+                sweet: 1
+                acidity: 4
+                body: 5
+                tannin: 4
+                price: 220000
+                ImageURL: images.vivino.com/thumbs/THePUhwIRlSQKmg5Li1YjQ_pb_300x300.png
+  '/search/wines/{name}{page}{perPage}':
+    get:
+      tags:
+        - search
+      summary: 와인 검색을 진행한다
+      description: |
+        쿼리로 검색어를 입력 받고, 검색 결과인 와인 리스트를 페이지네이션을 통해 전달한다
+      parameters:
+        - name: name
+          in: path
+          description: 검색어 (와인 이름)
+          required: true
+          type: string
+        - name: page
+          in: path
+          description: page
+          required: true
+          type: string
+        - name: perPage
+          in: path
+          description: perPage
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalPage:
+                    type: number
+                    description: 총 페이지 수
+                  page:
+                    type: number
+                    description: 현재 페이지
+                  isNone:
+                    type: boolean
+                    description: 검색 결과 유무
+                  wines:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: ObjectId
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                      nation:
+                        type: string
+                        description: 생산국
+                      local:
+                        type: string
+                        description: 생산 지역
+                      varieties:
+                        type: string
+                        description: 품종
+                      wine_type:
+                        type: string
+                        description: 와인 타입
+                      abv:
+                        type: string
+                        description: 알코올 도수
+                      sweet:
+                        type: number
+                        description: sweet
+                      acidity:
+                        type: number
+                        description: acidity
+                      body:
+                        type: number
+                        description: body
+                      tannin:
+                        type: number
+                        description: tannin
+                      price:
+                        type: number
+                        description: price
+                      imageUrl:
+                        type: string
+                        description: 이미지 주소
+              example:
+                totalPage: 11
+                page: 1
+                isNone: false
+                wines:
+                  - _id: 6274c6461063b16ef06aeea4
+                    id: 137199
+                    name: Baron du Val Red
+                    nation: 프랑스 France
+                    local: '-, -'
+                    varieties: 'Carignan, Cinsault, Syrah & Shiraz'
+                    type: Red
+                    abv: 11~12
+                    sweet: 2
+                    acidity: 3
+                    body: 2
+                    tannin: 2
+                    price: 0
+                    ImageURL: images.vivino.com/thumbs/00v4bfwk0r26j_375x500.jpg
+                  - _id: 6274c6461063b16ef06aeea5
+                    id: 137200
+                    name: Baron du Val White
+                    nation: 프랑스 France
+                    local: '-, -'
+                    varieties: 'Carignan, Ugni blanc, Grenache Blanc'
+                    type: White
+                    abv: 11~12
+                    sweet: 1
+                    acidity: 3
+                    body: 2
+                    tannin: 1
+                    price: 0
+                    ImageURL: images.vivino.com/thumbs/00v4bfwk0r26j_375x500.jpg
 components:
   securitySchemes:
     BearerAuth:
