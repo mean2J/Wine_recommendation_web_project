@@ -17,11 +17,11 @@ import { authRouter } from "./routers/authRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import swaggerDoc from "../api_docs/swaggerDoc.js";
 
-import session from "express-session";
-import MongoStore from "connect-mongo";
-
-const MONGODB_URI =
-  process.env.MONGODB_URI || "MONGODB_URI does not exist in .env file.";
+// import session from "express-session";
+// import MongoStore from "connect-mongo";
+//
+// const MONGODB_URI =
+//   process.env.MONGODB_URI || "MONGODB_URI does not exist in .env file.";
 
 const app = express();
 
