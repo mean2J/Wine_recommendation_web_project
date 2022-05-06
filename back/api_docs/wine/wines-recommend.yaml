@@ -1,0 +1,139 @@
+post:
+  tags:
+    - wines
+  summary: 사용자 선택 속성에 따라 필터링된 와인 리스트를 전송한다
+  description: |
+    사용자가 선택한 와인 속성을 전달받고, 송석에 따라 필터링된 와인 추천 리스트를 전달한다
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - nation
+            - type
+            - sweet
+            - acidity
+            - body
+            - tannin
+            - price
+            - isChecked
+          properties:
+            nation:
+              type: string
+              description: 생산국
+            type:
+              type: string
+              description: 와인 타입
+            sweet:
+              type: array
+              description: sweet
+            acidity:
+              type: array
+              description: acidity
+            body:
+              type: array
+              description: body
+            tannin:
+              type: array
+              description: tannin
+            price:
+              type: number
+              description: price
+            isChecked:
+              type: Boolean
+              description: 가격 정보 없음 선택 여부
+        example:
+          nation: 이탈리아 Italy
+          type: White
+          sweet: [1, 4]
+          acidity: [1, 4]
+          body: [1, 4]
+          tannin: [1, 4]
+          price: [10000, 50000]
+          isChecked: false
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              isRandom: Boolean
+              wines:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ObjectId
+                  id:
+                    type: number
+                    description: 와인 아이디
+                  name:
+                    type: string
+                    description: 와인 이름
+                  nation:
+                    type: string
+                    description: 생산국
+                  local:
+                    type: string
+                    description: 생산 지역
+                  varieties:
+                    type: string
+                    description: 품종
+                  wine_type:
+                    type: string
+                    description: 와인 타입
+                  abv:
+                    type: string
+                    description: 알코올 도수
+                  sweet:
+                    type: number
+                    description: sweet
+                  acidity:
+                    type: number
+                    description: acidity
+                  body:
+                    type: number
+                    description: body
+                  tannin:
+                    type: number
+                    description: tannin
+                  price:
+                    type: number
+                    description: price
+                  imageUrl:
+                    type: string
+                    description: 이미지 주소
+          example:
+            isRandom: false,
+            wines:
+              - _id: 6274c6481063b16ef06af404
+                id: 139589
+                name: Baroncini, Rosaspina
+                nation: 이탈리아 Italy
+                local: 토스카나 Toscana, -
+                varieties: Vernaccia, - , -
+                type: White
+                abv: 11.5
+                sweet: 1
+                acidity: 3
+                body: 2
+                tannin: 1
+                price: 15000
+                ImageURL: images.vivino.com/thumbs/qdDqUA4oQVqkkgYRCRwfZA_375x500.jpg
+              - _id: 6274c64f1063b16ef06b11c6
+                id: 150990
+                name: M by villa M
+                nation: 이탈리아 Italy
+                local: 피에몬테 Piemonte, -
+                varieties: Moscato, - , -
+                type: White
+                abv: 3
+                sweet: 4
+                acidity: 1
+                body: 2
+                tannin: 1
+                price: 20000
+                ImageURL: images.vivino.com/thumbs/gmTnkreyTiSR7QcCE8c7xg_pb_300x300.png

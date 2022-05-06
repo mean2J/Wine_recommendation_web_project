@@ -1,0 +1,77 @@
+get:
+  tags:
+    - "wines"
+  summary: 와인 아이디로 특정 와인을 찾는다
+  description: |
+    쿼리로 와인 아이디를 전달받아, 해당 아이디의 와인 정보를 전송한다
+  parameters:
+    - name: "id"
+      in: path
+      description: 와인 아이디
+      required: true
+      type: number
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: ObjectId
+              id:
+                type: number
+                description: 와인 아이디
+              name:
+                type: string
+                description: 와인 이름
+              nation:
+                type: string
+                description: 생산국
+              local:
+                type: string
+                description: 생산 지역
+              varieties:
+                type: string
+                description: 품종
+              type:
+                type: string
+                description: 와인 타입
+              abv:
+                type: string
+                description: 알코올 도수
+              sweet:
+                type: number
+                description: sweet
+              acidity:
+                type: number
+                description: acidity
+              body:
+                type: number
+                description: body
+              tannin:
+                type: number
+                description: tannin
+              price:
+                type: number
+                description: price
+              imageUrl:
+                type: string
+                description: 이미지 주소
+          example:
+            _id: 6274c6461063b16ef06aeea2
+            id: 137197
+            name: Altair
+            nation: 칠레 Chile
+            local: 라펠 밸리 Rapel Valley, -
+            varieties: Cabernet Sauvignon, Carmenere, Merlot
+            type: Red
+            abv: 14~15
+            sweet: 1
+            acidity: 4
+            body: 5
+            tannin: 4
+            price: 220000
+            ImageURL: images.vivino.com/thumbs/THePUhwIRlSQKmg5Li1YjQ_pb_300x300.png
