@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
-import { body, matchedData } from "express-validator";
+import { matchedData } from "express-validator";
 import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 import { removeFields } from "../utils/utils.js";
 import dayjs from "dayjs";
@@ -9,6 +9,7 @@ import { UserMiddleware } from "../middlewares/userMiddleware.js";
 
 const userRouter = Router();
 
+// 로컬 회원가입
 userRouter.post(
   "/users/signup",
   UserMiddleware.signUpBodyValidator,
@@ -16,6 +17,8 @@ userRouter.post(
   async (req, res, next) => {
     try {
       const userInfo = matchedData(req);
+
+      // 유저를 db에 등록
       const newUser = await UserService.addUser({ ...userInfo });
 
       const body = {
@@ -30,6 +33,7 @@ userRouter.post(
   }
 );
 
+// 로컬 로그인
 userRouter.post(
   "/users/signin",
   UserMiddleware.signInBodyValidator,
@@ -41,7 +45,9 @@ userRouter.post(
       const user = await UserService.getUser({ ...userInfo });
 
       const userId = user.id;
+      // 로그인 시각을 ISO full 형식으로 변환
       const date = dayjs().toISOString();
+      // 최종 로그인 시각을 업데이트
       const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
 
       await UserService.updateUser(userId, fieldToUpdate);
@@ -58,6 +64,7 @@ userRouter.post(
   }
 );
 
+// 유저 정보를 가져옴
 userRouter.get(
   "/users/:userId",
   loginRequired,
@@ -87,6 +94,7 @@ userRouter.get(
     }
   });
 
+// 본인의 정보를 가져옴
 userRouter.get(
   "/users",
   loginRequired,
@@ -108,6 +116,7 @@ userRouter.get(
     }
   });
 
+// 본인 정보를 업데이트
 userRouter.put(
   "/users",
   loginRequired,
@@ -132,6 +141,7 @@ userRouter.put(
   }
 );
 
+// 회원탈퇴
 userRouter.delete(
   "/users",
   loginRequired,
