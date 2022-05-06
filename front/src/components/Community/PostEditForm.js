@@ -30,7 +30,8 @@ function PostEditForm({ post, setTitle, setContent, setIsEditing }) {
   return (
     <>
       <Card>
-        수정 폼 컴포넌트
+        임시 수정 폼 컴포넌트(영우님의 상세페이지 UI를 참조하여 고칠
+        예정입니다..! -잘 만들고싶지만 디자인에 재능이 없는 사람-)
         <Form
           name="basic"
           initialValues={{
