@@ -9,29 +9,13 @@ import axios from "axios";
 import {User} from "../db/index.js";
 import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
+import {AuthMiddleware} from "../middlewares/authMiddleware.js";
 
 const authRouter = Router();
 
 authRouter.post(
   "/auth/local/signup",
-  body("name")
-    .notEmpty()
-    .withMessage("이름 정보는 필수입니다.")
-    .bail()
-    .isString()
-    .trim(),
-  body("email")
-    .notEmpty()
-    .withMessage("이메일 정보는 필수입니다.")
-    .bail()
-    .isEmail()
-    .bail()
-    .normalizeEmail(),
-  body("password")
-    .notEmpty()
-    .withMessage("비밀번호는 필수입니다.")
-    .bail()
-    .isString(),
+  AuthMiddleware.signUpBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -51,18 +35,7 @@ authRouter.post(
 
 authRouter.post(
   "/auth/local/signin",
-  body("email")
-    .notEmpty()
-    .withMessage("이메일 정보는 필수입니다.")
-    .bail()
-    .isEmail()
-    .bail()
-    .normalizeEmail(),
-  body("password")
-    .notEmpty()
-    .withMessage("비밀번호는 필수입니다.")
-    .bail()
-    .isString(),
+  AuthMiddleware.signInBodyValidator,
   validationErrorCatcher,
   passport.authenticate("localStrategy", { session: false }),
   async (req, res, next) => {
@@ -97,24 +70,7 @@ authRouter.post(
 
 authRouter.post(
   "/auth/jwt/signup",
-  body("name")
-    .notEmpty()
-    .withMessage("이름 정보는 필수입니다.")
-    .bail()
-    .isString()
-    .trim(),
-  body("email")
-    .notEmpty()
-    .withMessage("이메일 정보는 필수입니다.")
-    .bail()
-    .isEmail()
-    .bail()
-    .normalizeEmail(),
-  body("password")
-    .notEmpty()
-    .withMessage("비밀번호는 필수입니다.")
-    .bail()
-    .isString(),
+  AuthMiddleware.signUpBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -142,18 +98,7 @@ authRouter.post(
 
 authRouter.post(
   "/auth/jwt/signin",
-  body("email")
-    .notEmpty()
-    .withMessage("이메일 정보는 필수입니다.")
-    .bail()
-    .isEmail()
-    .bail()
-    .normalizeEmail(),
-  body("password")
-    .notEmpty()
-    .withMessage("비밀번호는 필수입니다.")
-    .bail()
-    .isString(),
+  AuthMiddleware.signInBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -187,17 +132,17 @@ authRouter.post(
   }
 );
 
-authRouter.get("/auth/local/signout",
-  async (req, res, next) => {
-    req.logout();
-
-    const body = {
-      success: true,
-      message: "성공적으로 로그아웃되었습니다.",
-    };
-
-    res.status(200).json(body);
-});
+// authRouter.get("/auth/local/signout",
+//   async (req, res, next) => {
+//     req.logout();
+//
+//     const body = {
+//       success: true,
+//       message: "성공적으로 로그아웃되었습니다.",
+//     };
+//
+//     res.status(200).json(body);
+// });
 
 authRouter.post(
   "/auth/google/signin",
@@ -296,17 +241,5 @@ authRouter.post(
 //     res.status(201).json(body);
 //   }
 // );
-
-authRouter.get("/auth/protected",
-  passport.authenticate("jwtStrategy", { session: false }),
-  async (req, res, next) => {
-
-    const body = {
-      success: true,
-      message: "yes you are authorized"
-    };
-
-    res.status(200).json(body);
-  });
 
 export { authRouter };

@@ -6,20 +6,14 @@ import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, matchedData } from "express-validator";
 import { removeFields } from "../utils/utils.js";
 import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
+import {ReviewMiddleware} from "../middlewares/reviewMiddleware.js";
 
 const reviewRouter = Router();
 
 reviewRouter.post(
   "/reviews/:wineId",
   loginRequired,
-  body("title")
-    .notEmpty()
-    .withMessage("제목은 필수입니다.")
-    .bail()
-    .isString()
-    .trim(),
-  body("content").notEmpty().withMessage("본문 내용은 필수입니다.").bail(),
-  body("rating").notEmpty().withMessage("별점 정보가 없습니다.").bail(),
+  ReviewMiddleware.postBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -162,16 +156,7 @@ reviewRouter.get(
 reviewRouter.put(
   "/reviews/:reviewId",
   loginRequired,
-  body("title")
-    .exists({ checkNull: true })
-    .isString()
-    .trim(),
-  body("content")
-    .exists({ checkNull: true })
-    .isString(),
-  body("rating")
-    .exists({ checkNull: true })
-    .isInt({ min: 0, max: 5 }),
+  ReviewMiddleware.putBodyValidator,
   async (req, res, next) => {
     try {
       const userId = req.user.id;
@@ -250,28 +235,29 @@ reviewRouter.delete(
     } catch (error) {
       next(error);
     }
-  }
-);
+  });
 
 //와인 별점 정보 전송 rating, ratingCnt
-reviewRouter.get("/reviews/rating/:wineId", async (req, res, next) => {
-  try {
-    const { wineId } = req.params;
+reviewRouter.get(
+  "/reviews/rating/:wineId",
+  async (req, res, next) => {
+    try {
+      const { wineId } = req.params;
 
-    const { ratingCnt, rating } = await ReviewService.getAverageRatingByWineId(
-      wineId
-    );
+      const { ratingCnt, rating } = await ReviewService.getAverageRatingByWineId(
+        wineId
+      );
 
-    const body = {
-      success: true,
-      rating: Number(rating.toFixed(1)),
-      ratingCnt,
-    };
+      const body = {
+        success: true,
+        rating: Number(rating.toFixed(1)),
+        ratingCnt,
+      };
 
-    res.status(200).json(body);
-  } catch (error) {
-    next(error);
-  }
-});
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 export { reviewRouter };

@@ -48,27 +48,30 @@ postRouter.post("/post",
 /*
  * Community : Post 조회(요청시마다 view +1)
  */
-postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
-  try {
-    const postId = req.params.id;
-    const post =
-    await PostService.getPost(postId)
-    .then((post)=>{
-      post.view++;
-      post.save();
-      return post;
-    })
+postRouter.get(
+  "/post/:id",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const postId = req.params.id;
+      const post =
+      await PostService.getPost(postId)
+      .then((post)=>{
+        post.view++;
+        post.save();
+        return post;
+      })
 
-    const body = {
-        success: true,
-        post: post,
-      };
+      const body = {
+          success: true,
+          post: post,
+        };
 
-    res.status(200).json(body);
-  } catch (error) {
-    next(error);
-  }
-});
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 
 
@@ -106,15 +109,16 @@ postRouter.get(
 /*
  * Community : Post 수정
  */
-postRouter.put("/post/:id", loginRequired, async (req, res, next) => {
+postRouter.put(
+  "/post/:id",
+  loginRequired,
+  PostMiddleware.putBodyValidator,
+  async (req, res, next) => {
     try {
       //const userId = req.currentUserId;
       const postId = req.params.id;
 
-      const title = req.body.title ?? null;
-      const content = req.body.content ?? null;
-
-      const toUpdate = { title, content };
+      const toUpdate = matchedData(req);
 
       const updatePost = await PostService.setPost({ postId, toUpdate });
 
@@ -133,16 +137,19 @@ postRouter.put("/post/:id", loginRequired, async (req, res, next) => {
 /*
  * Community : Post 삭제
  */
-postRouter.delete("/post/:id", loginRequired, async (req, res, next) => {
-  try {
-    const postId = req.params.id;
-    const isDeleted = await PostService.deletePost(postId);
+postRouter.delete(
+  "/post/:id",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const postId = req.params.id;
+      const isDeleted = await PostService.deletePost(postId);
 
-    res.status(200).json(isDeleted);
-  } catch (error) {
-    next(error);
-  }
-});
+      res.status(200).json(isDeleted);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 
 export { postRouter };

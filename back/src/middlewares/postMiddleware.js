@@ -28,4 +28,16 @@ PostMiddleware.postBodyValidator = [
     .bail()
 ];
 
+PostMiddleware.putBodyValidator = [
+  body("category")
+    .exists({ checkNull: true }),
+  body("title")
+    .exists({ checkNull: true })
+    .isString()
+    .trim(),
+  body("content")
+    .exists({ checkNull: true })
+    .isString(),
+];
+
 export { PostMiddleware };

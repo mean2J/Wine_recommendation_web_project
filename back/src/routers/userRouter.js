@@ -5,29 +5,13 @@ import { body, matchedData } from "express-validator";
 import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 import { removeFields } from "../utils/utils.js";
 import dayjs from "dayjs";
+import { UserMiddleware } from "../middlewares/userMiddleware.js";
 
 const userRouter = Router();
 
 userRouter.post(
   "/users/signup",
-  body("name")
-    .notEmpty()
-    .withMessage("이름 정보는 필수입니다.")
-    .bail()
-    .isString()
-    .trim(),
-  body("email")
-    .notEmpty()
-    .withMessage("이메일 정보는 필수입니다.")
-    .bail()
-    .isEmail()
-    .bail()
-    .normalizeEmail(),
-  body("password")
-    .notEmpty()
-    .withMessage("비밀번호는 필수입니다.")
-    .bail()
-    .isString(),
+  UserMiddleware.signUpBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -48,18 +32,7 @@ userRouter.post(
 
 userRouter.post(
   "/users/signin",
-  body("email")
-    .notEmpty()
-    .withMessage("이메일 정보는 필수입니다.")
-    .bail()
-    .isEmail()
-    .bail()
-    .normalizeEmail(),
-  body("password")
-    .notEmpty()
-    .withMessage("비밀번호는 필수입니다.")
-    .bail()
-    .isString(),
+  UserMiddleware.signInBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -85,56 +58,60 @@ userRouter.post(
   }
 );
 
-userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
-  try {
-    const { userId } = req.params;
+userRouter.get(
+  "/users/:userId",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const { userId } = req.params;
 
-    const user = await UserService.getUserById(userId);
-    const filteredUser = removeFields(user, [
-      "_id",
-      "email",
-      "password",
-      "__v",
-      "createdAt",
-      "updatedAt",
-      "recentLogin"
-    ]);
+      const user = await UserService.getUserById(userId);
+      const filteredUser = removeFields(user, [
+        "_id",
+        "email",
+        "password",
+        "__v",
+        "createdAt",
+        "updatedAt",
+        "recentLogin"
+      ]);
 
-    const body = {
-      success: true,
-      user: filteredUser,
-    };
+      const body = {
+        success: true,
+        user: filteredUser,
+      };
 
-    res.status(200).json(body);
-  } catch (error) {
-    next(error);
-  }
-});
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  });
 
-userRouter.get("/users", loginRequired, async (req, res, next) => {
-  try {
-    const userId = req.user.id;
+userRouter.get(
+  "/users",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const userId = req.user.id;
 
-    const user = await UserService.getUserById(userId);
-    const filteredUser = removeFields(user, ["_id", "password", "__v"]);
+      const user = await UserService.getUserById(userId);
+      const filteredUser = removeFields(user, ["_id", "password", "__v"]);
 
-    const body = {
-      success: true,
-      user: filteredUser,
-    };
+      const body = {
+        success: true,
+        user: filteredUser,
+      };
 
-    res.status(200).json(body);
-  } catch (error) {
-    next(error);
-  }
-});
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 userRouter.put(
   "/users",
   loginRequired,
-  body("name").exists({ checkNull: true }).isString().trim(),
-  body("password").exists({ checkNull: true }).isString(),
-  body("description").exists({ checkNull: true }).isString(),
+  UserMiddleware.putBodyValidator,
   async (req, res, next) => {
     try {
       const userId = req.user.id;
@@ -155,18 +132,21 @@ userRouter.put(
   }
 );
 
-userRouter.delete("/users", loginRequired, async (req, res, next) => {
-  try {
-    const userId = req.user.id;
+userRouter.delete(
+  "/users",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const userId = req.user.id;
 
-    await UserService.deleteUser(userId);
+      await UserService.deleteUser(userId);
 
-    res
-      .status(200)
-      .json({ success: true, message: "성공적으로 삭제되었습니다." });
-  } catch (error) {
-    next(error);
-  }
-});
+      res
+        .status(200)
+        .json({ success: true, message: "성공적으로 삭제되었습니다." });
+    } catch (error) {
+      next(error);
+    }
+  });
 
 export { userRouter };
