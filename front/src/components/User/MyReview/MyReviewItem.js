@@ -15,7 +15,7 @@ const ReviewkItemContainer = styled(Card)`
   height: auto;
 
   margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 34px;
   margin-right: 30px;
   margin-bottom: 20px;
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
@@ -175,14 +175,12 @@ function ReviewItem({
   const [wineImageURL, setWineImageURL] = useState("");
 
   const [Info, setInfo] = useState(reviewInfo);
-  
+
   const getWineName = useCallback(async () => {
     const res = await Api.get(`wines/${reviewInfo.wine}`);
     setWineName(res.data.name);
-    setWineImageURL(res.data.ImageURL)
-    
+    setWineImageURL(res.data.ImageURL);
   }, [reviewInfo.wine]);
-
 
   useEffect(() => {
     getWineName();
@@ -197,10 +195,7 @@ function ReviewItem({
       <ReviewkItemContainer>
         <ReviewWrapper>
           <ImgWrapper>
-            <ReviewImg
-              width={150}
-              src={"https://"+wineImageURL}
-            />
+            <ReviewImg width={150} src={"https://" + wineImageURL} />
           </ImgWrapper>
           {isEditing ? (
             <MyReviewEditForm
