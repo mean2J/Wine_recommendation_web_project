@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ReviewForm from "../Review/ReviewForm";
 import WineChart from "./WineChart";
+import Rating from "../SearchWine/Rating";
 
 const Container = styled.div`
   &:first-child {
@@ -169,9 +170,15 @@ function Result({
   acidity,
   body,
   tannin,
+  // rating,
+  // ratingCnt,
+  bookmarkList,
+  setBookmarkList,
 }) {
   const isResultPage = true; // 북마크 분기점
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+  const [rating, setRatingVal] = useState(0);
+  const [ratingCnt, setRatingCnt] = useState(0);
 
   useEffect(() => {
     setIsBookmarked(bookmarked);
@@ -192,6 +199,8 @@ function Result({
             isBookmarked={isBookmarked}
             setIsBookmarked={setIsBookmarked}
             wineId={wineId}
+            bookmarkList={bookmarkList}
+            setBookmarkList={setBookmarkList}
           />
           <ContentWrapper>
             <BottleImg></BottleImg>
@@ -210,19 +219,25 @@ function Result({
               </VarietyWrapper>
             </InfoColumn>
             <RatingWrapper>
-              <RatingContents>
-                <RatingNum>4.5</RatingNum>
-                <RatingDetail>
-                  <Rate disabled defaultValue={4} />
-                  <ReviewNum>1702개의 리뷰</ReviewNum>
-                </RatingDetail>
-              </RatingContents>
+              <Rating
+                wineId={wineId}
+                rating={rating}
+                ratingCnt={ratingCnt}
+                setRatingVal={setRatingVal}
+                setRatingCnt={setRatingCnt}
+              />
               <RatingPrice>가격: \{price}</RatingPrice>
             </RatingWrapper>
           </ContentWrapper>
         </StyledCard>
       </Container>
-      <ReviewForm wineId={wineId}></ReviewForm>
+      <ReviewForm
+        wineId={wineId}
+        rating={rating}
+        ratingCnt={ratingCnt}
+        setRatingVal={setRatingVal}
+        setRatingCnt={setRatingCnt}
+      ></ReviewForm>
       <BackTop />
     </>
   );

@@ -15,6 +15,17 @@ const MyInfoContainer = styled(Card)`
   border: none;
 
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    margin-left: 57px;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    margin-left: 1px;
+    width: 100%;
+  }
 `;
 
 const Name = styled.div`
@@ -54,6 +65,15 @@ const MyInfoButton = styled(Button)`
 
 const ButtonsWrapper = styled.div`
   margin-left: 370px;
+
+  @media screen and (max-width: 1024px) {
+    display: relative;
+    margin-left: 30px;
+  }
+  @media screen and (max-width: 768px) {
+    display: relative;
+    margin-top: 5px;
+  }
 `;
 
 function MyInfo({ user, setIsEditing }) {

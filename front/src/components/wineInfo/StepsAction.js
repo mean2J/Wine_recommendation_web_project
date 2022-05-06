@@ -116,11 +116,15 @@ function StpesBtn() {
       isChecked,
     };
     await Api.post("wines/recommend", Inputs).then((res) => {
-      if (res.data.length === 0) {
-        message.info("범위를 다시 설정해주세요.");
+      if (res.data.isRandom === true) {
+        message.success(
+          "범위에 맞는 데이터가 없어, 가장 근접한 결과를 불러왔어요."
+        );
+        setResult(res.data.wines);
+        setIsLoaded(true);
       } else {
-        message.success(`추천 결과 ${res.data.length}개를 불러왔어요.`);
-        setResult(res.data);
+        message.success(`추천 결과 ${res.data.wines.length}개를 불러왔어요.`);
+        setResult(res.data.wines);
         setIsLoaded(true);
       }
     });

@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentAtom, isLoadedAtom, resultAtom } from "../../atoms";
 import Result from "./Result";
 import StpesBtn from "./StepsAction";
+import { useNavigate } from "react-router-dom";
 
 const MainContainer = styled.div`
   display: flex;
@@ -82,6 +83,7 @@ const StyledStep = styled(Steps)`
 `;
 
 function WineInfo() {
+  const navigate = useNavigate();
   const current = useRecoilValue(currentAtom);
   const [isLoaded, setIsLoaded] = useRecoilState(isLoadedAtom);
   const result = useRecoilValue(resultAtom);
@@ -140,6 +142,12 @@ function WineInfo() {
           </>
         ) : (
           <ResultWrapper key={result.id} title={result.name}>
+            <Button
+              onClick={() => window.location.reload()}
+              style={{ margin: "20px 0 20px 0 " }}
+            >
+              돌아가기
+            </Button>
             {result.map((result) =>
               bookmarkList.some(
                 (bookmark) => bookmark.wineInfo.id === result.id
@@ -159,6 +167,8 @@ function WineInfo() {
                   body={result.body}
                   tannin={result.tannin}
                   bookmarked={true}
+                  bookmarkList={bookmarkList}
+                  setBookmarkList={setBookmarkList}
                 />
               ) : (
                 <Result
@@ -176,10 +186,11 @@ function WineInfo() {
                   body={result.body}
                   tannin={result.tannin}
                   bookmarked={false}
+                  bookmarkList={bookmarkList}
+                  setBookmarkList={setBookmarkList}
                 />
               )
             )}
-            <Button onClick={() => setIsLoaded(false)}>돌아가기</Button>
           </ResultWrapper>
         )}
       </BgContainer>

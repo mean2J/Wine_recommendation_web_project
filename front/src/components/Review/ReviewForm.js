@@ -1,4 +1,4 @@
-import { Button, Collapse, Divider, List} from "antd";
+import { Button, Collapse, Divider, List } from "antd";
 import * as Api from "../../api";
 import { useState, useEffect, useCallback } from "react";
 import WineReview from "./WineReview";
@@ -20,7 +20,7 @@ const StyledCollapse = styled(Collapse)`
   }
 `;
 
-function ReviewForm({ wineId }) {
+function ReviewForm({ wineId, setRatingVal, setRatingCnt }) {
   const [accordion, setAccordion] = useState(false);
   const [review, setReview] = useState([]);
   const handleReview = async () => {
@@ -34,20 +34,25 @@ function ReviewForm({ wineId }) {
   return (
     <StyledCollapse onChange={handleReview}>
       <Panel header="⭐리뷰 보기 / 작성⭐" key="1" style={{ border: "0" }}>
-        <WineReview wineId={wineId} setReview={setReview} />
+        <WineReview
+          wineId={wineId}
+          setReview={setReview}
+          setRatingVal={setRatingVal}
+          setRatingCnt={setRatingCnt}
+        />
         <Divider />
         <List
           itemLayout="horizontal"
           dataSource={review}
           renderItem={(item) => (
             <>
-            <ReviewCard
-              key={item.id}
-              title={item.title}
-              content={item.content}
-              createdAt={item.createdAt}
-              rating={item.rating}
-            ></ReviewCard>
+              <ReviewCard
+                key={item.id}
+                title={item.title}
+                content={item.content}
+                createdAt={item.createdAt}
+                rating={item.rating}
+              ></ReviewCard>
             </>
           )}
         />

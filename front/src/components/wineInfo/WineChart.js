@@ -16,21 +16,25 @@ const Wrapper = styled.div`
 
 function WineChart({ sweet, acidity, body, tannin }) {
   const flavorMeanData = {
-    labels: ["Sweet", "Acidity", "Body", "Tannin"],
+    labels: ["단맛", "산미", "바디감", "쓴맛"],
     datasets: [
       {
-        label: "Wine Taste",
-        backgroundColor: "rgba(34, 202, 236, .2)",
-        borderColor: "rgba(34, 202, 236, 1)",
-        pointBackgroundColor: "rgba(34, 202, 236, 1)",
+        backgroundColor: "rgba(149, 31, 153, 0.64)",
+        borderColor: "rgba(155, 66, 176, 1)",
+        pointBackgroundColor: "rgba(149, 31, 153, 0.65)",
         poingBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(34, 202, 236, 1)",
+        pointHoverBorderColor: "rgba(149, 31, 153, 0.64)",
         data: [sweet, acidity, body, tannin],
       },
     ],
   };
   const flavorRadarOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
     scale: {
       r: {
         min: 0,

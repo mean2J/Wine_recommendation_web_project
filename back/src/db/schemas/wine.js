@@ -7,6 +7,7 @@ const WineSchema = new Schema({
     type: Number,
     required: true,
     unique: true,
+    index: true,
   },
   name: {
     type: String,

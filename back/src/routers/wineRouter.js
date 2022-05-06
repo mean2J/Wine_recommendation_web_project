@@ -8,7 +8,8 @@ wineRouter.post("/wines/recommend", async (req, res, next) => {
   try {
     const { nation, type, sweet, acidity, body, tannin, price, isChecked } =
       req.body;
-    const wines = await WineService.getRecommendedWine({
+
+    const { wines, isRandom } = await WineService.getRecommendedWine({
       nation,
       type,
       sweet,
@@ -23,7 +24,13 @@ wineRouter.post("/wines/recommend", async (req, res, next) => {
       throw new Error(wines.errorMessage);
     }
 
-    res.status(200).json(wines);
+    const resBody = {
+      success: true,
+      isRandom: isRandom,
+      wines: wines,
+    };
+
+    res.status(200).json(resBody);
   } catch (e) {
     next(e);
   }
