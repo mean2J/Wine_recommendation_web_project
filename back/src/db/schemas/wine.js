@@ -53,7 +53,7 @@ const WineSchema = new Schema({
     type: Number,
     required: true,
   },
-  ImgUrl: {
+  ImageUrl: {
     type: String,
     required: true,
   },
