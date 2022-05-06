@@ -1,21 +1,24 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import { Input, Radio, Form, Button } from "antd";
+import { Input, Radio, Form, Button, message } from "antd";
 import * as Api from "../../api";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
   min-height: 100%;
   position: relative;
+  height: 100vh;
 `;
 
 const Editortop = styled.div`
   flex: 0 0 auto;
-  max-width: 720px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0;
   width: 100%;
@@ -33,7 +36,7 @@ const EditorTitleWrapper = styled.div`
 `;
 
 const EditorTitle = styled(Input)`
-  border-bottom: 1px solid #eaebef;
+  border-bottom: 1px solid grey;
   padding: 15px 0 15px 0;
   font-size: 34px;
   line-height: 31px;
@@ -58,7 +61,7 @@ const ContentsList = styled.div`
 `;
 
 const Contents = styled.div`
-  max-width: 720px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0;
   width: 100%;
@@ -82,44 +85,60 @@ const StyledArea = styled(TextArea)`
 `;
 
 const CategorieWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 60px;
-  max-width: 720px;
+  width: 900px;
   margin: 0 auto;
-  width: 100%;
 `;
 
+const StyledItem = styled(Form.Item)``;
+
 function PostForm() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(title, content, category);
-    await Api.post("post", {
-      category,
-      title,
-      content,
-    });
+  const onFinish = async (values) => {
+    console.log("Success:", values);
+    try {
+      console.log(title, content, category);
+      await Api.post("post", {
+        category,
+        title,
+        content,
+      });
+      navigate("/community");
+      message.success("글이 등록되었습니다.");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
     <Wrapper>
-      <div>?</div>
-      <div>?</div>
-      <div>?</div>
-      <div>?</div>
-      <Form>
+      <Form
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
         <Editortop>
           <EditorTopSection />
           <EditorTitleWrapper>
             <Form.Item
+              name="title"
               rules={[{ required: true, message: "필수 입력 항목이에요." }]}
             >
               <EditorTitle
                 placeholder="제목을 입력해주세요."
                 bordered={false}
                 showCount
+                autoFocus
                 maxLength={20}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -143,20 +162,35 @@ function PostForm() {
         </ContentsWrapper>
         <CategorieWrapper>
           <Form.Item
-            rules={[{ required: true, message: "필수 입력 항목이에요." }]}
+            label="카테고리"
+            name="radio-button"
+            rules={[{ required: true, message: "필수 선택 항목이에요." }]}
           >
             <Radio.Group onChange={(e) => setCategory(e.target.value)}>
-              <Radio.Button value="a">option1</Radio.Button>
-              <Radio.Button value="b">option2</Radio.Button>
-              <Radio.Button value="c">option3</Radio.Button>
-              <Radio.Button value="d">option4</Radio.Button>
+              <Radio.Button value="와인 질문">와인 질문</Radio.Button>
+              <Radio.Button value="와인 샵">와인 샵</Radio.Button>
+              <Radio.Button value="가격정보">가격정보</Radio.Button>
+              <Radio.Button value="자유">자유</Radio.Button>
             </Radio.Group>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" onClick={handleSubmit}>
-                Submit
-              </Button>
-            </Form.Item>
           </Form.Item>
+
+          <StyledItem
+            style={{ marginLeft: "200px" }}
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              글 올리기
+            </Button>
+          </StyledItem>
+
+          <StyledItem>
+            <Link to={`/community`}>
+              <Button>목록으로 돌아가기</Button>
+            </Link>
+          </StyledItem>
         </CategorieWrapper>
       </Form>
     </Wrapper>

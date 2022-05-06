@@ -1,5 +1,7 @@
 import PostList from "./PostList";
 import styled from "styled-components";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 function PostMain() {
   return (
@@ -8,7 +10,9 @@ function PostMain() {
       <div>?</div>
       <div>?</div>
       <div>?</div>
-      <div>dummydata example</div>
+      <Link to={`/community/newPost`}>
+        <Button>글 작성하기</Button>
+      </Link>
       <PostList />
     </>
   );

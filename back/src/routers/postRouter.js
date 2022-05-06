@@ -23,7 +23,7 @@ async (req, res, next) => {
       throw errors;
     }
     //로그인한 유저의 고유id 
-    const userId = req.currentUserId;
+    const userId = req.user.id
     //로그인 유저의 정보 -> author이름 정보 필요
     const user = await UserService.getUserById(userId);
     
@@ -50,12 +50,18 @@ async (req, res, next) => {
 });
 
 /*
- * Community : Post 조회
+ * Community : Post 조회(요청시마다 view +1)
  */
 postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
   try {
     const postId = req.params.id;
-    const post = await PostService.getPost(postId);
+    const post =
+    await PostService.getPost(postId)
+    .then((post)=>{
+      post.view++;
+      post.save();
+      return post;
+    })
 
     const body = {
         success: true,

@@ -80,6 +80,7 @@ const StaticsBox = styled.div`
   box-sizing: border-box;
   top: 20%;
   border-radius: 15px;
+  text-align: right;
 `;
 
 const SecReasonWrapper = styled(ReasonWrapper)`
@@ -131,6 +132,14 @@ const wineInfoData = {
     },
   ],
 };
+
+const wineInfoOptions = {
+  responsive: true,
+  interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+}
 
 const growthData = {
   labels: ["2018", "2019", "2020"],
@@ -202,8 +211,8 @@ function SecondSection() {
           <StaticsWrapper>
             <StaticsBox {...animatedItem[2]}>
               <ContentTitle>와인 수입</ContentTitle>
-              <Line data={wineInfoData} />
-              수출입무역통계(관세청)
+              <Line data={wineInfoData} options={wineInfoOptions}/>
+              출처:수출입무역통계(관세청) <br /> 단위:천 불(USD 1,000) / 톤(TON)
             </StaticsBox>
           </StaticsWrapper>
         </ReasonWrapper>
@@ -225,7 +234,7 @@ function SecondSection() {
             <SecStaticsBox {...animatedItem[5]}>
               <ContentTitle>맥주 와인 수입량</ContentTitle>
               <Line data={growthData} options={growthOptions} />
-              맥주 와인 수입 통계(관세청)
+              출처:맥주 와인 수입 통계(관세청) <br />  단위:톤(TON)
             </SecStaticsBox>
           </SecStaticsWrapper>
         </SecReasonWrapper>
