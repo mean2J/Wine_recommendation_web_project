@@ -160,6 +160,7 @@ function WineInfo() {
                   nation={result.nation}
                   local={result.local}
                   price={result.price}
+                  ImageURL={result.ImageURL}
                   abv={result.abv}
                   varieties={result.varieties}
                   sweet={result.sweet}
@@ -179,6 +180,7 @@ function WineInfo() {
                   nation={result.nation}
                   local={result.local}
                   price={result.price}
+                  ImageURL={result.ImageURL}
                   abv={result.abv}
                   varieties={result.varieties}
                   sweet={result.sweet}

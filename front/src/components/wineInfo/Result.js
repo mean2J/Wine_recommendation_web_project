@@ -1,4 +1,4 @@
-import { BackTop, Card, Rate } from "antd";
+import { BackTop, Card, Image, Rate } from "antd";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
@@ -33,6 +33,10 @@ const ContentWrapper = styled.div`
 
 const BottleImg = styled.div`
   flex: 0 0 20%;
+`;
+
+const WineImg = styled(Image)`
+  border-radius: 5px;
 `;
 
 const InfoColumn = styled.div`
@@ -163,6 +167,7 @@ function Result({
   type,
   local,
   price,
+  ImageURL,
   abv,
   varieties,
   bookmarked,
@@ -203,7 +208,12 @@ function Result({
             setBookmarkList={setBookmarkList}
           />
           <ContentWrapper>
-            <BottleImg></BottleImg>
+            <BottleImg>
+              <WineImg
+                width={150}
+                src={"https://"+ImageURL}
+              />
+            </BottleImg>
             <InfoColumn>
               <WineInfo>
                 <WineInfoVintage>
