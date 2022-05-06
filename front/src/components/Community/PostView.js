@@ -9,24 +9,18 @@ import * as Api from "../../api";
  */
 
 const Container = styled.div`
-  &:first-child {
-    padding-top: 100px;
-  }
+  padding-top: 100px;
+
   margin: 0 auto;
-  background-color: #f8f9fa;
+  background-color: #fff;
 `;
 
-const StyledCard = styled(Card)`
-  width: 80%;
-  height: auto;
-  box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
-  border-radius: 20px 20px 0 0;
-  border: 0;
-  z-index: 0;
-  .ant-card-body {
-    padding: 16px;
-  }
-  margin: 0 auto;
+const StyledCard = styled.div`
+  width: 720px;
+  position: relative;
+  width: 100%;
+  margin: 0px auto;
+  box-sizing: border-box;
 `;
 
 function PostView(props) {
