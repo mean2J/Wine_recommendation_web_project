@@ -101,6 +101,7 @@ function SearchWine() {
                 price={result.price}
                 abv={result.abv}
                 varieties={result.varieties}
+                ImageURL={result.ImageURL}
                 bookmarked={wineIdList.includes(result.id)}
                 bookmarkList={bookmarkList}
                 setBookmarkList={setBookmarkList}
