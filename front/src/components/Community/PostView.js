@@ -29,7 +29,7 @@ const StyledCard = styled(Card)`
   margin: 0 auto;
 `;
 
-function PostView(props) {
+function PostView() {
   const { postId } = useParams(); // 전달받은 postId
   const [post, setPost] = useState({});
 

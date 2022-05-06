@@ -129,7 +129,7 @@ function Header() {
             <Link to={`/wine`}>와인 추천 받아보기🍷</Link>
           </NavItems>
           <NavItems>
-            <Link to={`/community`}>커뮤니티💬</Link>
+            <Link to={`/community/postList`}>커뮤니티💬</Link>
           </NavItems>
           <NavLogin>
             {!isLogin ? (
