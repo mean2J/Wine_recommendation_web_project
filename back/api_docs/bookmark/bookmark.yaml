@@ -1,0 +1,40 @@
+post:
+  summary: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
+  description: Optional extended description in Markdown.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            wineId:
+              type: number
+  responses:
+    '201':
+      description: 와인 북마크가 생성되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              bookmark:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    description: req.currentUserId
+                  wineId:
+                    type: number
+                    description: wineId 넘버
+    '404':
+      description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
+    '400':
+      description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
+    default:
+      description: Unexpected error
+
+      

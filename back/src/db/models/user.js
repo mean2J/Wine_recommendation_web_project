@@ -1,4 +1,5 @@
-import {UserModel} from "../schemas/user.js";
+import { UserModel } from "../schemas/user.js";
+import bcrypt from "bcrypt";
 
 class User {
   static async createUser(User) {
@@ -7,17 +8,17 @@ class User {
   }
 
   static async findUserById(userId) {
-    const user = await UserModel.findOne({id: userId}).lean();
+    const user = await UserModel.findOne({ id: userId }).lean();
     return user;
   }
 
   static async findUserByEmail(email) {
-    const user = await UserModel.findOne({email: email}).lean();
+    const user = await UserModel.findOne({ email: email }).lean();
     return user;
   }
 
   static async findUserByName(name) {
-    const user = await UserModel.findOne({name: name}).lean();
+    const user = await UserModel.findOne({ name: name }).lean();
     return user;
   }
 
@@ -27,20 +28,22 @@ class User {
   }
 
   static async updateUser(userId, fieldToUpdate) {
-    const filter = {id: userId};
-    const option = {returnOriginal: false};
+    const filter = { id: userId };
+    const option = { returnOriginal: false };
+
+    option.timestamps = !fieldToUpdate.hasOwnProperty("updateTimestamp");
 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
-      {$set: fieldToUpdate},
+      { $set: fieldToUpdate },
       option
     ).lean();
     return updatedUser;
   }
 
   static async deleteUser(userId) {
-    await UserModel.findOneAndDelete({id: userId});
+    await UserModel.findOneAndDelete({ id: userId });
   }
 }
 
-export {User};
+export { User };

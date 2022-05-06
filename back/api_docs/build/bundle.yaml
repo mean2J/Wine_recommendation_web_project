@@ -1,28 +1,42 @@
 openapi: 3.0.0
 info:
-  title: Sample API
-  description: API description in Markdown.
+  title: 5팀 모코코 API 명세서
+  description: |
+    # 주의사항
+    backend 폴더 README.md 파일에 대략적인 사용 방법이 있으니 참고하세요.
+    yaml파일의 구체적인 작성 요령은
+    - https://swagger.io/docs/specification/about/
+    - https://swagger.io/specification/
+    - users MVP에 대한 yaml 파일들
+    을 참고하세요.
   version: 1.0.0
 servers:
   - url: 'localhost:5001/docs'
+tags:
+  - name: users
+    description: '유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등'
+  - name: reviews
+    description: '리뷰 작성, 조회, 수정, 삭제 등'
+  - name: auth
 paths:
   /users/signup:
     post:
+      tags:
+        - users
       summary: 입력받은 유저 정보로 회원가입을 합니다.
-      description: Optional extended description in Markdown.
+      description: |
+        # 회원가입 API
+        유저의 이메일과 비밀번호, 이름을 전달받아 회원가입을 진행하고 결과를 반환합니다.
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-                - id
                 - name
                 - email
                 - password
               properties:
-                id:
-                  type: string
                 name:
                   type: string
                 email:
@@ -30,13 +44,71 @@ paths:
                   format: email
                 password:
                   type: string
+            example:
+              name: acorn
+              email: mokoko@elice.com
+              password: 1q2w3e4r5t!
       responses:
-        '200':
-          description: The response
+        '201':
+          description: 정상적으로 회원가입이 되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+                      email:
+                        type: string
+                        description: 유저가 가입에 사용한 이메일 주소
+              example:
+                success: true
+                user:
+                  id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                  name: acorn
+                  email: mokoko@elice.com
+        '400':
+          description: 잘못된 요청입니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 400
+                  message: 이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.
   /users/signin:
     post:
+      tags:
+        - users
       summary: 입력받은 유저 정보로 로그인을 합니다.
-      description: Optional extended description in Markdown.
+      description: |
+        # 로그인 API
+        유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
       requestBody:
         content:
           application/json:
@@ -51,6 +123,1322 @@ paths:
                   format: email
                 password:
                   type: string
+            example:
+              email: mokoko@elice.com
+              password: 1q2w3e4r5t!
       responses:
         '200':
-          description: The response
+          description: 정상적으로 로그인되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: 이번 로그인에 대한 bearer token
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+                      email:
+                        type: string
+                        description: 유저가 가입에 사용한 이메일 주소
+              example:
+                success: true
+                user:
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+                  name: acorn
+                  email: mokoko@elice.com
+        '400':
+          description: 잘못된 요청입니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 400
+                  message: 이메일 정보는 필수입니다.
+        '401':
+          description: 비밀번호가 잘못되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 401
+                  message: 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.
+        '404':
+          description: 가입 내역이 존재하지 않습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 404
+                  message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
+  /users:
+    get:
+      tags:
+        - users
+      summary: 로그인한 유저 정보를 반환합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 로그인 유저 정보 API
+        현재 로그인한 유저의 정보를 반환합니다.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+                      email:
+                        type: string
+                        description: 유저가 가입에 사용한 이메일 주소
+                      createdAt:
+                        type: string
+                        format: date
+                        description: '회원가입 날짜, 시각'
+                      updatedAt:
+                        type: string
+                        format: date
+                        description: '마지막으로 정보가 수정된 날짜, 시각'
+              example:
+                success: true
+                user:
+                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+                  name: acorn
+                  email: mokoko@elice.com
+                  createdAt: 2022-04-27T16:26:08.844Z
+                  updatedAt: 2022-04-28T15:28:08.844Z
+        '403':
+          description: 미로그인
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 403
+                  message: 로그인한 유저만 사용할 수 있는 서비스입니다.
+        '404':
+          description: 가입 내역이 존재하지 않습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 404
+                  message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
+    delete:
+      tags:
+        - users
+      summary: 현재 로그인한 유저 계정을 삭제합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 회원탈퇴 API
+        현재 로그인한 유저의 계정 정보를 삭제합니다.
+      responses:
+        '200':
+          description: 정상적으로 삭제되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  message:
+                    type: string
+                    description: 삭제 성공 메시지
+              example:
+                success: true
+                message: 성공적으로 삭제되었습니다.
+        '403':
+          description: 미로그인
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 403
+                  message: 로그인한 유저만 사용할 수 있는 서비스입니다.
+        '404':
+          description: 가입 내역이 존재하지 않습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 404
+                  message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
+    put:
+      tags:
+        - users
+      summary: 입력받은 값으로 유저 정보를 업데이트합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 유저 정보 수정 API
+        입력받은 값들로 유저 정보를 업데이트합니다.
+        사용할 수 있는 정보는 유저 이름, 비밀번호, 상태 메시지입니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+                description:
+                  type: string
+            example:
+              name: acorn
+              password: 1q2w3e4r5t!
+              description: 안녕하세요
+      responses:
+        '200':
+          description: 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+                      email:
+                        type: string
+                        description: 유저가 가입에 사용한 이메일 주소
+                      description:
+                        type: string
+                        description: 상태 메시지
+              example:
+                success: true
+                user:
+                  name: acorn
+                  email: mokoko@elice.com
+                  description: 안녕하세요
+        '404':
+          description: 가입 내역이 존재하지 않습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 404
+                  message: 존재하지 않는 사용자입니다.
+  '/users/{userId}':
+    get:
+      tags:
+        - users
+      summary: 입력받은 유저 정보로 로그인을 합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 로그인 API
+        유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
+      parameters:
+        - name: userId
+          in: path
+          description: 유저 아이디
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+              example:
+                success: true
+                user:
+                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+                  name: acorn
+        '400':
+          description: 잘못된 요청입니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 400
+                  message: 이메일 정보는 필수입니다.
+        '403':
+          '404':
+            description: 가입 내역이 존재하지 않습니다.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      description: 요청이 성공했는지를 나타냅니다.
+                    error:
+                      type: obejct
+                      properties:
+                        code:
+                          type: integer
+                          description: http status code
+                        message:
+                          type: string
+                          description: 에러 메시지
+                example:
+                  success: false
+                  error:
+                    code: 404
+                    message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
+          description: 미로그인
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 403
+                  message: 로그인한 유저만 사용할 수 있는 서비스입니다.
+  '/reviews/{wineId}':
+    post:
+      tags:
+        - reviews
+      summary: 입력받은 게시글 정보로 리뷰를 업로드합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 리뷰 작성 API
+        제목과 내용과 와인 id를 요청받아 리뷰를 업로드합니다.
+      parameters:
+        - name: wineId
+          in: path
+          description: 와인 아이디
+          required: true
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                rating:
+                  type: number
+                  format: int32
+            example:
+              title: 리뷰 제목
+              content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+              rating: 3
+      responses:
+        '201':
+          description: 정상적으로 리뷰가 작성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  review:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: review ID
+                      title:
+                        type: string
+                        description: 리뷰 제목
+                      content:
+                        type: string
+                        description: 리뷰 내용
+                      author:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: 작성자 아이디
+                          name:
+                            type: string
+                            description: 작성자 닉네임
+                      wine:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: 와인 아이디
+                          name:
+                            type: string
+                            description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
+                      createdAt:
+                        type: string
+                        format: date
+                        description: 작성 시각
+              example:
+                success: true
+                review:
+                  id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                  title: 와인 리뷰
+                  content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+                  author:
+                    id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                    name: acorn
+                  wine:
+                    id: 137198
+                    name: 'Altair, Sideral'
+                  rating: 3
+                  createdAt: 2022-04-29T07:46:27.333Z
+  '/reviews/{reviewId}':
+    get:
+      tags:
+        - reviews
+      summary: review id에 해당하는 리뷰를 가져옵니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 리뷰 조회 API
+        review id를 전달받아 리뷰 정보를 돌려보냅니다.
+      parameters:
+        - name: reviewId
+          in: path
+          description: 리뷰 아이디
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 정상적으로 리뷰를 조회했습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  review:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: review ID
+                      title:
+                        type: string
+                        description: 리뷰 제목
+                      content:
+                        type: string
+                        description: 리뷰 내용
+                      author:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: 작성자 아이디
+                          name:
+                            type: string
+                            description: 작성자 닉네임
+                      wine:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: 와인 아이디
+                          name:
+                            type: string
+                            description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
+                      createdAt:
+                        type: string
+                        format: date
+                        description: 작성 시각
+              example:
+                success: true
+                review:
+                  id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                  title: 와인 리뷰
+                  content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+                  author:
+                    id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                    name: acorn
+                  wine:
+                    id: 137198
+                    name: 'Altair, Sideral'
+                  rating: 3
+                  createdAt: 2022-04-29T07:46:27.333Z
+    put:
+      tags:
+        - reviews
+      summary: review id에 해당하는 리뷰를 수정합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 리뷰 수정 API
+        review id를 전달받아 리뷰 정보를 수정합니다.
+      parameters:
+        - name: reviewId
+          in: path
+          description: 리뷰 아이디
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                rating:
+                  type: number
+                  format: int32
+            example:
+              title: 새로운 리뷰 제목
+              content: 크리스마스를 위해 한 병 샀는데 좋았습니다
+              rating: 4
+      responses:
+        '201':
+          description: 정상적으로 리뷰를 편집했습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  review:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: review ID
+                      title:
+                        type: string
+                        description: 리뷰 제목
+                      content:
+                        type: string
+                        description: 리뷰 내용
+                      author:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: 작성자 아이디
+                          name:
+                            type: string
+                            description: 작성자 닉네임
+                      wine:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: 와인 아이디
+                          name:
+                            type: string
+                            description: 와인 이름
+                      rating:
+                        type: number
+                        format: int32
+                        description: 별점
+                      createdAt:
+                        type: string
+                        format: date
+                        description: 작성 시각
+              example:
+                success: true
+                review:
+                  id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                  title: 새로운 리뷰 제목
+                  content: 크리스마스를 위해 한 병 샀는데 좋았습니다
+                  author:
+                    id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                    name: acorn
+                  wine:
+                    id: 137198
+                    name: 'Altair, Sideral'
+                  rating: 4
+                  createdAt: 2022-04-29T07:46:27.333Z
+    delete:
+      tags:
+        - reviews
+      summary: review id에 해당하는 리뷰를 삭제합니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 리뷰 조회 API
+        review id를 전달받아 리뷰를 삭제합니다.
+      parameters:
+        - name: reviewId
+          in: path
+          description: 리뷰 아이디
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 정상적으로 리뷰를 조회했습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  message:
+                    type: string
+                    description: 삭제 성공 메시지
+              example:
+                success: true
+                message: 성공적으로 삭제되었습니다.
+  '/reviews/authors/{userId}':
+    get:
+      tags:
+        - reviews
+      summary: review id에 해당하는 유저의 리뷰를 모두 가져옵니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 리뷰 조회 API
+        유저 id를 요청받아 리뷰를 모두 조회합니다.
+      parameters:
+        - name: userId
+          in: path
+          description: 유저 아이디
+          required: true
+          type: number
+      responses:
+        '200':
+          description: 정상적으로 리뷰를 조회했습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  reviews:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: review ID
+                        title:
+                          type: string
+                          description: 리뷰 제목
+                        content:
+                          type: string
+                          description: 리뷰 내용
+                        author:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: 작성자 아이디
+                            name:
+                              type: string
+                              description: 작성자 닉네임
+                        wine:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: 와인 아이디
+                            name:
+                              type: string
+                              description: 와인 이름
+                        rating:
+                          type: number
+                          format: int32
+                          description: 별점
+                        createdAt:
+                          type: string
+                          format: date
+                          description: 작성 시각
+              example:
+                success: true
+                reviews:
+                  - id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                    title: 와인 리뷰1
+                    content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+                    author:
+                      id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                      name: acorn
+                    wine:
+                      id: 137198
+                      name: 'Altair, Sideral'
+                    rating: 2
+                    createdAt: 2022-04-29T07:46:27.333Z
+                  - id: 7d2c290a-54a0-4edf-8c02-6dc8cea39d58
+                    title: 와인 리뷰2
+                    content: 이번엔 쓴맛이 너무 강합니다
+                    author:
+                      id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                      name: acorn
+                    wine:
+                      id: 137196
+                      name: Sideral
+                    rating: 1
+                    createdAt: 2022-04-29T07:24:28.863Z
+  '/reviews/wines/{wineId}':
+    get:
+      tags:
+        - reviews
+      summary: wine id에 해당하는 와인의 리뷰를 모두 가져옵니다.
+      security:
+        - BearerAuth: []
+      description: |
+        # 리뷰 조회 API
+        와인 id를 요청받아 리뷰를 모두 조회합니다.
+      parameters:
+        - name: wineId
+          in: path
+          description: 와인 아이디
+          required: true
+          type: number
+      responses:
+        '200':
+          description: 정상적으로 리뷰를 조회했습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  reviews:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: review ID
+                        title:
+                          type: string
+                          description: 리뷰 제목
+                        content:
+                          type: string
+                          description: 리뷰 내용
+                        author:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: 작성자 아이디
+                            name:
+                              type: string
+                              description: 작성자 닉네임
+                        wine:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: 와인 아이디
+                            name:
+                              type: string
+                              description: 와인 이름
+                        rating:
+                          type: number
+                          format: int32
+                          description: 별점
+                        createdAt:
+                          type: string
+                          format: date
+                          description: 작성 시각
+              example:
+                success: true
+                reviews:
+                  - id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                    title: 와인 리뷰1
+                    content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+                    author:
+                      id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                      name: acorn
+                    wine:
+                      id: 137198
+                      name: 'Altair, Sideral'
+                    rating: 2
+                    createdAt: 2022-04-29T07:46:27.333Z
+                  - id: 7d2c290a-54a0-4edf-8c02-6dc8cea39d58
+                    title: 와인 리뷰2
+                    content: 이번엔 쓴맛이 너무 강합니다
+                    author:
+                      id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                      name: acorn
+                    wine:
+                      id: 137196
+                      name: Sideral
+                    rating: 1
+                    createdAt: 2022-04-29T07:24:28.863Z
+  /bookmark:
+    post:
+      summary: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
+      description: Optional extended description in Markdown.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wineId:
+                  type: number
+      responses:
+        '201':
+          description: 와인 북마크가 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  bookmark:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        description: req.currentUserId
+                      wineId:
+                        type: number
+                        description: wineId 넘버
+        '400':
+          description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
+        '404':
+          description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
+        default:
+          description: Unexpected error
+  /bookmarklist:
+    get:
+      summary: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
+      description: Optional extended description in Markdown.
+      responses:
+        '200':
+          description: 내 북마크리스트가 정상적으로 출력되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  bookmark:
+                    type: object
+                    properties:
+                      bookmarkId:
+                        type: string
+                      bookmarkCreate:
+                        type: string
+                      wineInfo:
+                        type: Object
+        '404':
+          description: 북마크한 와인이 없습니다. 먼저 관심있는 와인을 북마크해주세요.
+        default:
+          description: Unexpected error
+  '/bookmark/{wineId}':
+    delete:
+      summary: 와인 카드의 북마크 버튼을 해제하면 해당와인의 북마크가 해제됩니다.
+      description: Optional extended description in Markdown.
+      parameters:
+        - name: wineId
+          in: path
+          description: wine 고유 넘버
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wineId:
+                  type: number
+      responses:
+        '200':
+          description: 와인 북마크가 해제되었습니다.
+        '400':
+          description: 북마크하지 않은 와인은 해제할 수 없습니다.
+        default:
+          description: Unexpected error
+  /auth/local/signup:
+    post:
+      tags:
+        - auth
+      summary: 입력받은 유저 정보로 회원가입을 합니다.
+      description: |
+        # 로컬 회원가입 API
+        유저의 이메일과 비밀번호, 이름을 전달받아 회원가입을 진행하고 결과를 반환합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+            example:
+              name: acorn
+              email: mokoko@elice.com
+              password: 1q2w3e4r5t!
+      responses:
+        '201':
+          description: 정상적으로 회원가입이 되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+                      email:
+                        type: string
+                        description: 유저가 가입에 사용한 이메일 주소
+              example:
+                success: true
+                user:
+                  id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                  name: acorn
+                  email: mokoko@elice.com
+        '400':
+          description: 잘못된 요청입니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 400
+                  message: 이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.
+  /auth/local/signin:
+    post:
+      tags:
+        - auth
+      summary: 입력받은 유저 정보로 로그인을 합니다.
+      description: |
+        # 로컬 로그인 API
+        유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+            example:
+              email: mokoko@elice.com
+              password: 1q2w3e4r5t!
+      responses:
+        '200':
+          description: 정상적으로 로그인되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: 이번 로그인에 대한 bearer token
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 유저가 설정한 이름
+                      email:
+                        type: string
+                        description: 유저가 가입에 사용한 이메일 주소
+              example:
+                success: true
+                user:
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+                  name: acorn
+                  email: mokoko@elice.com
+        '400':
+          description: 잘못된 요청입니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 400
+                  message: 이메일 정보는 필수입니다.
+        '401':
+          description: 비밀번호가 잘못되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 401
+                  message: 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.
+        '404':
+          description: 가입 내역이 존재하지 않습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  error:
+                    type: obejct
+                    properties:
+                      code:
+                        type: integer
+                        description: http status code
+                      message:
+                        type: string
+                        description: 에러 메시지
+              example:
+                success: false
+                error:
+                  code: 404
+                  message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
+  /auth/google/signin:
+    get:
+      tags:
+        - auth
+      summary: 구글 로그인을 진행합니다.
+      description: |
+        # 구글 로그인 API
+        구글 로그인 페이지로 넘어갑니다.
+      responses:
+        '200':
+          description: 정상적으로 로그인되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: userId
+                      name:
+                        type: string
+                        description: 구글 이름
+                      email:
+                        type: string
+                        description: 구글에 등록된 이메일 주소
+                      token:
+                        type: string
+                        description: 이번 로그인에 대한 bearer token
+                      expiredIn:
+                        type: string
+                        description: 토큰 유효기간
+              example:
+                success: true
+                user:
+                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
+                  name: acorn
+                  email: mokoko@gmail.com
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  expiredIn: 1d
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

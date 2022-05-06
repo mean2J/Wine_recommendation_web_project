@@ -1,0 +1,28 @@
+delete:
+  summary: 와인 카드의 북마크 버튼을 해제하면 해당와인의 북마크가 해제됩니다.
+  description: Optional extended description in Markdown.
+  parameters:
+  - name: wineId
+    in: path
+    description: wine 고유 넘버
+    required: true
+    schema: 
+      type: number
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            wineId:
+              type: number
+  responses:
+    '200':
+      description: 와인 북마크가 해제되었습니다.
+    '400':
+      description: 북마크하지 않은 와인은 해제할 수 없습니다.
+    default:
+      description: Unexpected error
+
+      

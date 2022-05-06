@@ -5,13 +5,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import LoginModal from "./User/Login/LoginModal";
 import "antd/dist/antd.min.css";
+import SearchWine from "./SearchWine/SearchWine";
+import Search from "antd/lib/transfer/search";
+import { message } from "antd";
 
 const Navbar = styled.nav`
   width: 100%;
   height: 60px;
   position: fixed;
   background-color: white;
-  border-bottom: 1px solid #c4c4c4;
+  box-shadow: 0 1px 4px 0 rgb(30 30 30 / 15%);
   z-index: 1;
 `;
 
@@ -36,14 +39,17 @@ const Logo = styled.p`
   background-clip: text;
 `;
 
-const NavItems = styled.p`
+const NavItems = styled.span`
   justify-content: start;
   margin-left: 40px;
   font-size: 17px;
   font-weight: 400;
+  a:hover {
+    color: #c365fd;
+  }
 `;
 
-const NavLoginItems = styled.p`
+const NavLoginItems = styled.span`
   margin-left: 20px;
   font-size: 17px;
   font-weight: 400;
@@ -53,6 +59,10 @@ const NavLogin = styled.div`
   display: flex;
   justify-content: end;
   margin-left: auto;
+  a:hover {
+    color: #c365fd;
+  }
+  cursor: pointer;
 `;
 
 function Header() {
@@ -75,34 +85,69 @@ function Header() {
     navigate("/");
   };
   const [isModal, setIsModal] = useState(false);
-  const getModalBoolean = (e) => {
+  const onClose = (e) => {
     setIsModal(e);
   };
   const showModal = () => {
     setIsModal(true);
+  };
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const page = 1;
+  const perPage = 10;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchValue < 1) {
+      message.info("검색어를 한 글자 이상 입력해주세요.");
+    } else {
+      navigate(
+        `/search/wines?text=${searchValue}&page=${page}&perPage=${perPage}`
+      );
+    }
   };
   return (
     <>
       <Navbar>
         <NavContainer>
           <Logo>
-            <Link to={`/`}>LOGO</Link>
+            <Link to={`/`}>
+              <img
+                alt=""
+                src={require("./team_5_logo.png")}
+                width="100px"
+                height="40px"
+              />
+            </Link>
           </Logo>
+          <NavItems>
+            <form onSubmit={handleSubmit}>
+              <Search
+                placeholder="와인 검색하기"
+                allowClear
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                }}
+              />
+            </form>
+          </NavItems>
           <NavItems>
             <Link to={`/wine`}>와인 추천 받아보기🍷</Link>
           </NavItems>
           <NavItems>
-            <Link to={`/community`}>커뮤니티 💬</Link>
+            <Link to={`/community`}>커뮤니티💬</Link>
           </NavItems>
           <NavLogin>
             {!isLogin ? (
               <NavLoginItems onClick={showModal}>로그인</NavLoginItems>
             ) : (
-              <NavLoginItems onClick={logout}>로그아웃</NavLoginItems>
+              <>
+                <Link to={`/myPage`}>마이 페이지</Link>
+                <NavLoginItems onClick={logout}>로그아웃</NavLoginItems>
+              </>
             )}
-            {isModal && (
-              <LoginModal isModal={isModal} getModalBoolean={getModalBoolean} />
-            )}
+            {isModal && <LoginModal isModal={isModal} onClose={onClose} />}
           </NavLogin>
         </NavContainer>
       </Navbar>

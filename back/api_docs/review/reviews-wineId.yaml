@@ -1,0 +1,98 @@
+post:
+  tags:
+    - "reviews"
+  summary: 입력받은 게시글 정보로 리뷰를 업로드합니다.
+  security:
+    - BearerAuth: [ ]
+  description: |
+    # 리뷰 작성 API
+    제목과 내용과 와인 id를 요청받아 리뷰를 업로드합니다.
+  parameters:
+    - name: "wineId"
+      in: path
+      description: 와인 아이디
+      required: true
+      type: number
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - title
+            - content
+          properties:
+            title:
+              type: string
+            content:
+              type: string
+            rating:
+              type: number
+              format: int32
+        example:
+          title: 리뷰 제목
+          content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+          rating: 3
+  responses:
+    '201':
+      description: 정상적으로 리뷰가 작성되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              review:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: review ID
+                  title:
+                    type: string
+                    description: 리뷰 제목
+                  content:
+                    type: string
+                    description: 리뷰 내용
+                  author:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: 작성자 아이디
+                      name:
+                        type: string
+                        description: 작성자 닉네임
+                  wine:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                  rating:
+                    type: number
+                    format: int32
+                    description: 별점
+                  createdAt:
+                    type: string
+                    format: date
+                    description: 작성 시각
+          example:
+            success: true
+            review:
+              id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+              title: 와인 리뷰
+              content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+              author:
+                id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                name: acorn
+              wine:
+                id: 137198
+                name: Altair, Sideral
+              rating: 3
+              createdAt: 2022-04-29T07:46:27.333Z

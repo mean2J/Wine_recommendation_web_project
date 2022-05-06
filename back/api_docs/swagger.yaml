@@ -1,0 +1,64 @@
+openapi: "3.0.0"
+info:
+  title: 5팀 모코코 API 명세서
+  description: |
+    # 주의사항
+    backend 폴더 README.md 파일에 대략적인 사용 방법이 있으니 참고하세요.
+    yaml파일의 구체적인 작성 요령은
+    - https://swagger.io/docs/specification/about/
+    - https://swagger.io/specification/
+    - users MVP에 대한 yaml 파일들
+    을 참고하세요.
+
+  version: 1.0.0
+
+servers:
+  - url: localhost:5001/docs
+
+tags:
+  - name: users
+    description: 유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등
+  - name: reviews
+    description: 리뷰 작성, 조회, 수정, 삭제 등
+  - name: auth
+
+paths:
+  /users/signup:
+    $ref: "./user/users-signup.yaml"
+  /users/signin:
+    $ref: "./user/users-signin.yaml"
+  /users:
+    $ref: "./user/users.yaml"
+  /users/{userId}:
+    $ref: "./user/users-userId.yaml"
+  /reviews/{wineId}:
+    $ref: "./review/reviews-wineId.yaml"
+  /reviews/{reviewId}:
+    $ref: "./review/reviews-reviewId.yaml"
+  /reviews/authors/{userId}:
+    $ref: "./review/reviews-authors-userId.yaml"
+  /reviews/wines/{wineId}:
+    $ref: "./review/reviews-wines-wineId.yaml"
+  /bookmark:
+    $ref: "./bookmark/bookmark.yaml"
+  /bookmarklist:
+    $ref: "./bookmark/bookmarklist.yaml"
+  /bookmark/{wineId}:
+    $ref: "./bookmark/bookmark-wineid.yaml"
+  /auth/local/signup:
+    $ref: "./auth/auth-local-signup.yaml"
+  /auth/local/signin:
+    $ref: "./auth/auth-local-signin.yaml"
+  /auth/google/signin:
+    $ref: "./auth/auth-google-signin.yaml"
+  /wines/recommend:
+    $ref: "./wine/wines-recommend.yaml"
+  /wines/{id}:
+    $ref: "./wine/wines-id.yaml"
+  /search/wines/{name}{page}{perPage}:
+    $ref: "./search/search-wines.yaml"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

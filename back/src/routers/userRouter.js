@@ -2,8 +2,9 @@ import { Router } from "express";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { body, matchedData } from "express-validator";
-import { validationErrorCatcher } from "../middlewares/userMiddleware.js";
+import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
 import { removeFields } from "../utils/utils.js";
+import dayjs from "dayjs";
 
 const userRouter = Router();
 
@@ -66,6 +67,12 @@ userRouter.post(
 
       const user = await UserService.getUser({ ...userInfo });
 
+      const userId = user.id;
+      const date = dayjs().toISOString();
+      const fieldToUpdate = { recentLogin: date, updateTimestamp: false };
+
+      await UserService.updateUser(userId, fieldToUpdate);
+
       const body = {
         success: true,
         user,
@@ -90,6 +97,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
       "__v",
       "createdAt",
       "updatedAt",
+      "recentLogin"
     ]);
 
     const body = {
@@ -105,7 +113,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
 
 userRouter.get("/users", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
 
     const user = await UserService.getUserById(userId);
     const filteredUser = removeFields(user, ["_id", "password", "__v"]);
@@ -129,7 +137,7 @@ userRouter.put(
   body("description").exists({ checkNull: true }).isString(),
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.user.id;
       const fieldToUpdate = matchedData(req);
 
       const user = await UserService.updateUser(userId, fieldToUpdate);
@@ -149,7 +157,7 @@ userRouter.put(
 
 userRouter.delete("/users", loginRequired, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.user.id;
 
     await UserService.deleteUser(userId);
 

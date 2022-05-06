@@ -1,0 +1,208 @@
+get:
+  tags:
+    - "reviews"
+  summary: review id에 해당하는 리뷰를 가져옵니다.
+  security:
+    - BearerAuth: [ ]
+  description: |
+    # 리뷰 조회 API
+    review id를 전달받아 리뷰 정보를 돌려보냅니다.
+  parameters:
+    - name: "reviewId"
+      in: path
+      description: 리뷰 아이디
+      required: true
+      type: string
+  responses:
+    '200':
+      description: 정상적으로 리뷰를 조회했습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              review:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: review ID
+                  title:
+                    type: string
+                    description: 리뷰 제목
+                  content:
+                    type: string
+                    description: 리뷰 내용
+                  author:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: 작성자 아이디
+                      name:
+                        type: string
+                        description: 작성자 닉네임
+                  wine:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                  rating:
+                    type: number
+                    format: int32
+                    description: 별점
+                  createdAt:
+                    type: string
+                    format: date
+                    description: 작성 시각
+          example:
+            success: true
+            review:
+              id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+              title: 와인 리뷰
+              content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+              author:
+                id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                name: acorn
+              wine:
+                id: 137198
+                name: Altair, Sideral
+              rating: 3
+              createdAt: 2022-04-29T07:46:27.333Z
+put:
+  tags:
+    - "reviews"
+  summary: review id에 해당하는 리뷰를 수정합니다.
+  security:
+    - BearerAuth: [ ]
+  description: |
+    # 리뷰 수정 API
+    review id를 전달받아 리뷰 정보를 수정합니다.
+  parameters:
+    - name: "reviewId"
+      in: path
+      description: 리뷰 아이디
+      required: true
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - title
+            - content
+          properties:
+            title:
+              type: string
+            content:
+              type: string
+            rating:
+              type: number
+              format: int32
+        example:
+          title: 새로운 리뷰 제목
+          content: 크리스마스를 위해 한 병 샀는데 좋았습니다
+          rating: 4
+  responses:
+    '201':
+      description: 정상적으로 리뷰를 편집했습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              review:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: review ID
+                  title:
+                    type: string
+                    description: 리뷰 제목
+                  content:
+                    type: string
+                    description: 리뷰 내용
+                  author:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: 작성자 아이디
+                      name:
+                        type: string
+                        description: 작성자 닉네임
+                  wine:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                  rating:
+                    type: number
+                    format: int32
+                    description: 별점
+                  createdAt:
+                    type: string
+                    format: date
+                    description: 작성 시각
+          example:
+            success: true
+            review:
+              id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+              title: 새로운 리뷰 제목
+              content: 크리스마스를 위해 한 병 샀는데 좋았습니다
+              author:
+                id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                name: acorn
+              wine:
+                id: 137198
+                name: Altair, Sideral
+              rating: 4
+              createdAt: 2022-04-29T07:46:27.333Z
+delete:
+  tags:
+    - "reviews"
+  summary: review id에 해당하는 리뷰를 삭제합니다.
+  security:
+    - BearerAuth: [ ]
+  description: |
+    # 리뷰 조회 API
+    review id를 전달받아 리뷰를 삭제합니다.
+  parameters:
+    - name: "reviewId"
+      in: path
+      description: 리뷰 아이디
+      required: true
+      type: string
+  responses:
+    '200':
+      description: 정상적으로 리뷰를 조회했습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              message:
+                type: string
+                description: 삭제 성공 메시지
+          example:
+            success: true
+            message: 성공적으로 삭제되었습니다.

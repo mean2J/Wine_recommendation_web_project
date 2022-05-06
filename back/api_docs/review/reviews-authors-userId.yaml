@@ -1,0 +1,91 @@
+get:
+  tags:
+    - "reviews"
+  summary: review id에 해당하는 유저의 리뷰를 모두 가져옵니다.
+  security:
+    - BearerAuth: [ ]
+  description: |
+    # 리뷰 조회 API
+    유저 id를 요청받아 리뷰를 모두 조회합니다.
+  parameters:
+    - name: "userId"
+      in: path
+      description: 유저 아이디
+      required: true
+      type: number
+  responses:
+    '200':
+      description: 정상적으로 리뷰를 조회했습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              reviews:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: review ID
+                    title:
+                      type: string
+                      description: 리뷰 제목
+                    content:
+                      type: string
+                      description: 리뷰 내용
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 작성자 아이디
+                        name:
+                          type: string
+                          description: 작성자 닉네임
+                    wine:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: 와인 아이디
+                        name:
+                          type: string
+                          description: 와인 이름
+                    rating:
+                      type: number
+                      format: int32
+                      description: 별점
+                    createdAt:
+                      type: string
+                      format: date
+                      description: 작성 시각
+          example:
+            success: true
+            reviews:
+              - id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
+                title: 와인 리뷰1
+                content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
+                author:
+                  id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                  name: acorn
+                wine:
+                  id: 137198
+                  name: Altair, Sideral
+                rating: 2
+                createdAt: 2022-04-29T07:46:27.333Z
+              - id: 7d2c290a-54a0-4edf-8c02-6dc8cea39d58
+                title: 와인 리뷰2
+                content: 이번엔 쓴맛이 너무 강합니다
+                author:
+                  id: 4c2461de-93b5-41b5-9246-279856f3bff2
+                  name: acorn
+                wine:
+                  id: 137196
+                  name: Sideral
+                rating: 1
+                createdAt: 2022-04-29T07:24:28.863Z
