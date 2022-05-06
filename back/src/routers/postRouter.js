@@ -11,8 +11,8 @@ const postRouter = Router();
  */
 postRouter.post("/post",
 body("category", "카테고리를 선택해주세요.").isString(),
-body("title", "제목은 5자 이상 50자 이하로 작성해주세요").isLength({min:5, max:50}),
-body("content", "내용은 10자 이상 1000자 이하로 작성해주세요").isLength({min:10, max:1000}),
+body("title", "제목은 5자 이상 작성해주세요").isLength({min:5}),
+body("content", "내용은 10자 이상 작성해주세요").isLength({min:10}),
 loginRequired,
 async (req, res, next) => {
   try {
@@ -28,14 +28,17 @@ async (req, res, next) => {
     const user = await UserService.getUserById(userId);
     
     const author = user.name;
-    const {category, title, content} = req.body;   
+    const {category, title, content} = req.body; 
+    
+    //const currentDate = await PostService.getCurrentDate()
 
     const newPost = await PostService.addPost({
       userId,
       author,
       category,
       title,
-      content
+      content,
+      //currentDate
     })
 
     const body = {
@@ -58,7 +61,7 @@ postRouter.get("/post/:id", loginRequired, async (req, res, next) => {
     const post =
     await PostService.getPost(postId)
     .then((post)=>{
-      post.view++;
+      post.view=post.view+0.5;
       post.save();
       return post;
     })
