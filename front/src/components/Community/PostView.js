@@ -40,7 +40,7 @@ function PostView() {
 
   // 수정/삭제 권한 체크
   const [authorId, setAuthorId] = useState("");
-  const currentUserId = userState.user.id;
+  const currentUserId = userState.user.user.id;
 
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
