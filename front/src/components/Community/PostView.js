@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Card } from "antd";
 import styled from "styled-components";
 import * as Api from "../../api";
+
 /*
  * POST 상세 페이지
  */
@@ -29,7 +30,7 @@ const StyledCard = styled(Card)`
 `;
 
 function PostView(props) {
-  const { postId } = useParams();
+  const { postId } = useParams(); // 전달받은 postId
   const [post, setPost] = useState({});
 
   const getPost = useCallback(async () => {
