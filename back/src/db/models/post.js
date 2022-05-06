@@ -13,7 +13,7 @@ class Post {
    * PostId(=id)로 해당 post 찾아서 리턴
    */
   static async findPostById(postId) {
-    const post = await PostModel.findOne({id: postId}).lean();
+    const post = await PostModel.findOne({id: postId});
     return post;
   }
 
