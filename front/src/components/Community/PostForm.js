@@ -109,7 +109,7 @@ function PostForm() {
         title,
         content,
       });
-      navigate("/community");
+      navigate("/community/postList");
       message.success("글이 등록되었습니다.");
     } catch (err) {
       console.log(err);
@@ -187,7 +187,7 @@ function PostForm() {
           </StyledItem>
 
           <StyledItem>
-            <Link to={`/community`}>
+            <Link to={`/community/postList`}>
               <Button>목록으로 돌아가기</Button>
             </Link>
           </StyledItem>
