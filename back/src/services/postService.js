@@ -44,6 +44,17 @@ class PostService {
     return finalPage;
   }
 
+
+  // static async getCurrentDate(){
+  //   var date = new Date();
+  //   var year = date.getFullYear();
+  //   var month = date.getMonth();
+  //   var today = date.getDate();
+  //   var hours = date.getHours();
+  //   var minutes = date.getMinutes();
+  //   return new Date(Date.UTC(year, month, today, hours, minutes));
+  // }
+
   /**
    * Community : post 수정
    */
