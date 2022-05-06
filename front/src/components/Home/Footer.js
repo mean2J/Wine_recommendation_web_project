@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import useScrollFadeIn from "../../hooks/useScrollFadeIn";
+import { useNavigate } from "react-router-dom";
 
 const FooterSection = styled.section`
   height: 70vh;
@@ -57,6 +58,12 @@ const FooterBtn = styled.div`
 `;
 
 function Footer() {
+  const navigate = useNavigate();
+
+  const handleWine = () => {
+    navigate("wine");
+  }
+
   const animatedItem = {
     0: useScrollFadeIn("up", 0.9, 0),
     1: useScrollFadeIn("up", 0.9, 0),
@@ -65,15 +72,12 @@ function Footer() {
   return (
     <>
       <FooterSection>
-        <FooterWrapper>
-          <FooterTitle {...animatedItem[0]}>
-            <span>로그인</span> 하고 사용해보세요
-          </FooterTitle>
+        <FooterWrapper {...animatedItem[0]}>
           <FooterDesc {...animatedItem[1]}>
             사용자의 입맛에 맛는 <span>와인</span>을 추천하고, <br />
             <span>와인</span>을 즐기는데에 도움을 주고자 제안한 서비스 입니다.
           </FooterDesc>
-          <FooterBtn {...animatedItem[2]}>추천 받아보기</FooterBtn>
+          <FooterBtn {...animatedItem[2]} onClick={handleWine}>추천 받아보기</FooterBtn>
         </FooterWrapper>
       </FooterSection>
     </>

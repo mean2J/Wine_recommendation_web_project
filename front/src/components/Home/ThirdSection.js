@@ -116,8 +116,45 @@ const flavorMeanData = {
     },
   ],
 };
+
+const nationOptions = {
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+    },
+  },
+};
+
+const priceOptions = {
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+    },
+  },
+};
+
+const typeOptions = {
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+    },
+  },
+   interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+};
+
 const flavorRadarOptions = {
   maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+    },
+  },
   scale: {
     r: {
       min: 0,
@@ -136,18 +173,18 @@ const flavorRadarOptions = {
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
-  height: 150vh;
+  height: 85vh;
 `;
 
 const Titlewrapper = styled.div`
   padding-top: 100px;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 `;
 
 const FeatureTitle = styled.span`
   font-weight: 600;
   font-size: 54px;
-  line-height: 72px;
+  line-height: 54px;
   color: black;
   display: block;
   text-align: center;
@@ -158,21 +195,21 @@ const FeatureTitle = styled.span`
 
 const ContentWrapper = styled.div`
   width: 100%;
-  padding: 0 48px;
-  max-width: calc(960px + 48px + 48px);
+  max-width: 1440px;
   margin: 0 auto;
 `;
 
 const InnerWrapper = styled.div`
   display: flex;
-  margin-left: -30px;
-  margin-top: -77px;
   flex-wrap: wrap;
   justify-content: center;
 `;
 
 const Contents = styled.div`
   padding-top: 8vh;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin: auto;
 `;
 
 const ContentTitle = styled.span`
@@ -182,12 +219,12 @@ const ContentTitle = styled.span`
   display: flex;
   justify-content: center;
   color: #fd6585;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 `;
 
 const ContentDesc = styled.div`
   position: relative;
-  margin: 0 100px;
+  margin: 0 auto;
 `;
 
 export function ThirdSection() {
@@ -211,9 +248,9 @@ export function ThirdSection() {
             <ContentDesc>
               <PolarArea
                 data={nationData}
-                width={240}
-                height={240}
-                options={{ maintainAspectRatio: true }}
+                width={280}
+                height={280}
+                options={nationOptions}
               />
             </ContentDesc>
           </Contents>
@@ -222,9 +259,9 @@ export function ThirdSection() {
             <ContentDesc>
               <Doughnut
                 data={priceData}
-                width={240}
-                height={240}
-                options={{ maintainAspectRatio: true }}
+                width={280}
+                height={280}
+                options={priceOptions}
               />
             </ContentDesc>
           </Contents>
@@ -233,9 +270,9 @@ export function ThirdSection() {
             <ContentDesc>
               <Bar
                 data={typeData}
-                width={240}
-                height={240}
-                options={{ maintainAspectRatio: true }}
+                width={280}
+                height={280}
+                options={typeOptions}
               />
             </ContentDesc>
           </Contents>
@@ -244,8 +281,8 @@ export function ThirdSection() {
             <ContentDesc>
               <Radar
                 data={flavorMeanData}
-                width={240}
-                height={240}
+                width={280}
+                height={280}
                 options={flavorRadarOptions}
               />
             </ContentDesc>
