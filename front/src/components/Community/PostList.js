@@ -4,19 +4,6 @@ import { List, Space } from "antd";
 import { MessageOutlined } from "@ant-design/icons";
 import * as Api from "../../api";
 
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: "https://ant.design",
-    title: `ant design part ${i}`,
-    avatar: "https://joeschmoe.io/api/v1/random",
-    description:
-      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  });
-}
-
 const IconText = ({ icon, text }) => (
   <Space>
     {React.createElement(icon)}
@@ -33,7 +20,7 @@ function PostList() {
   useEffect(() => {
     Api.get(`postlist`).then((res) => {
       setPosts(res.data.postList);
-      console.log(posts);
+      // console.log(posts);
     });
   }, []);
 
