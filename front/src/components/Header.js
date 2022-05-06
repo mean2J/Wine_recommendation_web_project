@@ -112,7 +112,14 @@ function Header() {
       <Navbar>
         <NavContainer>
           <Logo>
-            <Link to={`/`}>LOGO</Link>
+            <Link to={`/`}>
+              <img
+                alt=""
+                src={require("./team_5_logo.png")}
+                width="100px"
+                height="40px"
+              />
+            </Link>
           </Logo>
           <NavItems>
             <form onSubmit={handleSubmit}>

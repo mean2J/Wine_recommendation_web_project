@@ -51,7 +51,12 @@ paths:
     $ref: "./auth/auth-local-signin.yaml"
   /auth/google/signin:
     $ref: "./auth/auth-google-signin.yaml"
-
+  /wines/recommend:
+    $ref: "./wine/wines-recommend.yaml"
+  /wines/{id}:
+    $ref: "./wine/wines-id.yaml"
+  /search/wines/{name}{page}{perPage}:
+    $ref: "./search/search-wines.yaml"
 components:
   securitySchemes:
     BearerAuth:
