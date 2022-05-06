@@ -16,14 +16,6 @@ const FooterWrapper = styled.div`
   text-align: center;
 `;
 
-const FooterTitle = styled.h1`
-  font-weight: 600;
-  font-size: 54px;
-  line-height: 67px;
-  span {
-    color: #fd6585;
-  }
-`;
 
 const FooterDesc = styled.span`
   margin-top: 55px;
