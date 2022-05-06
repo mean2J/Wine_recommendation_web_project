@@ -4,6 +4,9 @@ import { Card } from "antd";
 import styled from "styled-components";
 import * as Api from "../../api";
 
+import PostEditForm from "./PostEditForm";
+import PostDeleteModal from "./PostDeleteModal";
+
 /*
  * POST 상세 페이지
  */
@@ -32,6 +35,10 @@ const StyledCard = styled(Card)`
 function PostView() {
   const { postId } = useParams(); // 전달받은 postId
   const [post, setPost] = useState({});
+  const [title, setTitle] = useState(post.title);
+  const [content, setContent] = useState(post.content);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isModal, setIsModal] = useState(false); // 삭제 모달 여부
 
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
@@ -40,9 +47,8 @@ function PostView() {
 
   useEffect(() => {
     getPost();
-  }, [getPost]);
+  }, [getPost, title, content]);
 
-  console.log(postId);
   return (
     <>
       <Container>
@@ -53,7 +59,24 @@ function PostView() {
           <div>{post.content}</div>
           <div>{post.category}</div>
           <div>{post.view}</div>
+          <button onClick={() => setIsEditing(true)}>수정</button>
+          <button onClick={() => setIsModal(true)}>삭제</button>
+          {isModal && (
+            <PostDeleteModal
+              postId={postId}
+              isModal={isModal}
+              setIsModal={setIsModal}
+            />
+          )}
         </StyledCard>
+        {isEditing && (
+          <PostEditForm
+            post={post}
+            setIsEditing={setIsEditing}
+            setTitle={setTitle}
+            setContent={setContent}
+          />
+        )}
       </Container>
     </>
   );
