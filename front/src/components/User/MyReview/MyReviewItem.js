@@ -172,13 +172,17 @@ function ReviewItem({
   const [isEditing, setIsEditing] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [wineName, setWineName] = useState("");
+  const [wineImageURL, setWineImageURL] = useState("");
 
   const [Info, setInfo] = useState(reviewInfo);
-
+  
   const getWineName = useCallback(async () => {
     const res = await Api.get(`wines/${reviewInfo.wine}`);
     setWineName(res.data.name);
+    setWineImageURL(res.data.ImageURL)
+    
   }, [reviewInfo.wine]);
+
 
   useEffect(() => {
     getWineName();
@@ -195,7 +199,7 @@ function ReviewItem({
           <ImgWrapper>
             <ReviewImg
               width={150}
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mg0Z3jjdhhILbiweMfnMc4JSYlaf267GyA&usqp=CAU"
+              src={"https://"+wineImageURL}
             />
           </ImgWrapper>
           {isEditing ? (

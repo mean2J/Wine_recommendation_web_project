@@ -53,6 +53,10 @@ const WineSchema = new Schema({
     type: Number,
     required: true,
   },
+  ImageURL: {
+    type: String,
+    required: true,
+  },
 });
 
 const WineModel = model("Wine", WineSchema);
