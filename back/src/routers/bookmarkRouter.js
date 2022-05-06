@@ -125,7 +125,7 @@ bookmarkRouter.delete(
   async (req, res, next) => {
     try {
       const userId = req.user.id;
-      const isDeleted = await bookmarkService.deleteAllBookmark({ userId });
+      const isDeleted = await BookmarkService.deleteAllBookmark({ userId });
 
       res.status(200).send("allDelete");
     } catch (error) {
