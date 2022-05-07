@@ -134,6 +134,10 @@ const CountWrapper = styled.div`
   color: rgb(101, 110, 117);
 `;
 
+const TextWrapper = styled.div`
+  word-break: break-all;
+`;
+
 function PostView() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
@@ -201,7 +205,7 @@ function PostView() {
                 </AuthorWrapper>
               </TopWrapper>
               <ContentWrapper>
-                <p>{post.content}</p>
+                <TextWrapper>{post.content}</TextWrapper>
               </ContentWrapper>
               <CategorieWrapper>#{post.category}</CategorieWrapper>
               <CountWrapper>조회: {post.view}</CountWrapper>
