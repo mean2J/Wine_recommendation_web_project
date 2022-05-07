@@ -105,7 +105,6 @@ function PostForm() {
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
-      console.log(title, content, category);
       await Api.post("post", {
         category,
         title,
@@ -157,7 +156,7 @@ function PostForm() {
             <Contents>
               <ContentsContainer>
                 <StyledArea
-                  placeholder="내용을 입력해주세요. (1000자 이하)"
+                  placeholder="내용을 입력해주세요. (5자 이상, 1000자 이하)"
                   bordered={false}
                   autoSize
                   maxLength={999}

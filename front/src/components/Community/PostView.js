@@ -65,7 +65,12 @@ const BtnWrapper = styled.div`
   display: flex;
   align-items: center;
   float: right;
-  
+  Button {
+    margin: 16px 0 16px 0;
+  }
+  Button:first-child {
+    margin-right: 10px;
+  }
 `;
 
 const Title = styled.p`
@@ -148,7 +153,7 @@ function PostView() {
   /**
    * getPost 작동시 Api.get(`post/view/${postId}`) 딱 한번만 요청되어야 함.
    */
-  
+
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
     setPost(res.data.post);
@@ -177,10 +182,6 @@ function PostView() {
                     onBack={() => navigate("/community")}
                     title="목록으로 돌아가기"
                   />
-                  <BtnWrapper>
-                    <Button>수정</Button>
-                    <Button>삭제</Button>
-                  </BtnWrapper>
                 </HeadWarpper>
                 <Title>{post.title}</Title>
                 <AuthorWrapper>
@@ -221,6 +222,7 @@ function PostView() {
               setIsEditing={setIsEditing}
               setTitle={setTitle}
               setContent={setContent}
+              setCategory={setCategory}
             />
           )}
         </Container>
