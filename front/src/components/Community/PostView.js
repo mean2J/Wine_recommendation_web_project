@@ -9,6 +9,7 @@ import moment from "moment";
 
 import PostEditForm from "./PostEditForm";
 import PostDeleteModal from "./PostDeleteModal";
+import Comment from "./Comment/Comment";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Item from "antd/lib/list/Item";
 import { useNavigate } from "react-router-dom";
@@ -235,6 +236,7 @@ function PostView() {
           )}
         </Container>
       </MainContainer>
+      <Comment />
     </>
   );
 }
