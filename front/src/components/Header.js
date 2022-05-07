@@ -47,9 +47,8 @@ const NavItems = styled.span`
   a:hover {
     color: #c365fd;
   }
-  cursor:pointer;
+  cursor: pointer;
 `;
-
 
 const NavLoginItems = styled.span`
   margin-left: 20px;
@@ -66,7 +65,6 @@ const NavLogin = styled.div`
   }
   cursor: pointer;
 `;
-
 
 function Header() {
   const navigate = useNavigate();
@@ -89,8 +87,11 @@ function Header() {
   };
 
   const communityForUser = () => {
-    message.warning("회원가입 후 이용할 수 있습니다.");
-  }
+    message.warning({
+      content: "회원가입 후 이용할 수 있습니다.",
+      duration: 1.3,
+    });
+  };
 
   const [isModal, setIsModal] = useState(false);
   const onClose = (e) => {
@@ -145,7 +146,9 @@ function Header() {
           </NavItems>
           <NavItems>
             {isLogin ? (
-              <NavItems><Link to={`/community/postList`}>커뮤니티💬</Link></NavItems>
+              <NavItems>
+                <Link to={`/community/postList`}>커뮤니티💬</Link>
+              </NavItems>
             ) : (
               <NavItems onClick={communityForUser}>커뮤니티💬</NavItems>
             )}
