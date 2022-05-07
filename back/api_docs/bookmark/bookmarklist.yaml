@@ -1,6 +1,8 @@
 get:
-  summary: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
-  description: Optional extended description in Markdown.
+  tags:
+    - bookmarks
+  summary: 나의 북마크를 조회합니다.
+  description: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
   responses:
     '200':
       description: 내 북마크리스트가 정상적으로 출력되었습니다.
@@ -21,6 +23,24 @@ get:
                     type: string
                   wineInfo:
                     type: Object
+          example:
+            success: true
+            bookmark: 
+              bookmarkId: 79228eb7-a17d-44c4-b9fe-6b6c5bc71759
+              bookmarkCreate: 2022-04-29T10:34:41.272Z
+              wineInfo:
+                id: 137202
+                name: Calvet, Beaujolais Villages
+                nation: 프랑스 France
+                local: 부르고뉴 Bourgogne, 보졸레 Beaujolais
+                varieties: Gamay, - , - 
+                type: Red
+                abv: 12
+                sweet: 2
+                acidity: 4
+                body: 2
+                tannin: 2
+                price: 0
     '404':
       description: 북마크한 와인이 없습니다. 먼저 관심있는 와인을 북마크해주세요.
     default:
