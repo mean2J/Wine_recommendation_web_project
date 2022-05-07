@@ -63,7 +63,7 @@ get:
                   updatedAt: 
                     type: string
                     description: 업데이트 시각
-        example:
+          example:
             success: true
             page : 1
             finalPage : 3
