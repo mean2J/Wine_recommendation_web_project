@@ -167,10 +167,10 @@ function PostForm() {
             rules={[{ required: true, message: "필수 선택 항목이에요." }]}
           >
             <Radio.Group onChange={(e) => setCategory(e.target.value)}>
-              <Radio.Button value="와인 질문">와인 질문</Radio.Button>
-              <Radio.Button value="와인 샵">와인 샵</Radio.Button>
+              <Radio.Button value="와인추천">와인추천</Radio.Button>
+              <Radio.Button value="와인상식">와인상식</Radio.Button>
+              <Radio.Button value="와인샵">와인샵</Radio.Button>
               <Radio.Button value="가격정보">가격정보</Radio.Button>
-              <Radio.Button value="자유">자유</Radio.Button>
             </Radio.Group>
           </Form.Item>
 

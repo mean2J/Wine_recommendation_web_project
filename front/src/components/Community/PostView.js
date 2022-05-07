@@ -35,12 +35,13 @@ function PostView() {
   const [post, setPost] = useState({});
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
+  const [category, setCategory] = useState(post.category);
   const [isEditing, setIsEditing] = useState(false);
   const [isModal, setIsModal] = useState(false); // 삭제 모달 여부
 
   // 수정/삭제 권한 체크
   const [authorId, setAuthorId] = useState("");
-  const currentUserId = userState.user.id;
+  const currentUserId = userState.user.user.id;
 
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
@@ -50,7 +51,7 @@ function PostView() {
   useEffect(() => {
     getPost();
     setAuthorId(post.userId);
-  }, [getPost, title, content, setAuthorId, post.userId]);
+  }, [getPost, title, content, category, setAuthorId, post.userId]);
 
   return (
     <>
@@ -83,6 +84,7 @@ function PostView() {
             setIsEditing={setIsEditing}
             setTitle={setTitle}
             setContent={setContent}
+            setCategory={setCategory}
           />
         )}
       </Container>

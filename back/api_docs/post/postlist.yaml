@@ -1,0 +1,78 @@
+get:
+  tags:
+    - posts
+  summary: 페이지로 나눠진 게시글(post) 목록을 조회합니다.
+  description: 쿼리 파라미터로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다.
+  parameters:
+  - name: category
+    in: query
+    description: 게시물이 속한 카테고리
+    required: true
+    type: string
+  - name: page
+    in: query
+    description: 페이지 번호
+    required: true
+    type: string
+  - name: maxPost
+    in: query
+    description: 페이지당 게시글 수
+    required: true
+    type: string
+  responses:
+    '200':
+      description: n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              page: 
+                type: number
+                description: 요청한 페이지 번호
+              finalPage:
+                type: number
+                description: 요청한 게시글 목록의 최대 페이지 번호
+              postList:
+                type: object array
+                properties:
+                  id: 
+                    type: string
+                    description: post를 구분하는 id
+                  userId: 
+                    type: string
+                    description: post를 작성한 유저의 id
+                  author: 
+                    type: string
+                    description: post를 작성한 유저의 이름
+                  category: 
+                    type: string
+                    description: post가 속한 카테고리
+                  title : 
+                    type: string
+                    description: 제목
+                  content : 
+                    type: string
+                    description: 본문 내용
+                  createdAt: 
+                    type: string
+                    description: 작성 시각
+                  updatedAt: 
+                    type: string
+                    description: 업데이트 시각
+          example:
+            success: true
+            page : 1
+            finalPage : 3
+            postList:
+              id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+              userId: d020ec12-f280-4d30-be94-58350d6fac81
+              author: 익명
+              category: 와인샵
+              title : 파이퍼하이직 파는 곳 어디 있을까요?
+              content : 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+              createdAt: 2022-05-07T00:17:22.464Z
+              updatedAt: 2022-05-07T00:37:53.111Z

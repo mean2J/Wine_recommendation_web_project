@@ -21,7 +21,11 @@ function App() {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
       const res = await Api.get("users");
       const currentUser = res.data;
+<<<<<<< HEAD
 
+=======
+      console.log(currentUser);
+>>>>>>> 2d793c46899855edfea0c1b704ed6b9427263416
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
         type: "LOGIN_SUCCESS",
