@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input, Radio, Form, Button, message } from "antd";
 import * as Api from "../../api";
 import { Link } from "react-router-dom";
