@@ -54,7 +54,7 @@ post:
                   updatedAt: 
                     type: string
                     description: 업데이트 시각
-        example:
+          example:
             success: true
             post:
               id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d

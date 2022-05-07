@@ -9,8 +9,6 @@ put:
     description: comment 고유 id
     required: true
     type: string
-    example :
-      id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
   requestBody:
     content:
       application/json:
@@ -57,7 +55,7 @@ put:
                   updatedAt: 
                     type: string
                     description: 업데이트 시각
-        example:
+          example:
             success: true
             commentList:
               id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
@@ -78,9 +76,6 @@ delete:
     in: path
     description: comment 고유 id
     required: true
-    type: string
-    example :
-      id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
     responses:
     '200':
       description: 댓글이 정상적으로 삭제되었습니다.
