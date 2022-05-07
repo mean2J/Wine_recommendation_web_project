@@ -47,6 +47,7 @@ const NavItems = styled.span`
   a:hover {
     color: #c365fd;
   }
+  cursor: pointer;
 `;
 
 const NavLoginItems = styled.span`
@@ -84,6 +85,14 @@ function Header() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
+
+  const communityForUser = () => {
+    message.warning({
+      content: "회원가입 후 이용할 수 있습니다.",
+      duration: 1.3,
+    });
+  };
+
   const [isModal, setIsModal] = useState(false);
   const onClose = (e) => {
     setIsModal(e);
@@ -112,7 +121,14 @@ function Header() {
       <Navbar>
         <NavContainer>
           <Logo>
-            <Link to={`/`}>LOGO</Link>
+            <Link to={`/`}>
+              <img
+                alt=""
+                src={require("./team_5_logo.png")}
+                width="100px"
+                height="40px"
+              />
+            </Link>
           </Logo>
           <NavItems>
             <form onSubmit={handleSubmit}>
@@ -129,7 +145,13 @@ function Header() {
             <Link to={`/wine`}>와인 추천 받아보기🍷</Link>
           </NavItems>
           <NavItems>
-            <Link to={`/community`}>커뮤니티💬</Link>
+            {isLogin ? (
+              <NavItems>
+                <Link to={`/community/postList`}>커뮤니티💬</Link>
+              </NavItems>
+            ) : (
+              <NavItems onClick={communityForUser}>커뮤니티💬</NavItems>
+            )}
           </NavItems>
           <NavLogin>
             {!isLogin ? (

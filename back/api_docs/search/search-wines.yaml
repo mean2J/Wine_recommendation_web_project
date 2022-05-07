@@ -1,0 +1,117 @@
+get:
+  tags:
+    - "search"
+  summary: 와인 검색을 진행한다
+  description: |
+    쿼리로 검색어를 입력 받고, 검색 결과인 와인 리스트를 페이지네이션을 통해 전달한다
+  parameters:
+    - name: "name"
+      in: path
+      description: 검색어 (와인 이름)
+      required: true
+      type: string
+    - name: "page"
+      in: path
+      description: page
+      required: true
+      type: string
+    - name: "perPage"
+      in: path
+      description: perPage
+      required: true
+      type: string
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              totalPage:
+                type: number
+                description: 총 페이지 수
+              page:
+                type: number
+                description: 현재 페이지
+              isNone:
+                type: boolean
+                description: 검색 결과 유무
+              wines:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ObjectId
+                  id:
+                    type: number
+                    description: 와인 아이디
+                  name:
+                    type: string
+                    description: 와인 이름
+                  nation:
+                    type: string
+                    description: 생산국
+                  local:
+                    type: string
+                    description: 생산 지역
+                  varieties:
+                    type: string
+                    description: 품종
+                  wine_type:
+                    type: string
+                    description: 와인 타입
+                  abv:
+                    type: string
+                    description: 알코올 도수
+                  sweet:
+                    type: number
+                    description: sweet
+                  acidity:
+                    type: number
+                    description: acidity
+                  body:
+                    type: number
+                    description: body
+                  tannin:
+                    type: number
+                    description: tannin
+                  price:
+                    type: number
+                    description: price
+                  imageUrl:
+                    type: string
+                    description: 이미지 주소
+          example:
+            totalPage: 11
+            page: 1
+            isNone: false
+            wines:
+              - _id: 6274c6461063b16ef06aeea4
+                id: 137199
+                name: Baron du Val Red
+                nation: 프랑스 France
+                local: -, -
+                varieties: Carignan, Cinsault, Syrah & Shiraz
+                type: Red
+                abv: 11~12
+                sweet: 2
+                acidity: 3
+                body: 2
+                tannin: 2
+                price: 0
+                ImageURL: images.vivino.com/thumbs/00v4bfwk0r26j_375x500.jpg
+              - _id: 6274c6461063b16ef06aeea5
+                id: 137200
+                name: Baron du Val White
+                nation: 프랑스 France
+                local: -, -
+                varieties: Carignan, Ugni blanc, Grenache Blanc
+                type: White
+                abv: 11~12
+                sweet: 1
+                acidity: 3
+                body: 2
+                tannin: 1
+                price: 0
+                ImageURL: images.vivino.com/thumbs/00v4bfwk0r26j_375x500.jpg

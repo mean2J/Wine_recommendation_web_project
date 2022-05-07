@@ -1,0 +1,150 @@
+get:
+  tags:
+    - posts
+  summary: 게시글(post)을 상세 조회합니다.
+  description: 게시글(post)을 상세 조회합니다. 조회할 post의 id를 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: post 고유 id
+    required: true
+    type: string
+    example :
+      id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+  responses:
+    '201':
+      description: 게시물이 정상적으로 생성되었습니다..
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    description: post를 구분하는 id
+                  userId: 
+                    type: string
+                    description: post를 작성한 유저의 id
+                  author: 
+                    type: string
+                    description: post를 작성한 유저의 이름
+                  category: 
+                    type: string
+                    description: post가 속한 카테고리
+                  title : 
+                    type: string
+                    description: 제목
+                  content : 
+                    type: string
+                    description: 본문 내용
+                  createdAt: 
+                    type: string
+                    description: 작성 시각
+                  updatedAt: 
+                    type: string
+                    description: 업데이트 시각
+          example:
+            success: true
+            post:
+              id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+              userId: d020ec12-f280-4d30-be94-58350d6fac81
+              author: 익명
+              category: 와인샵
+              title : 파이퍼하이직 파는 곳 어디 있을까요?
+              content : 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+              createdAt: 2022-05-07T00:17:22.464Z
+              updatedAt: 2022-05-07T00:17:22.464Z
+
+put:
+  tags:
+    - posts
+  summary: 게시글(post)을 수정합니다.
+  description: 수정할 post의 id와 수정할 제목, 본문을 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: post 고유 id
+    required: true
+    type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+              description: 수정할 제목을 입력합니다.
+            content:
+              type: string
+              description: 수정할 본문을 입력합니다.
+        example:
+          content : 올림픽공원 말고 여의도쪽으로 추천해주세요!
+  responses:
+    '200':
+      description: 게시물이 정상적으로 수정되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    description: post를 구분하는 id
+                  userId: 
+                    type: string
+                    description: post를 작성한 유저의 id
+                  author: 
+                    type: string
+                    description: post를 작성한 유저의 이름
+                  category: 
+                    type: string
+                    description: post가 속한 카테고리
+                  title : 
+                    type: string
+                    description: 제목
+                  content : 
+                    type: string
+                    description: 본문 내용
+                  createdAt: 
+                    type: string
+                    description: 작성 시각
+                  updatedAt: 
+                    type: string
+                    description: 업데이트 시각
+          example:
+            success: true
+            post:
+              id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+              userId: d020ec12-f280-4d30-be94-58350d6fac81
+              author: 익명
+              category: 와인샵
+              title : 파이퍼하이직 파는 곳 어디 있을까요?
+              content : 올림픽공원 말고 여의도쪽으로 추천해주세요!
+              createdAt: 2022-05-07T00:17:22.464Z
+              updatedAt: 2022-05-07T00:37:53.111Z
+delete:
+  tags:
+    - posts
+  summary: 게시글(post)을 삭제합니다.
+  description: 게시글(post)을 삭제합니다. 삭제할 post의 id를 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: post 고유 id
+    required: true
+    responses:
+    '200':
+      description: 게시물이 정상적으로 삭제되었습니다.

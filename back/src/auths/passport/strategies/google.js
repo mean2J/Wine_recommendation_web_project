@@ -31,9 +31,6 @@ async function googleVerifyFunction(req, accessToken, refreshToken, profile, don
         password: hashedPassword
       });
 
-      /*
-      구글 로그인 시 db에 집어넣을 패스워드는 어떻게 해야 할까?
-       */
       return done(null, createdNewUser);
     }
 
