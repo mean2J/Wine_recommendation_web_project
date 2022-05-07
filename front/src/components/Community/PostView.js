@@ -153,7 +153,6 @@ function PostView() {
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
     setPost(res.data.post);
-    console.log(res);
   }, [postId]);
 
   const getView = useCallback(async () => {

@@ -76,26 +76,15 @@ function PostList() {
       <List
         itemLayout="vertical"
         size="large"
-        // pagination={{
-        //   onChange: (page) => {
-        //     console.log(page);
-        //   },
-        //   pageSize: 10,
-        // }}
         dataSource={posts}
         renderItem={(item) => (
           <List.Item
             key={item.id}
             actions={[
               <div>{item.author}</div>,
-              <IconText
-                icon={MessageOutlined}
-                text="댓글 갯수 예정"
-                key="list-vertical-message"
-              />,
-              <div>조회 {item.view}</div>,
               <Tag>{item.category}</Tag>,
               <div>{moment(item.createdAt).format("YYYY-MM-DD")}</div>,
+              <div>조회 {item.view}</div>,
             ]}
           >
             <List.Item.Meta
