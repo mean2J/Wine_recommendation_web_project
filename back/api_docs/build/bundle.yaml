@@ -921,14 +921,14 @@ paths:
                       wineId:
                         type: number
                         description: wineId 넘버
-            example:
-              success: true
-              bookmark:
-                id: 069a686b-0bee-4d10-b302-741c57e746a7
-                userId: d020ec12-f280-4d30-be94-58350d6fac8
-                wineId: 150637
-                createdAt: 2022-05-06T23:56:37.395Z
-                updatedAt: 2022-05-06T23:56:37.395Z
+              example:
+                success: true
+                bookmark:
+                  id: 069a686b-0bee-4d10-b302-741c57e746a7
+                  userId: d020ec12-f280-4d30-be94-58350d6fac8
+                  wineId: 150637
+                  createdAt: 2022-05-06T23:56:37.395Z
+                  updatedAt: 2022-05-06T23:56:37.395Z
         '400':
           description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
         '404':
@@ -1667,17 +1667,17 @@ paths:
                       updatedAt:
                         type: string
                         description: 업데이트 시각
-            example:
-              success: true
-              post:
-                id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
-                userId: d020ec12-f280-4d30-be94-58350d6fac81
-                author: 익명
-                category: 와인샵
-                title: 파이퍼하이직 파는 곳 어디 있을까요?
-                content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
-                createdAt: 2022-05-07T00:17:22.464Z
-                updatedAt: 2022-05-07T00:17:22.464Z
+              example:
+                success: true
+                post:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:17:22.464Z
   '/post/{id}':
     get:
       tags:
@@ -1752,8 +1752,6 @@ paths:
           description: post 고유 id
           required: true
           type: string
-          example:
-            id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
       requestBody:
         content:
           application/json:
@@ -1806,17 +1804,17 @@ paths:
                       updatedAt:
                         type: string
                         description: 업데이트 시각
-            example:
-              success: true
-              post:
-                id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
-                userId: d020ec12-f280-4d30-be94-58350d6fac81
-                author: 익명
-                category: 와인샵
-                title: 파이퍼하이직 파는 곳 어디 있을까요?
-                content: 올림픽공원 말고 여의도쪽으로 추천해주세요!
-                createdAt: 2022-05-07T00:17:22.464Z
-                updatedAt: 2022-05-07T00:37:53.111Z
+              example:
+                success: true
+                post:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽공원 말고 여의도쪽으로 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:37:53.111Z
     delete:
       tags:
         - posts
@@ -1829,9 +1827,6 @@ paths:
           in: path
           description: post 고유 id
           required: true
-          type: string
-          example:
-            id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
           responses: null
   '/postlist/{category}{page}{maxPost}':
     get:
@@ -1899,19 +1894,19 @@ paths:
                       updatedAt:
                         type: string
                         description: 업데이트 시각
-            example:
-              success: true
-              page: 1
-              finalPage: 3
-              postList:
-                id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
-                userId: d020ec12-f280-4d30-be94-58350d6fac81
-                author: 익명
-                category: 와인샵
-                title: 파이퍼하이직 파는 곳 어디 있을까요?
-                content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
-                createdAt: 2022-05-07T00:17:22.464Z
-                updatedAt: 2022-05-07T00:37:53.111Z
+              example:
+                success: true
+                page: 1
+                finalPage: 3
+                postList:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:37:53.111Z
   /comment:
     post:
       tags:
@@ -1969,16 +1964,16 @@ paths:
                       updatedAt:
                         type: string
                         description: 업데이트 시각
-            example:
-              success: true
-              post:
-                id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
-                postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
-                userId: d020ec12-f280-4d30-be94-58350d6fac81
-                author: 익명
-                content: 근방에 **샵 있어요 추천합니다.
-                createdAt: 2022-05-07T00:50:21.846Z
-                updatedAt: 2022-05-07T00:50:21.846Z
+              example:
+                success: true
+                post:
+                  id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+                  postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  content: 근방에 **샵 있어요 추천합니다.
+                  createdAt: 2022-05-07T00:50:21.846Z
+                  updatedAt: 2022-05-07T00:50:21.846Z
   '/commentlist/{postId}':
     get:
       tags:
@@ -2005,7 +2000,7 @@ paths:
                     type: boolean
                     description: 요청이 성공했는지를 나타냅니다.
                   commentList:
-                    type: object Array
+                    type: object
                     properties:
                       id:
                         type: string
@@ -2028,16 +2023,16 @@ paths:
                       updatedAt:
                         type: string
                         description: 업데이트 시각
-            example:
-              success: true
-              commentList:
-                id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
-                postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
-                userId: d020ec12-f280-4d30-be94-58350d6fac81
-                author: 익명
-                content: 근방에 **샵 있어요 추천합니다.
-                createdAt: 2022-05-07T00:50:21.846Z
-                updatedAt: 2022-05-07T00:50:21.846Z
+              example:
+                success: true
+                commentList:
+                  id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+                  postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  content: 근방에 **샵 있어요 추천합니다.
+                  createdAt: 2022-05-07T00:50:21.846Z
+                  updatedAt: 2022-05-07T00:50:21.846Z
   '/comment/{id}':
     put:
       tags:
@@ -2050,8 +2045,6 @@ paths:
           description: comment 고유 id
           required: true
           type: string
-          example:
-            id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
       requestBody:
         content:
           application/json:
@@ -2098,16 +2091,16 @@ paths:
                       updatedAt:
                         type: string
                         description: 업데이트 시각
-            example:
-              success: true
-              commentList:
-                id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
-                postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
-                userId: d020ec12-f280-4d30-be94-58350d6fac81
-                author: 익명
-                content: 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요.
-                createdAt: 2022-05-07T00:50:21.846Z
-                updatedAt: 2022-05-07T01:02:49.140Z
+              example:
+                success: true
+                commentList:
+                  id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+                  postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  content: 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요.
+                  createdAt: 2022-05-07T00:50:21.846Z
+                  updatedAt: 2022-05-07T01:02:49.140Z
     delete:
       tags:
         - comments
@@ -2120,9 +2113,6 @@ paths:
           in: path
           description: comment 고유 id
           required: true
-          type: string
-          example:
-            id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
           responses: null
 components:
   securitySchemes:

@@ -23,7 +23,7 @@ get:
                 type: boolean
                 description: 요청이 성공했는지를 나타냅니다.
               commentList:
-                type: object Array
+                type: object
                 properties:
                   id: 
                     type: string
