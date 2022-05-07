@@ -120,7 +120,7 @@ postRouter.put(
 
       const toUpdate = matchedData(req);
 
-      const updatePost = await PostService.setPost({ postId, toUpdate });
+      const updatePost = await PostService.setPost({postId, toUpdate });
 
       const body = {
         success: true,

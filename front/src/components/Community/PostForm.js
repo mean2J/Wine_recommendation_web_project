@@ -4,6 +4,8 @@ import { Input, Radio, Form, Button, message } from "antd";
 import * as Api from "../../api";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const { TextArea } = Input;
 
@@ -122,6 +124,11 @@ function PostForm() {
 
   return (
     <Wrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>글 작성하기</title>
+        </Helmet>
+      </HelmetProvider>
       <Form
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -167,15 +174,15 @@ function PostForm() {
             rules={[{ required: true, message: "필수 선택 항목이에요." }]}
           >
             <Radio.Group onChange={(e) => setCategory(e.target.value)}>
-              <Radio.Button value="와인 질문">와인 질문</Radio.Button>
-              <Radio.Button value="와인 샵">와인 샵</Radio.Button>
+              <Radio.Button value="와인추천">와인추천</Radio.Button>
+              <Radio.Button value="와인상식">와인상식</Radio.Button>
+              <Radio.Button value="와인샵">와인샵</Radio.Button>
               <Radio.Button value="가격정보">가격정보</Radio.Button>
-              <Radio.Button value="자유">자유</Radio.Button>
             </Radio.Group>
           </Form.Item>
 
           <StyledItem
-            style={{ marginLeft: "200px" }}
+            style={{ marginLeft: "180px" }}
             wrapperCol={{
               offset: 8,
               span: 16,

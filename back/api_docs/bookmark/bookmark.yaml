@@ -1,6 +1,8 @@
 post:
-  summary: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
-  description: Optional extended description in Markdown.
+  tags:
+    - bookmarks
+  summary: 북마크를 생성합니다.
+  description: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
   requestBody:
     required: true
     content:
@@ -10,6 +12,8 @@ post:
           properties:
             wineId:
               type: number
+        example:
+          wineId: 150637
   responses:
     '201':
       description: 와인 북마크가 생성되었습니다.
@@ -30,6 +34,15 @@ post:
                   wineId:
                     type: number
                     description: wineId 넘버
+          example:
+            success: true
+            bookmark:
+              id: 069a686b-0bee-4d10-b302-741c57e746a7
+              userId: d020ec12-f280-4d30-be94-58350d6fac8
+              wineId: 150637
+              createdAt: 2022-05-06T23:56:37.395Z
+              updatedAt: 2022-05-06T23:56:37.395Z
+
     '404':
       description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
     '400':

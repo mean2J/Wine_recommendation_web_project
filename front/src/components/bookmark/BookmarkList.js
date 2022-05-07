@@ -58,24 +58,30 @@ function BookmarkList() {
   const pageRef = React.useRef();
   const [bookmarkList, setBookmarkList] = useState([]); // 북마크 리스트 데이터
   const maxCount = 3;
+  const [check, setCheck] = useState(null);
 
   const getList = async () => {
     setIsLoaded(true);
     isLoadedRef.current = true;
 
-    let res = await Api.get(
-      `bookmarklistpage?page=${pageRef.current}&maxBookmark=${maxCount}` // page 수정중
-    );
-    const data = res.data.bookmark;
-    if (data.length > 0) {
-      setBookmarkList((prevState) => [...prevState, ...data]);
-      setPage((page) => page + 1);
-      pageRef.current = pageRef.current + 1;
-      setIsLoaded(false);
-      isLoadedRef.current = false;
+    if (check !== 0) {
+      let res = await Api.get(
+        `bookmarklistpage?page=${pageRef.current}&maxBookmark=${maxCount}` // page 수정중
+      );
+      setCheck(res.data.bookmark.length);
+      const data = res.data.bookmark;
+      if (data.length > 0) {
+        setBookmarkList((prevState) => [...prevState, ...data]);
+        setPage((page) => page + 1);
+        pageRef.current = pageRef.current + 1;
+        setIsLoaded(false);
+        isLoadedRef.current = false;
+      } else {
+        setIsLoaded(false);
+        isLoadedRef.current = false;
+      }
     } else {
-      setIsLoaded(false);
-      isLoadedRef.current = false;
+      return;
     }
   };
 
