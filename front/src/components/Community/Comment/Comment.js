@@ -47,6 +47,10 @@ const CommentButton = styled(Button)`
   margin: auto;
 `;
 
+const TextWrapper = styled.div`
+  word-break: break-all;
+`;
+
 function Comment(props) {
   const { postId } = useParams();
   const [content, setContent] = useState("");
@@ -117,12 +121,14 @@ function Comment(props) {
       </Container>
       {commentLists.commentList &&
         commentLists.commentList.map((comment) => (
-          <CommentList
-            key={comment.id}
-            comment={comment}
-            setCommentLists={setCommentLists}
-            getComment={getComment}
-          />
+          <TextWrapper>
+            <CommentList
+              key={comment.id}
+              comment={comment}
+              setCommentLists={setCommentLists}
+              getComment={getComment}
+            />
+          </TextWrapper>
         ))}
     </>
   );
