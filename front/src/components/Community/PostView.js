@@ -35,6 +35,7 @@ function PostView() {
   const [post, setPost] = useState({});
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
+  const [category, setCategory] = useState(post.category);
   const [isEditing, setIsEditing] = useState(false);
   const [isModal, setIsModal] = useState(false); // 삭제 모달 여부
 
@@ -50,7 +51,7 @@ function PostView() {
   useEffect(() => {
     getPost();
     setAuthorId(post.userId);
-  }, [getPost, title, content, setAuthorId, post.userId]);
+  }, [getPost, title, content, category, setAuthorId, post.userId]);
 
   return (
     <>
@@ -83,6 +84,7 @@ function PostView() {
             setIsEditing={setIsEditing}
             setTitle={setTitle}
             setContent={setContent}
+            setCategory={setCategory}
           />
         )}
       </Container>
