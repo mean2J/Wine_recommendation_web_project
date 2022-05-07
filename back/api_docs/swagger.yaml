@@ -57,6 +57,18 @@ paths:
     $ref: "./wine/wines-id.yaml"
   /search/wines/{name}{page}{perPage}:
     $ref: "./search/search-wines.yaml"
+  /post:
+    $ref: "./post/post.yaml"
+  /post/{id}:
+    $ref: "./post/post-id.yaml"
+  /postlist/{category}{page}{maxPost}:
+    $ref: "./post/postlist.yaml"
+  /comment:
+    $ref: "./comment/comment.yaml"
+  /commentlist/{postId}:
+    $ref: "./comment/commentlist-postId.yaml"
+  /comment/{id}:
+    $ref: "./comment/comment-id.yaml"
 components:
   securitySchemes:
     BearerAuth:
