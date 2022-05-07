@@ -14,6 +14,18 @@ const Container = styled.div`
   background-color: #fff;
 `;
 
+const CommentNumDiv = styled.div`
+  position: relative;
+  width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+`;
+
+const CommentNum = styled.h1`
+  font-weight: 600;
+  font-size: 20px;
+`;
+
 const StyledArea = styled(TextArea)`
   color: #292929;
   font-size: 16px;
@@ -39,10 +51,12 @@ function Comment(props) {
   const { postId } = useParams();
   const [content, setContent] = useState("");
   const [commentLists, setCommentLists] = useState({});
+  const [commentNum, setCommentNum] = useState(0);
   const [form] = Form.useForm();
 
   const getComment = useCallback(async () => {
     const res = await Api.get(`commentlist/${postId}`);
+    setCommentNum(res.data.commentList.length);
     setCommentLists(res.data);
   }, [postId]);
 
@@ -59,6 +73,7 @@ function Comment(props) {
       const res = await Api.get(`commentlist/${postId}`);
       setCommentLists(res.data);
       setContent("");
+      getComment();
     } catch (err) {
       console.log(err);
     }
@@ -69,6 +84,9 @@ function Comment(props) {
 
   return (
     <>
+      <CommentNumDiv>
+        <CommentNum>댓글 {commentNum}</CommentNum>
+      </CommentNumDiv>
       <Container>
         <Form
           form={form}
