@@ -103,7 +103,6 @@ function PostForm() {
   const [category, setCategory] = useState("");
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
     try {
       await Api.post("post", {
         category,

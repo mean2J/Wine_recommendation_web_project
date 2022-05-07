@@ -51,8 +51,8 @@ function CommunityEditForm({
       setCommentLists(res.data);
       setIsEditing(false);
       getComment();
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
     }
   };
 
