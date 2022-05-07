@@ -8,6 +8,7 @@ import moment from "moment";
 
 import PostEditForm from "./PostEditForm";
 import PostDeleteModal from "./PostDeleteModal";
+import Comment from "./Comment/Comment";
 
 /*
  * POST 상세 페이지
@@ -88,6 +89,7 @@ function PostView() {
           />
         )}
       </Container>
+      <Comment />
     </>
   );
 }

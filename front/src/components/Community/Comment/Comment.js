@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import * as Api from "../../../api";
 import { Form, Button, Input } from "antd";
@@ -39,26 +39,26 @@ const CommentButton = styled(Button)`
 function Comment(props) {
   const { postId } = useParams();
   const [content, setContent] = useState("");
-  const [commentList, setCommentList] = useState({});
+  const [commentLists, setCommentLists] = useState({});
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    Api.get(`commentlist/${postId}`).then((res) => {
-      setCommentList(res.data.commentList);
-    });
+  const getComment = useCallback(async () => {
+    const res = await Api.get(`commentlist/${postId}`);
+    setCommentLists(res.data);
   }, [postId]);
 
+  useEffect(() => {
+    getComment();
+  }, [getComment]);
+
   const onFinish = async (values) => {
-    console.log("Success", values);
     try {
-      console.log(postId, content);
       await Api.post(`comment`, {
         postId,
         content,
       });
-
       const res = await Api.get(`commentlist/${postId}`);
-      setCommentList(res.data.comment);
+      setCommentLists(res.data);
       setContent("");
     } catch (err) {
       console.log(err);
@@ -82,9 +82,12 @@ function Comment(props) {
             <StyledArea
               placeholder="내용을 입력해주세요. (200자 이하)"
               showCount
+              value={content}
               autoSize={true}
               maxLength={200}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => {
+                setContent(e.target.value);
+              }}
             />
           </Form.Item>
 
@@ -94,19 +97,16 @@ function Comment(props) {
             </CommentButton>
           </StyledItem>
         </Form>
-
-        {commentList !== {} ? (
-          <></>
-        ) : (
-          commentList.map((comment) => (
-            <CommentList
-              comment={comment}
-              setCommentList={setCommentList}
-              postId={postId}
-            />
-          ))
-        )}
       </Container>
+      {commentLists.commentList &&
+        commentLists.commentList.map((comment) => (
+          <CommentList
+            key={comment.id}
+            comment={comment}
+            setCommentLists={setCommentLists}
+            getComment={getComment}
+          />
+        ))}
     </>
   );
 }

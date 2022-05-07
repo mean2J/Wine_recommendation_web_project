@@ -2,7 +2,6 @@ import PostList from "./PostList";
 import styled from "styled-components";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import Comment from "./Comment/Comment";
 
 const MainContainer = styled.div`
   background-color: #f8f9fa;
@@ -42,7 +41,6 @@ function PostMain() {
           </Link>
         </StepWrapper>
       </Container>
-      <Comment />
     </MainContainer>
   );
 }

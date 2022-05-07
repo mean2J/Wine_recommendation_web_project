@@ -1,38 +1,96 @@
 import React, { useState } from "react";
 import * as Api from "../../../api";
-import { Form, Button } from "antd";
+import { Form, Button, Input } from "antd";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
-function CommunityEditForm(comment, setCommentList, setIsEditing) {
-  const [content, setContent] = useState(comment?.content);
+const { TextArea } = Input;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const StyledArea = styled(TextArea)`
+  color: #292929;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  min-height: 28px;
+  width: 600px;
+  resize: none;
+`;
 
-    await Api.put(`comment/${comment.id}`, {
-      content,
-    });
-    // 유저 정보는 response의 data임.
-    const res = await Api.get("commentlist");
-    setCommentList(res.data);
-    setIsEditing(false);
+const StyledItem = styled(Form.Item)`
+  display: flex;
+  align-items: center;
+`;
+
+const CommentButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  margin: auto;
+`;
+
+const Container = styled.div`
+  &:first-child {
+    padding-top: 100px;
+  }
+  width: 70%;
+  margin: 0 auto;
+`;
+
+function CommunityEditForm({
+  comment,
+  setIsEditing,
+  setCommentLists,
+  getComment,
+}) {
+  const { postId } = useParams();
+  const [curContent, setCurContent] = useState(comment.content);
+
+  const onFinish = async () => {
+    try {
+      await Api.put(`comment/${comment.id}`, {
+        content: curContent,
+      });
+      // 유저 정보는 response의 data임.
+      const res = await Api.get(`post/${postId}`);
+      setCommentLists(res.data);
+      setIsEditing(false);
+      getComment();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Control
-          type="text"
-          placeholder="댓글을 입력해주세요."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-      </Form.Group>
+    <Container>
+      <Form
+        initialValues={{
+          content: curContent,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        layout="inline"
+      >
+        <Form.Item name="content">
+          <StyledArea
+            showCount
+            autoSize={true}
+            maxLength={200}
+            onChange={(e) => setCurContent(e.target.value)}
+          />
+        </Form.Item>
 
-      <Form.Group>
-        <Button>확인</Button>
-        <Button onClick={() => setIsEditing(false)}>취소</Button>
-      </Form.Group>
-    </Form>
+        <StyledItem>
+          <CommentButton type="primary" htmlType="submit">
+            수정
+          </CommentButton>
+          <Button onClick={() => setIsEditing(false)}>취소</Button>
+        </StyledItem>
+      </Form>
+    </Container>
   );
 }
 
