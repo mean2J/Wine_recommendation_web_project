@@ -106,6 +106,7 @@ function PostEditForm({
       await Api.put(`post/${post.id}`, {
         title: curTitle,
         content: curContent,
+        category: curCategory
       });
       // 수정 내용 변경
       setTitle(curTitle);
