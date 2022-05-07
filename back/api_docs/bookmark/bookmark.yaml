@@ -34,7 +34,7 @@ post:
                   wineId:
                     type: number
                     description: wineId 넘버
-        example:
+          example:
             success: true
             bookmark:
               id: 069a686b-0bee-4d10-b302-741c57e746a7
