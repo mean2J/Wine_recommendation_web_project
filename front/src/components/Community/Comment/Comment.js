@@ -8,11 +8,10 @@ import CommentList from "./CommentList";
 const { TextArea } = Input;
 
 const Container = styled.div`
-  &:first-child {
-    padding-top: 100px;
-  }
-  width: 70%;
-  margin: 0 auto;
+  position: relative;
+  width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
 `;
 
 const StyledArea = styled(TextArea)`
@@ -21,7 +20,7 @@ const StyledArea = styled(TextArea)`
   font-weight: 400;
   line-height: 20px;
   min-height: 28px;
-  width: 600px;
+  width: 700px;
   resize: none;
 `;
 

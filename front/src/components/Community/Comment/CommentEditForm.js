@@ -6,14 +6,19 @@ import { useParams } from "react-router-dom";
 
 const { TextArea } = Input;
 
+const Container = styled.div`
+  position: relative;
+  width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+`;
+
 const StyledArea = styled(TextArea)`
   color: #292929;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
-  min-height: 28px;
-  width: 600px;
-  resize: none;
+  width: 700px;
 `;
 
 const StyledItem = styled(Form.Item)`
@@ -24,15 +29,7 @@ const StyledItem = styled(Form.Item)`
 const CommentButton = styled(Button)`
   display: flex;
   align-items: center;
-  margin: auto;
-`;
-
-const Container = styled.div`
-  &:first-child {
-    padding-top: 100px;
-  }
-  width: 70%;
-  margin: 0 auto;
+  margin: 5px auto;
 `;
 
 function CommunityEditForm({
@@ -79,6 +76,7 @@ function CommunityEditForm({
             showCount
             autoSize={true}
             maxLength={200}
+            style={{ minHeight: "80px" }}
             onChange={(e) => setCurContent(e.target.value)}
           />
         </Form.Item>

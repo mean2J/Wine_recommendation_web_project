@@ -5,17 +5,30 @@ import CommentEditForm from "./CommentEditForm";
 import { UserStateContext } from "../../../App";
 import CommentDeleteModal from "./CommentDeleteModal";
 
+const Container = styled.div`
+  position: relative;
+  width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+`;
+
 const StyledCard = styled(Card)`
-  width: 70%;
-  height: 100px;
+  width: 100%;
   box-shadow: 0 0 0 1px rgb(87 87 87 / 10%), 0 8px 8px 0 rgb(234 224 218 / 30%);
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px;
   border: 0;
   z-index: 0;
   .ant-card-body {
     padding: 16px;
   }
   margin: 20px auto;
+`;
+const Author = styled.div`
+  font-weight: bold;
+`;
+
+const ButtonWrapper = styled.div`
+  text-align: right;
 `;
 
 function CommentList({ comment, setCommentLists, getComment }) {
@@ -36,7 +49,7 @@ function CommentList({ comment, setCommentLists, getComment }) {
   };
 
   return (
-    <div>
+    <Container>
       {isEditing ? (
         <CommentEditForm
           comment={comment}
@@ -46,11 +59,16 @@ function CommentList({ comment, setCommentLists, getComment }) {
         ></CommentEditForm>
       ) : (
         <StyledCard>
-          <div>{comment.author}</div>
+          <Author>{comment.author}</Author>
           <div>{content}</div>
           {authorId === currentUserId && (
-            <>
-              <Button onClick={() => setIsEditing(true)}>수정</Button>
+            <ButtonWrapper>
+              <Button
+                onClick={() => setIsEditing(true)}
+                style={{ marginRight: "5px" }}
+              >
+                수정
+              </Button>
               <Button onClick={showModal}>삭제</Button>
               {isModal && (
                 <CommentDeleteModal
@@ -61,11 +79,11 @@ function CommentList({ comment, setCommentLists, getComment }) {
                   getComment={getComment}
                 />
               )}
-            </>
+            </ButtonWrapper>
           )}
         </StyledCard>
       )}
-    </div>
+    </Container>
   );
 }
 
