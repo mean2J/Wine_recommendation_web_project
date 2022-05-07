@@ -4,6 +4,7 @@ import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
 import { matchedData, validationResult } from "express-validator";
 import { CommentMiddleware } from "../middlewares/commentMiddleware.js";
+import {validationErrorCatcher} from "../middlewares/errorMiddleware.js";
 
 const commentRouter = Router();
 
@@ -14,13 +15,9 @@ commentRouter.post(
   "/comment",
   loginRequired,
   CommentMiddleware.postBodyValidator,
+  validationErrorCatcher,
   async (req, res, next) => {
     try {
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-        res.status(400).json(errors.errors);
-        throw errors;
-      }
       //로그인한 유저의 고유id
       const userId = req.user.id
       //로그인 유저의 정보 -> author이름 정보 필요
@@ -29,7 +26,7 @@ commentRouter.post(
 
       const author = user.name;
 
-      const {postId, content} = req.body;
+      const { postId, content } = matchedData(req);
 
       const newComment = await CommentService.addComment({
         postId,
