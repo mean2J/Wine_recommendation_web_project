@@ -106,6 +106,7 @@ const SecStaticsBox = styled(StaticsBox)`
 const ContentTitle = styled.span`
   font-weight: 500;
   font-size: 34px;
+  font-weight: 600;
   line-height: 28px;
   display: flex;
   justify-content: center;
@@ -210,7 +211,7 @@ function SecondSection() {
           </ReasonTextWrapper>
           <StaticsWrapper>
             <StaticsBox {...animatedItem[2]}>
-              <ContentTitle>와인 수입</ContentTitle>
+              <ContentTitle>와인 시장의 성장</ContentTitle>
               <Line data={wineInfoData} options={wineInfoOptions}/>
               출처:수출입무역통계(관세청) <br /> 단위:천 불(USD 1,000) / 톤(TON)
             </StaticsBox>
@@ -232,7 +233,7 @@ function SecondSection() {
           </SecrTextWrapper>
           <SecStaticsWrapper>
             <SecStaticsBox {...animatedItem[5]}>
-              <ContentTitle>맥주 와인 수입량</ContentTitle>
+              <ContentTitle> 주류 트렌트 변화 - 맥주 vs 와인</ContentTitle>
               <Line data={growthData} options={growthOptions} />
               출처:맥주 와인 수입 통계(관세청) <br />  단위:톤(TON)
             </SecStaticsBox>

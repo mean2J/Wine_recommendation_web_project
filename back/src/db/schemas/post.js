@@ -36,8 +36,7 @@ const PostSchema = new Schema({
   view: {
     type:Number,
     default:0
-  }
-
+  },
 },
 {//생성, 갱신 시점
   timestamps: true,
