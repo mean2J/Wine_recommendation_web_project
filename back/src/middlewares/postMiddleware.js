@@ -16,20 +16,20 @@ PostMiddleware.postBodyValidator = [
     .notEmpty()
     .withMessage("제목은 필수입니다.")
     .bail()
-    .isLength({min:5})
-    .withMessage("제목은 5자 이상 작성해주세요")
+    .isLength({min:1})
+    .withMessage("제목은 1자 이상 작성해주세요")
     .bail(),
   body("content")
     .notEmpty()
     .withMessage("내용은 필수입니다.")
     .bail()
-    .isLength({min:10})
-    .withMessage("내용은 10자 이상 작성해주세요")
+    .isLength({min:5})
+    .withMessage("내용은 5자 이상 작성해주세요")
     .bail()
 ];
 
 PostMiddleware.putBodyValidator = [
-  body("category")
+  body("category"),
     .exists({ checkNull: true }),
   body("title")
     .exists({ checkNull: true })
