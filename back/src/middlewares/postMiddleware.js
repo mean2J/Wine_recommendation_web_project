@@ -29,7 +29,7 @@ PostMiddleware.postBodyValidator = [
 ];
 
 PostMiddleware.putBodyValidator = [
-  body("category"),
+  body("category")
     .exists({ checkNull: true }),
   body("title")
     .exists({ checkNull: true })
