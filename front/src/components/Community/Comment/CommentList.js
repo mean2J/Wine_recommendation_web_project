@@ -33,12 +33,12 @@ const ButtonWrapper = styled.div`
 
 function CommentList({ comment, setCommentLists, getComment }) {
   const userState = useContext(UserStateContext);
-  const [commentId, setCommentId] = useState(comment.id);
-  const [content, setContent] = useState(comment.content);
+  const [commentId] = useState(comment.id);
+  const [content] = useState(comment.content);
   const [isEditing, setIsEditing] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
-  const [authorId, setAuthorId] = useState(comment.userId);
+  const [authorId] = useState(comment.userId);
   const currentUserId = userState.user.user.id;
 
   const onClose = (e) => {

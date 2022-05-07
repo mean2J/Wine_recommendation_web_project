@@ -55,7 +55,6 @@ commentRouter.get(
   async (req, res, next) => {
     try {
       const postId = req.params.postId;
-      console.log("req.params.id",postId );
       const commentList = await CommentService.getCommentList(postId);
 
       const body = {

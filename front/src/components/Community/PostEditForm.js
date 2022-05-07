@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
-import { Form, Input, Button, Radio, message } from "antd";
+import { Form, Input, Button, Radio } from "antd";
 const { TextArea } = Input;
 
 const Wrapper = styled.div`
@@ -106,7 +106,7 @@ function PostEditForm({
       await Api.put(`post/${post.id}`, {
         title: curTitle,
         content: curContent,
-        category: curCategory
+        category: curCategory,
       });
       // 수정 내용 변경
       setTitle(curTitle);
