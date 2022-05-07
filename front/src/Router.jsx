@@ -19,6 +19,7 @@ function RouterFile() {
         <Route path="/wine" element={<WineInfo />} />
         <Route path="/myPage" element={<MyPage />} />
         <Route path="/myPage/:tabId" element={<MyPage />} />
+        <Route path="/community" element={<PostMain />} />
         <Route path="/community/postList" element={<PostMain />} />
         <Route path="/community/newPost" element={<PostForm />} />
         <Route exact path="/community/:postId" element={<PostView />} />

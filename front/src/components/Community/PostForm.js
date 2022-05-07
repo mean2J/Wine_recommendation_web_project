@@ -4,6 +4,8 @@ import { Input, Radio, Form, Button, message } from "antd";
 import * as Api from "../../api";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const { TextArea } = Input;
 
@@ -103,7 +105,6 @@ function PostForm() {
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
-      console.log(title, content, category);
       await Api.post("post", {
         category,
         title,
@@ -122,6 +123,11 @@ function PostForm() {
 
   return (
     <Wrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>글 작성하기</title>
+        </Helmet>
+      </HelmetProvider>
       <Form
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -150,7 +156,7 @@ function PostForm() {
             <Contents>
               <ContentsContainer>
                 <StyledArea
-                  placeholder="내용을 입력해주세요. (1000자 이하)"
+                  placeholder="내용을 입력해주세요. (5자 이상, 1000자 이하)"
                   bordered={false}
                   autoSize
                   maxLength={999}
@@ -175,7 +181,7 @@ function PostForm() {
           </Form.Item>
 
           <StyledItem
-            style={{ marginLeft: "200px" }}
+            style={{ marginLeft: "180px" }}
             wrapperCol={{
               offset: 8,
               span: 16,
