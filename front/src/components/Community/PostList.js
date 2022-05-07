@@ -23,6 +23,10 @@ const Container = styled.div`
   background-color: #fff;
 `;
 
+const TextWrapper = styled.div`
+  word-break: break-all;
+`;
+
 const IconText = ({ icon, text }) => (
   <Space>
     {React.createElement(icon)}
@@ -89,7 +93,7 @@ function PostList() {
           >
             <List.Item.Meta
               title={<Link to={`/community/${item.id}`}>{item.title}</Link>}
-              description={item.content}
+              description={<TextWrapper>{item.content}</TextWrapper>}
             />
           </List.Item>
         )}
