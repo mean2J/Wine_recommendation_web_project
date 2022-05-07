@@ -7,10 +7,10 @@ class PostService {
    */
   static async addPost({userId, category, author, title, content}) {
 
-    const createdAtKT = await PostService.getCurrentDate();
+    //const createdAtKT = await PostService.getCurrentDate();
     const id = uuidv4();
     const view = 0;
-    const newPost = {id, userId, category, author, title, content, view, createdAtKT};
+    const newPost = {id, userId, category, author, title, content, view};
 
     // db에 저장
     const createdNewPost = await Post.createPost(newPost);

@@ -37,9 +37,6 @@ const PostSchema = new Schema({
     type:Number,
     default:0
   },
-  createdAtKT: {
-    type:Date,
-  }
 },
 {//생성, 갱신 시점
   timestamps: true,
