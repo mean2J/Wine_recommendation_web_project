@@ -2,7 +2,8 @@ import { Router } from "express";
 import { CommentService } from "../services/commentService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
-import {body, matchedData, validationResult} from "express-validator";
+import { matchedData, validationResult } from "express-validator";
+import { CommentMiddleware } from "../middlewares/commentMiddleware.js";
 
 const commentRouter = Router();
 
@@ -12,13 +13,7 @@ const commentRouter = Router();
 commentRouter.post(
   "/comment",
   loginRequired,
-  body("content")
-    .isLength({min:1, max:200})
-    .withMessage("내용은 1자 이상 200자 이하로 작성해주세요"),
-  body("postId")
-    .notEmpty()
-    .withMessage("postId를 입력해주세요")
-    .bail(),
+  CommentMiddleware.postBodyValidator,
   async (req, res, next) => {
     try {
       const errors = validationResult(req)
@@ -86,13 +81,7 @@ commentRouter.get(
 commentRouter.put(
   "/comment/:id",
   loginRequired,
-  body("title")
-    .exists({ checkNull: true })
-    .isString()
-    .trim(),
-  body("content")
-    .exists({ checkNull: true })
-    .isString(),
+  CommentMiddleware.putBodyValidator,
   async (req, res, next) => {
     try {
       //const userId = req.currentUserId;
