@@ -159,10 +159,18 @@ function PostView() {
     setPost(res.data.post);
   }, [postId]);
 
+  const getView = useCallback(async () => {
+    await Api.get(`post/view/${postId}`);
+  }, [postId]);
+
   useEffect(() => {
     getPost();
     setAuthorId(post.userId);
   }, [getPost, title, content, category, setAuthorId, post.userId]);
+
+  useEffect(() => {
+    getView();
+  }, [getView]);
 
   return (
     <>
