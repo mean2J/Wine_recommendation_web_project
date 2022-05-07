@@ -3,8 +3,6 @@ import styled from "styled-components";
 import SignUpForm from "./SignUpForm";
 
 const MainContainer = styled.div`
-  overflow-x: hidden;
-  overflow-y: auto;
   height: 100%;
 `;
 

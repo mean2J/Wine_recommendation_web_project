@@ -7,8 +7,6 @@ import SecondSection from "./Home/SecondSection";
 import { ThirdSection } from "./Home/ThirdSection";
 
 const MainContainer = styled.div`
-  overflow-x: hidden;
-  overflow-y: auto;
   height: auto;
 `;
 
