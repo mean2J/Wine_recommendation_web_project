@@ -11,12 +11,12 @@ info:
     을 참고하세요.
   version: 1.0.0
 servers:
-  - url: "localhost:5001/docs"
+  - url: 'localhost:5001/docs'
 tags:
   - name: users
-    description: "유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등"
+    description: '유저 로그인, 회원가입, 탈퇴, 정보 조회, 정보 수정 등'
   - name: reviews
-    description: "리뷰 작성, 조회, 수정, 삭제 등"
+    description: '리뷰 작성, 조회, 수정, 삭제 등'
   - name: auth
 paths:
   /users:
@@ -30,7 +30,7 @@ paths:
         # 로그인 유저 정보 API
         현재 로그인한 유저의 정보를 반환합니다.
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -55,11 +55,11 @@ paths:
                       createdAt:
                         type: string
                         format: date
-                        description: "회원가입 날짜, 시각"
+                        description: '회원가입 날짜, 시각'
                       updatedAt:
                         type: string
                         format: date
-                        description: "마지막으로 정보가 수정된 날짜, 시각"
+                        description: '마지막으로 정보가 수정된 날짜, 시각'
               example:
                 success: true
                 user:
@@ -68,7 +68,7 @@ paths:
                   email: mokoko@elice.com
                   createdAt: 2022-04-27T16:26:08.844Z
                   updatedAt: 2022-04-28T15:28:08.844Z
-        "403":
+        '403':
           description: 미로그인
           content:
             application/json:
@@ -92,7 +92,7 @@ paths:
                 error:
                   code: 403
                   message: 로그인한 유저만 사용할 수 있는 서비스입니다.
-        "404":
+        '404':
           description: 가입 내역이 존재하지 않습니다.
           content:
             application/json:
@@ -126,7 +126,7 @@ paths:
         # 회원탈퇴 API
         현재 로그인한 유저의 계정 정보를 삭제합니다.
       responses:
-        "200":
+        '200':
           description: 정상적으로 삭제되었습니다.
           content:
             application/json:
@@ -142,7 +142,7 @@ paths:
               example:
                 success: true
                 message: 성공적으로 삭제되었습니다.
-        "403":
+        '403':
           description: 미로그인
           content:
             application/json:
@@ -166,7 +166,7 @@ paths:
                 error:
                   code: 403
                   message: 로그인한 유저만 사용할 수 있는 서비스입니다.
-        "404":
+        '404':
           description: 가입 내역이 존재하지 않습니다.
           content:
             application/json:
@@ -217,7 +217,7 @@ paths:
               password: 1q2w3e4r5t!
               description: 안녕하세요
       responses:
-        "200":
+        '200':
           description: 정상적으로 수정되었습니다.
           content:
             application/json:
@@ -245,7 +245,7 @@ paths:
                   name: acorn
                   email: mokoko@elice.com
                   description: 안녕하세요
-        "404":
+        '404':
           description: 가입 내역이 존재하지 않습니다.
           content:
             application/json:
@@ -269,7 +269,7 @@ paths:
                 error:
                   code: 404
                   message: 존재하지 않는 사용자입니다.
-  "/users/{userId}":
+  '/users/{userId}':
     get:
       tags:
         - users
@@ -286,7 +286,7 @@ paths:
           required: true
           type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -310,7 +310,7 @@ paths:
                 user:
                   id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
                   name: acorn
-        "400":
+        '400':
           description: 잘못된 요청입니다.
           content:
             application/json:
@@ -334,8 +334,8 @@ paths:
                 error:
                   code: 400
                   message: 이메일 정보는 필수입니다.
-        "403":
-          "404":
+        '403':
+          '404':
             description: 가입 내역이 존재하지 않습니다.
             content:
               application/json:
@@ -382,7 +382,7 @@ paths:
                 error:
                   code: 403
                   message: 로그인한 유저만 사용할 수 있는 서비스입니다.
-  "/reviews/{wineId}":
+  '/reviews/{wineId}':
     post:
       tags:
         - reviews
@@ -419,7 +419,7 @@ paths:
               content: 와인이 단맛이 너무 강해서 제 취향이 아니네요
               rating: 3
       responses:
-        "201":
+        '201':
           description: 정상적으로 리뷰가 작성되었습니다.
           content:
             application/json:
@@ -478,10 +478,10 @@ paths:
                     name: acorn
                   wine:
                     id: 137198
-                    name: "Altair, Sideral"
+                    name: 'Altair, Sideral'
                   rating: 3
                   createdAt: 2022-04-29T07:46:27.333Z
-  "/reviews/{reviewId}":
+  '/reviews/{reviewId}':
     get:
       tags:
         - reviews
@@ -498,7 +498,7 @@ paths:
           required: true
           type: string
       responses:
-        "200":
+        '200':
           description: 정상적으로 리뷰를 조회했습니다.
           content:
             application/json:
@@ -557,7 +557,7 @@ paths:
                     name: acorn
                   wine:
                     id: 137198
-                    name: "Altair, Sideral"
+                    name: 'Altair, Sideral'
                   rating: 3
                   createdAt: 2022-04-29T07:46:27.333Z
     put:
@@ -596,7 +596,7 @@ paths:
               content: 크리스마스를 위해 한 병 샀는데 좋았습니다
               rating: 4
       responses:
-        "201":
+        '201':
           description: 정상적으로 리뷰를 편집했습니다.
           content:
             application/json:
@@ -655,7 +655,7 @@ paths:
                     name: acorn
                   wine:
                     id: 137198
-                    name: "Altair, Sideral"
+                    name: 'Altair, Sideral'
                   rating: 4
                   createdAt: 2022-04-29T07:46:27.333Z
     delete:
@@ -674,7 +674,7 @@ paths:
           required: true
           type: string
       responses:
-        "200":
+        '200':
           description: 정상적으로 리뷰를 조회했습니다.
           content:
             application/json:
@@ -690,7 +690,7 @@ paths:
               example:
                 success: true
                 message: 성공적으로 삭제되었습니다.
-  "/reviews/authors/{userId}":
+  '/reviews/authors/{userId}':
     get:
       tags:
         - reviews
@@ -707,7 +707,7 @@ paths:
           required: true
           type: number
       responses:
-        "200":
+        '200':
           description: 정상적으로 리뷰를 조회했습니다.
           content:
             application/json:
@@ -768,7 +768,7 @@ paths:
                       name: acorn
                     wine:
                       id: 137198
-                      name: "Altair, Sideral"
+                      name: 'Altair, Sideral'
                     rating: 2
                     createdAt: 2022-04-29T07:46:27.333Z
                   - id: 7d2c290a-54a0-4edf-8c02-6dc8cea39d58
@@ -782,7 +782,7 @@ paths:
                       name: Sideral
                     rating: 1
                     createdAt: 2022-04-29T07:24:28.863Z
-  "/reviews/wines/{wineId}":
+  '/reviews/wines/{wineId}':
     get:
       tags:
         - reviews
@@ -809,7 +809,7 @@ paths:
             type: interger
           description: 한 페이지에 표시할 리뷰 수
       responses:
-        "200":
+        '200':
           description: 정상적으로 리뷰를 조회했습니다.
           content:
             application/json:
@@ -870,7 +870,7 @@ paths:
                       name: acorn
                     wine:
                       id: 137198
-                      name: "Altair, Sideral"
+                      name: 'Altair, Sideral'
                     rating: 2
                     createdAt: 2022-04-29T07:46:27.333Z
                   - id: 7d2c290a-54a0-4edf-8c02-6dc8cea39d58
@@ -902,7 +902,7 @@ paths:
             example:
               wineId: 150637
       responses:
-        "201":
+        '201':
           description: 와인 북마크가 생성되었습니다.
           content:
             application/json:
@@ -929,9 +929,9 @@ paths:
                   wineId: 150637
                   createdAt: 2022-05-06T23:56:37.395Z
                   updatedAt: 2022-05-06T23:56:37.395Z
-        "400":
+        '400':
           description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
-        "404":
+        '404':
           description: 이미 북마크한 와인입니다. 북마크는 중복으로 생성되지 않습니다.
         default:
           description: Unexpected error
@@ -942,7 +942,7 @@ paths:
       summary: 나의 북마크를 조회합니다.
       description: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
       responses:
-        "200":
+        '200':
           description: 내 북마크리스트가 정상적으로 출력되었습니다.
           content:
             application/json:
@@ -968,10 +968,10 @@ paths:
                   bookmarkCreate: 2022-04-29T10:34:41.272Z
                   wineInfo:
                     id: 137202
-                    name: "Calvet, Beaujolais Villages"
+                    name: 'Calvet, Beaujolais Villages'
                     nation: 프랑스 France
-                    local: "부르고뉴 Bourgogne, 보졸레 Beaujolais"
-                    varieties: "Gamay, - , -"
+                    local: '부르고뉴 Bourgogne, 보졸레 Beaujolais'
+                    varieties: 'Gamay, - , -'
                     type: Red
                     abv: 12
                     sweet: 2
@@ -979,11 +979,11 @@ paths:
                     body: 2
                     tannin: 2
                     price: 0
-        "404":
+        '404':
           description: 북마크한 와인이 없습니다. 먼저 관심있는 와인을 북마크해주세요.
         default:
           description: Unexpected error
-  "/bookmark/{wineId}":
+  '/bookmark/{wineId}':
     delete:
       tags:
         - bookmarks
@@ -997,9 +997,9 @@ paths:
           schema:
             type: number
       responses:
-        "200":
+        '200':
           description: 와인 북마크가 해제되었습니다.
-        "400":
+        '400':
           description: 북마크하지 않은 와인은 해제할 수 없습니다.
         default:
           description: Unexpected error
@@ -1033,7 +1033,7 @@ paths:
               email: mokoko@elice.com
               password: 1q2w3e4r5t!
       responses:
-        "201":
+        '201':
           description: 정상적으로 회원가입이 되었습니다.
           content:
             application/json:
@@ -1061,7 +1061,7 @@ paths:
                   id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
                   name: acorn
                   email: mokoko@elice.com
-        "400":
+        '400':
           description: 잘못된 요청입니다.
           content:
             application/json:
@@ -1111,7 +1111,7 @@ paths:
               email: mokoko@elice.com
               password: 1q2w3e4r5t!
       responses:
-        "200":
+        '200':
           description: 정상적으로 로그인되었습니다.
           content:
             application/json:
@@ -1147,7 +1147,7 @@ paths:
                   email: mokoko@elice.com
                   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                   expiredIn: 1d
-        "400":
+        '400':
           description: 잘못된 요청입니다.
           content:
             application/json:
@@ -1171,7 +1171,7 @@ paths:
                 error:
                   code: 400
                   message: 이메일 정보는 필수입니다.
-        "401":
+        '401':
           description: 비밀번호가 잘못되었습니다.
           content:
             application/json:
@@ -1195,7 +1195,7 @@ paths:
                 error:
                   code: 401
                   message: 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.
-        "404":
+        '404':
           description: 가입 내역이 존재하지 않습니다.
           content:
             application/json:
@@ -1228,7 +1228,7 @@ paths:
         # 구글 로그인 API
         구글 로그인 페이지로 넘어갑니다.
       responses:
-        "200":
+        '200':
           description: 정상적으로 로그인되었습니다.
           content:
             application/json:
@@ -1330,7 +1330,7 @@ paths:
                 - 50000
               isChecked: false
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1384,14 +1384,14 @@ paths:
                         type: string
                         description: 이미지 주소
               example:
-                isRandom: "false,"
+                isRandom: 'false,'
                 wines:
                   - _id: 6274c6481063b16ef06af404
                     id: 139589
-                    name: "Baroncini, Rosaspina"
+                    name: 'Baroncini, Rosaspina'
                     nation: 이탈리아 Italy
-                    local: "토스카나 Toscana, -"
-                    varieties: "Vernaccia, - , -"
+                    local: '토스카나 Toscana, -'
+                    varieties: 'Vernaccia, - , -'
                     type: White
                     abv: 11.5
                     sweet: 1
@@ -1404,8 +1404,8 @@ paths:
                     id: 150990
                     name: M by villa M
                     nation: 이탈리아 Italy
-                    local: "피에몬테 Piemonte, -"
-                    varieties: "Moscato, - , -"
+                    local: '피에몬테 Piemonte, -'
+                    varieties: 'Moscato, - , -'
                     type: White
                     abv: 3
                     sweet: 4
@@ -1414,7 +1414,7 @@ paths:
                     tannin: 1
                     price: 20000
                     ImageURL: images.vivino.com/thumbs/gmTnkreyTiSR7QcCE8c7xg_pb_300x300.png
-  "/wines/{id}":
+  '/wines/{id}':
     get:
       tags:
         - wines
@@ -1428,7 +1428,7 @@ paths:
           required: true
           type: number
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1482,8 +1482,8 @@ paths:
                 id: 137197
                 name: Altair
                 nation: 칠레 Chile
-                local: "라펠 밸리 Rapel Valley, -"
-                varieties: "Cabernet Sauvignon, Carmenere, Merlot"
+                local: '라펠 밸리 Rapel Valley, -'
+                varieties: 'Cabernet Sauvignon, Carmenere, Merlot'
                 type: Red
                 abv: 14~15
                 sweet: 1
@@ -1492,7 +1492,7 @@ paths:
                 tannin: 4
                 price: 220000
                 ImageURL: images.vivino.com/thumbs/THePUhwIRlSQKmg5Li1YjQ_pb_300x300.png
-  "/search/wines/{name}{page}{perPage}":
+  '/search/wines/{name}{page}{perPage}':
     get:
       tags:
         - search
@@ -1516,7 +1516,7 @@ paths:
           required: true
           type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1586,8 +1586,8 @@ paths:
                     id: 137199
                     name: Baron du Val Red
                     nation: 프랑스 France
-                    local: "-, -"
-                    varieties: "Carignan, Cinsault, Syrah & Shiraz"
+                    local: '-, -'
+                    varieties: 'Carignan, Cinsault, Syrah & Shiraz'
                     type: Red
                     abv: 11~12
                     sweet: 2
@@ -1600,8 +1600,8 @@ paths:
                     id: 137200
                     name: Baron du Val White
                     nation: 프랑스 France
-                    local: "-, -"
-                    varieties: "Carignan, Ugni blanc, Grenache Blanc"
+                    local: '-, -'
+                    varieties: 'Carignan, Ugni blanc, Grenache Blanc'
                     type: White
                     abv: 11~12
                     sweet: 1
@@ -1630,7 +1630,7 @@ paths:
               title: 파이퍼하이직 파는 곳 어디 있을까요?
               content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
       responses:
-        "201":
+        '201':
           description: 게시물이 정상적으로 생성되었습니다..
           content:
             application/json:
@@ -1678,7 +1678,7 @@ paths:
                   content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
                   createdAt: 2022-05-07T00:17:22.464Z
                   updatedAt: 2022-05-07T00:17:22.464Z
-  "/post/{id}":
+  '/post/{id}':
     get:
       tags:
         - posts
@@ -1693,7 +1693,7 @@ paths:
           example:
             id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
       responses:
-        "201":
+        '201':
           description: 게시물이 정상적으로 생성되었습니다..
           content:
             application/json:
@@ -1745,7 +1745,7 @@ paths:
       tags:
         - posts
       summary: 게시글(post)을 수정합니다.
-      description: "수정할 post의 id와 수정할 제목, 본문을 입력합니다."
+      description: '수정할 post의 id와 수정할 제목, 본문을 입력합니다.'
       parameters:
         - name: id
           in: path
@@ -1767,7 +1767,7 @@ paths:
             example:
               content: 올림픽공원 말고 여의도쪽으로 추천해주세요!
       responses:
-        "200":
+        '200':
           description: 게시물이 정상적으로 수정되었습니다.
           content:
             application/json:
@@ -1821,19 +1821,19 @@ paths:
       summary: 게시글(post)을 삭제합니다.
       description: 게시글(post)을 삭제합니다. 삭제할 post의 id를 입력합니다.
       parameters:
-        - "200":
+        - '200':
             description: 게시물이 정상적으로 삭제되었습니다.
           name: id
           in: path
           description: post 고유 id
           required: true
           responses: null
-  "/postlist/{category}{page}{maxPost}":
+  '/postlist/{category}{page}{maxPost}':
     get:
       tags:
         - posts
       summary: 페이지로 나눠진 게시글(post) 목록을 조회합니다.
-      description: "쿼리 파라미터로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다."
+      description: '쿼리 파라미터로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다.'
       parameters:
         - name: category
           in: query
@@ -1851,8 +1851,8 @@ paths:
           required: true
           type: string
       responses:
-        "200":
-          description: "n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다."
+        '200':
+          description: 'n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다.'
           content:
             application/json:
               schema:
@@ -1930,7 +1930,7 @@ paths:
               postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
               content: 댓글
       responses:
-        "201":
+        '201':
           description: 댓글이 정상적으로 생성되었습니다.
           content:
             application/json:
@@ -1974,7 +1974,7 @@ paths:
                   content: 근방에 **샵 있어요 추천합니다.
                   createdAt: 2022-05-07T00:50:21.846Z
                   updatedAt: 2022-05-07T00:50:21.846Z
-  "/commentlist/{postId}":
+  '/commentlist/{postId}':
     get:
       tags:
         - comments
@@ -1989,7 +1989,7 @@ paths:
           example:
             id: 81e7e004-47d1-40c6-8667-6a063f4de3003
       responses:
-        "200":
+        '200':
           description: 댓글 목록이 정상적으로 조회되었습니다.
           content:
             application/json:
@@ -2033,7 +2033,7 @@ paths:
                   content: 근방에 **샵 있어요 추천합니다.
                   createdAt: 2022-05-07T00:50:21.846Z
                   updatedAt: 2022-05-07T00:50:21.846Z
-  "/comment/{id}":
+  '/comment/{id}':
     put:
       tags:
         - comments
@@ -2057,7 +2057,7 @@ paths:
             example:
               content: 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요.
       responses:
-        "200":
+        '200':
           description: 댓글이 정상적으로 수정되었습니다.
           content:
             application/json:
@@ -2107,7 +2107,7 @@ paths:
       summary: 댓글(comment)을 삭제합니다.
       description: 삭제할 comments의 id를 입력합니다.
       parameters:
-        - "200":
+        - '200':
             description: 댓글이 정상적으로 삭제되었습니다.
           name: id
           in: path
