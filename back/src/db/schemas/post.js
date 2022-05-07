@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 const {Schema, model} = mongoose;
 
+const categories = ["와인추천", "와인상식", "와인샵", "가격정보"];
+
 const PostSchema = new Schema({
   //커뮤니티 post 아이디
   id: {
@@ -16,6 +18,7 @@ const PostSchema = new Schema({
   //커뮤니티 post 카테고리(ex.와인추천, 와인상식, 와인샵, 가격정보 등)
   category: {
     type: String,
+    enum: [...categories],
     required: true
   },
   title: {
@@ -33,8 +36,7 @@ const PostSchema = new Schema({
   view: {
     type:Number,
     default:0
-  }
-
+  },
 },
 {//생성, 갱신 시점
   timestamps: true,

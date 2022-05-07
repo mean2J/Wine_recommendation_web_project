@@ -74,7 +74,6 @@ function MyInfoEditForm({ user, setUser, setIsEditing }) {
   const [description, setDescription] = useState(user.description);
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
     try {
       // user 정보 수정 요청
       const res = await Api.put(`users`, {

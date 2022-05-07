@@ -23,8 +23,8 @@ class Post {
    */
   static async findFinalPage({category, maxPost}) {
     const totalPost = (category === null) 
-    ? await PostModel.countDocuments()
-    : await PostModel.countDocuments({category});
+    ? await PostModel.countDocuments() //null 이면 전체count
+    : await PostModel.countDocuments({category}); //아니면 카테고리별
     const finalPage = Math.ceil(totalPost / maxPost);
     return finalPage;
   }

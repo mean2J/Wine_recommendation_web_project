@@ -8,7 +8,7 @@ const MyInfoContainer = styled(Card)`
   width: 642px;
   margin-left: 150px;
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 
   background: #f8f9fa;
   border-radius: 15px;

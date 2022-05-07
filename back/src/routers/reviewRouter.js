@@ -3,23 +3,17 @@ import { ReviewService } from "../services/reviewService.js";
 import { WineService } from "../services/wineService.js";
 import { UserService } from "../services/userService.js";
 import { loginRequired } from "../middlewares/loginRequired.js";
-import { body, matchedData } from "express-validator";
+import { matchedData } from "express-validator";
 import { removeFields } from "../utils/utils.js";
 import { validationErrorCatcher } from "../middlewares/errorMiddleware.js";
+import { ReviewMiddleware } from "../middlewares/reviewMiddleware.js";
 
 const reviewRouter = Router();
 
 reviewRouter.post(
   "/reviews/:wineId",
   loginRequired,
-  body("title")
-    .notEmpty()
-    .withMessage("제목은 필수입니다.")
-    .bail()
-    .isString()
-    .trim(),
-  body("content").notEmpty().withMessage("본문 내용은 필수입니다.").bail(),
-  body("rating").notEmpty().withMessage("별점 정보가 없습니다.").bail(),
+  ReviewMiddleware.postBodyValidator,
   validationErrorCatcher,
   async (req, res, next) => {
     try {
@@ -27,9 +21,13 @@ reviewRouter.post(
       const { wineId } = req.params;
       const userId = req.user.id;
 
+      // 작성자 정보를 가져옴
       const author = await UserService.getUserById(userId);
+
+      // 와인 정보를 가져옴
       const wine = await WineService.getWineById({ id: wineId });
 
+      // 리뷰를 db에 등록
       const review = await ReviewService.addReview({
         ...fieldToPost,
         author: userId,
@@ -68,8 +66,8 @@ reviewRouter.get(
     try {
       const { reviewId } = req.params;
 
+      // 리뷰 정보, 작성자 정보, 와인 정보를 불러옴
       const review = await ReviewService.getReviewById(reviewId);
-
       const author = await UserService.getUserById(review.author);
       const wine = await WineService.getWineById({ id: review.wine });
 
@@ -103,6 +101,7 @@ reviewRouter.get(
   async (req, res, next) => {
     try {
       const { userId } = req.params;
+      // 페이지네이션을 위한 변수
       const page = req.query.page || 1;
       const limit = req.query.limit || 5;
 
@@ -110,16 +109,18 @@ reviewRouter.get(
       const author = await UserService.getUserById(userId);
 
       // 작성자 정보로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByAuthorId(author.id, {page, limit});
+      const reviews = await ReviewService.getReviewsByAuthorId(author.id, {
+        page,
+        limit,
+      });
 
-      const filteredReviews =
-        reviews.map((review) => {
-          const newReview = removeFields(review, ["_id", "updatedAt", "__v"]);
-          newReview.author = { id: author.id, name: author.name }
+      // 쓸모없는 결과값을 정리하고 작성자 닉네임을 추가
+      const filteredReviews = reviews.map((review) => {
+        const newReview = removeFields(review, ["_id", "updatedAt", "__v"]);
+        newReview.author = { id: author.id, name: author.name };
 
-          return newReview;
-        });
-
+        return newReview;
+      });
 
       const body = {
         success: true,
@@ -162,16 +163,7 @@ reviewRouter.get(
 reviewRouter.put(
   "/reviews/:reviewId",
   loginRequired,
-  body("title")
-    .exists({ checkNull: true })
-    .isString()
-    .trim(),
-  body("content")
-    .exists({ checkNull: true })
-    .isString(),
-  body("rating")
-    .exists({ checkNull: true })
-    .isInt({ min: 0, max: 5 }),
+  ReviewMiddleware.putBodyValidator,
   async (req, res, next) => {
     try {
       const userId = req.user.id;
@@ -199,6 +191,7 @@ reviewRouter.put(
         "__v",
       ]);
 
+      // 작성자 정보와 와인 정보를 가져옴
       const author = await UserService.getUserById(review.author);
       const wine = await WineService.getWineById({ id: review.wine });
 
