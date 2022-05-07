@@ -9,7 +9,7 @@ PostMiddleware.postBodyValidator = [
     .bail()
     .isString()
     .trim()
-    .isIn(["와인추천", "와인상식", "와인샵", "가격정보"])
+    .isIn(["와인질문", "와인샵", "가격정보", "자유"])
     .withMessage("카테고리 정보를 다시 확인해주세요.")
     .bail(),
   body("title")
