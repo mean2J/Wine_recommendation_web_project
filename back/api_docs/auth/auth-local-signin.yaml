@@ -36,9 +36,6 @@ post:
               user:
                 type: object
                 properties:
-                  token:
-                    type: string
-                    description: 이번 로그인에 대한 bearer token
                   id:
                     type: string
                     description: userId
@@ -48,13 +45,20 @@ post:
                   email:
                     type: string
                     description: 유저가 가입에 사용한 이메일 주소
+                  token:
+                    type: string
+                    description: 이번 로그인에 대한 bearer token
+                    expiredIn:
+                      type: string
+                      description: 토큰 유효기간
           example:
             success: true
             user:
-              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
               id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
               name: acorn
               email: mokoko@elice.com
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+              expiredIn: 1d
 
     '400':
       description: 잘못된 요청입니다.
