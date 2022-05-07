@@ -11,7 +11,6 @@ import PostEditForm from "./PostEditForm";
 import PostDeleteModal from "./PostDeleteModal";
 import Comment from "./Comment/Comment";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import Item from "antd/lib/list/Item";
 import { useNavigate } from "react-router-dom";
 
 /*
@@ -151,13 +150,10 @@ function PostView() {
   const [authorId, setAuthorId] = useState("");
   const currentUserId = userState.user.user.id;
 
-  /**
-   * getPost 작동시 Api.get(`post/view/${postId}`) 딱 한번만 요청되어야 함.
-   */
-
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
     setPost(res.data.post);
+    console.log(res);
   }, [postId]);
 
   const getView = useCallback(async () => {
@@ -199,7 +195,7 @@ function PostView() {
                     <AuthorText>
                       <AuthorUser>{post.author}</AuthorUser>
                       <TimeText>
-                        {moment(post.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+                        {moment(post.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
                       </TimeText>
                     </AuthorText>
                   </InnerAuthor>
