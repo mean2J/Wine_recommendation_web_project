@@ -150,7 +150,7 @@ function PostEditForm({
             >
               <EditorTitle
                 placeholder="제목을 입력해주세요."
-                borderd={false}
+                bordered={false}
                 showCount
                 autoFocus
                 maxLength={20}
@@ -164,7 +164,6 @@ function PostEditForm({
             <Contents>
               <ContentsContainer>
                 <Form.Item
-                  label="내용"
                   name="content"
                   rules={[
                     {
@@ -199,7 +198,13 @@ function PostEditForm({
             </Radio.Group>
           </Form.Item>
           <StyledItem>
-            <Button htmlType="submit">수정</Button>
+            <Button
+              style={{ marginRight: "10px" }}
+              type="primary"
+              htmlType="submit"
+            >
+              수정
+            </Button>
             <Button onClick={() => setIsEditing(false)}>취소</Button>
           </StyledItem>
         </CategoryWrapper>
