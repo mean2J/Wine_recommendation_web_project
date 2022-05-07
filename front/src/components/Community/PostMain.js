@@ -1,6 +1,6 @@
 import PostList from "./PostList";
 import styled from "styled-components";
-
+import Comment from "./Comment/Comment";
 function PostMain() {
   return (
     <>
@@ -10,6 +10,7 @@ function PostMain() {
       <div>?</div>
       <div>임시</div>
       <PostList />
+      <Comment />
     </>
   );
 }

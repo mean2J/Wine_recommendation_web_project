@@ -22,7 +22,7 @@ function CommentView(comment, setCommentList) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await Api.delete(`deleteComment/${comment.id}`);
+    await Api.del(`deleteComment/${comment.id}`);
     const res = await Api.get("commentlist");
     setCommentList(res.data);
   };

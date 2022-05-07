@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as Api from "../../../api";
-import { Form, Button } from "antd";
+import { Form, Button, Input } from "antd";
 import styled from "styled-components";
 import CommentView from "./CommentView";
 
@@ -9,14 +9,16 @@ const Container = styled.div`
   &:first-child {
     padding-top: 100px;
   }
+  width: 70%;
   margin: 0 auto;
-  background-color: #f8f9fa;
 `;
 
 function Comment(props) {
   const { postId } = useParams();
   const [content, setContent] = useState("");
   const [commentList, setCommentList] = useState({});
+  const [form] = Form.useForm();
+  const { TextArea } = Input;
 
   useEffect(() => {
     Api.get(`commentlist/${postId}`).then((res) => {
@@ -39,24 +41,29 @@ function Comment(props) {
   return (
     <>
       <Container>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="comment" className="mb-3">
-            <Form.Control
-              type="text"
-              placeholder="댓글을 입력해주세요."
-              value={content}
+        <Form form={form}>
+          <Form.Item>
+            <TextArea
+              showCount
+              maxLength={200}
               onChange={(e) => setContent(e.target.value)}
+              style={{ width: 800, resize: "none" }}
             />
+          </Form.Item>
+          <Form.Item>
             <Button
               type="submit"
-              style={{ margin: "10px auto", display: "flex" }}
+              style={{ margin: "10px auto" }}
+              onClick={handleSubmit}
             >
               등록
             </Button>
-          </Form.Group>
+          </Form.Item>
         </Form>
 
-        {commentList !== null ? (
+        {commentList !== {} ? (
+          <></>
+        ) : (
           commentList.map((comment) => (
             <CommentView
               comment={comment}
@@ -64,8 +71,6 @@ function Comment(props) {
               postId={postId}
             />
           ))
-        ) : (
-          <></>
         )}
       </Container>
     </>
