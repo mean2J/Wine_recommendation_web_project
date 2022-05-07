@@ -43,6 +43,10 @@ function PostView() {
   const [authorId, setAuthorId] = useState("");
   const currentUserId = userState.user.user.id;
 
+  /**
+   * getPost 작동시 Api.get(`post/view/${postId}`) 딱 한번만 요청되어야 함.
+   */
+  
   const getPost = useCallback(async () => {
     const res = await Api.get(`post/${postId}`);
     setPost(res.data.post);
