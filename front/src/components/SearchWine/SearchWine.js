@@ -1,12 +1,12 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import * as Api from "../../api";
 import { Empty, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
 import SearchResult from "./SearchResult";
-
+import { UserStateContext } from "../../App";
 const StyledPagination = styled(Pagination)`
   display: flex;
   justify-content: center;
@@ -41,9 +41,11 @@ function SearchWine() {
     setTotalPage(res.data.totalPage * 10);
   }, [page, perPage, searchInp]);
 
+  const userState = useContext(UserStateContext);
   /**
    * 내 북마크 확인
    */
+
   const handleBookmarks = useCallback(async () => {
     const res = await Api.get("bookmarklist");
     // 북마크의 와인 아이디 리스트
@@ -53,7 +55,9 @@ function SearchWine() {
   }, []);
 
   useEffect(() => {
-    handleBookmarks();
+    if (userState.user !== null) {
+      handleBookmarks();
+    }
     handleSearch();
   }, [handleSearch, handleBookmarks]);
 

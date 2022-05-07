@@ -109,16 +109,18 @@ reviewRouter.get(
       const author = await UserService.getUserById(userId);
 
       // 작성자 정보로 리뷰 목록을 가져옴
-      const reviews = await ReviewService.getReviewsByAuthorId(author.id, {page, limit});
+      const reviews = await ReviewService.getReviewsByAuthorId(author.id, {
+        page,
+        limit,
+      });
 
       // 쓸모없는 결과값을 정리하고 작성자 닉네임을 추가
-      const filteredReviews =
-        reviews.map((review) => {
-          const newReview = removeFields(review, ["_id", "updatedAt", "__v"]);
-          newReview.author = { id: author.id, name: author.name }
+      const filteredReviews = reviews.map((review) => {
+        const newReview = removeFields(review, ["_id", "updatedAt", "__v"]);
+        newReview.author = { id: author.id, name: author.name };
 
-          return newReview;
-        });
+        return newReview;
+      });
 
       const body = {
         success: true,
@@ -241,28 +243,28 @@ reviewRouter.delete(
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 
 //와인 별점 정보 전송 rating, ratingCnt
-reviewRouter.get(
-  "/reviews/rating/:wineId",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      const { wineId } = req.params;
+reviewRouter.get("/reviews/rating/:wineId", async (req, res, next) => {
+  try {
+    const { wineId } = req.params;
 
-      const { ratingCnt, rating } = await ReviewService.getAverageRatingByWineId(wineId);
+    const { ratingCnt, rating } = await ReviewService.getAverageRatingByWineId(
+      wineId
+    );
 
-      const body = {
-        success: true,
-        rating: Number(rating.toFixed(1)),
-        ratingCnt,
-      };
+    const body = {
+      success: true,
+      rating: Number(rating.toFixed(1)),
+      ratingCnt,
+    };
 
-      res.status(200).json(body);
-    } catch (error) {
-      next(error);
-    }
-  });
+    res.status(200).json(body);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { reviewRouter };
