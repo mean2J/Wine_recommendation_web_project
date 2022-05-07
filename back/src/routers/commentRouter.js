@@ -31,7 +31,6 @@ commentRouter.post(
 
       const {postId, content} = req.body;
 
-
       const newComment = await CommentService.addComment({
         postId,
         userId,
