@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as Api from "../../../api";
 import { Card, Button } from "antd";
 import styled from "styled-components";
 import CommentEditForm from "./CommentEditForm";
+import { UserStateContext } from "../../../App";
 
 const StyledCard = styled(Card)`
   width: 80%;
@@ -17,8 +18,12 @@ const StyledCard = styled(Card)`
   margin: 0 auto;
 `;
 
-function CommentView(comment, setCommentList) {
+function CommentList(comment, setCommentList) {
+  const userState = useContext(UserStateContext);
   const [isEditing, setIsEditing] = useState(false);
+
+  const [authorId, setAuthorId] = useState("");
+  const currentUserId = userState.user.id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,4 +64,4 @@ function CommentView(comment, setCommentList) {
   );
 }
 
-export default CommentView;
+export default CommentList;

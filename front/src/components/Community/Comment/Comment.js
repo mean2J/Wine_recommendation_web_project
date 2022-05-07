@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import * as Api from "../../../api";
 import { Form, Button, Input } from "antd";
 import styled from "styled-components";
-import CommentView from "./CommentView";
+import CommentList from "./CommentList";
+
+const { TextArea } = Input;
 
 const Container = styled.div`
   &:first-child {
@@ -13,12 +15,32 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const StyledArea = styled(TextArea)`
+  color: #292929;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  min-height: 28px;
+  width: 600px;
+  resize: none;
+`;
+
+const StyledItem = styled(Form.Item)`
+  display: flex;
+  align-items: center;
+`;
+
+const CommentButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  margin: auto;
+`;
+
 function Comment(props) {
   const { postId } = useParams();
   const [content, setContent] = useState("");
   const [commentList, setCommentList] = useState({});
   const [form] = Form.useForm();
-  const { TextArea } = Input;
 
   useEffect(() => {
     Api.get(`commentlist/${postId}`).then((res) => {
@@ -26,46 +48,58 @@ function Comment(props) {
     });
   }, [postId]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await Api.post(`/comment`, {
-      postId,
-      content,
-    });
+  const onFinish = async (values) => {
+    console.log("Success", values);
+    try {
+      console.log(postId, content);
+      await Api.post(`comment`, {
+        postId,
+        content,
+      });
 
-    const res = await Api.get(`commentlist/${postId}`);
-    setCommentList(res.data.comment);
-    setContent("");
+      const res = await Api.get(`commentlist/${postId}`);
+      setCommentList(res.data.comment);
+      setContent("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
     <>
       <Container>
-        <Form form={form}>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          layout="inline"
+        >
           <Form.Item>
-            <TextArea
+            <StyledArea
+              placeholder="내용을 입력해주세요. (200자 이하)"
               showCount
+              autoSize={true}
               maxLength={200}
               onChange={(e) => setContent(e.target.value)}
-              style={{ width: 800, resize: "none" }}
             />
           </Form.Item>
-          <Form.Item>
-            <Button
-              type="submit"
-              style={{ margin: "10px auto" }}
-              onClick={handleSubmit}
-            >
+
+          <StyledItem>
+            <CommentButton type="primary" htmlType="submit">
               등록
-            </Button>
-          </Form.Item>
+            </CommentButton>
+          </StyledItem>
         </Form>
 
         {commentList !== {} ? (
           <></>
         ) : (
           commentList.map((comment) => (
-            <CommentView
+            <CommentList
               comment={comment}
               setCommentList={setCommentList}
               postId={postId}

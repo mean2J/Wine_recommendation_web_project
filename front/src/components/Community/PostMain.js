@@ -1,21 +1,8 @@
 import PostList from "./PostList";
 import styled from "styled-components";
-<<<<<<< HEAD
-import Comment from "./Comment/Comment";
-function PostMain() {
-  return (
-    <>
-      <div>?</div>
-      <div>?</div>
-      <div>?</div>
-      <div>?</div>
-      <div>임시</div>
-      <PostList />
-      <Comment />
-    </>
-=======
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import Comment from "./Comment/Comment";
 
 const MainContainer = styled.div`
   background-color: #f8f9fa;
@@ -55,8 +42,8 @@ function PostMain() {
           </Link>
         </StepWrapper>
       </Container>
+      <Comment />
     </MainContainer>
->>>>>>> 6558368fa0e87f40f5d490bd7cdb5c84eaa545ab
   );
 }
 
