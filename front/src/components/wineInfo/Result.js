@@ -209,10 +209,7 @@ function Result({
           />
           <ContentWrapper>
             <BottleImg>
-              <WineImg
-                width={150}
-                src={"https://"+ImageURL}
-              />
+              <WineImg width={150} src={"https://" + ImageURL} />
             </BottleImg>
             <InfoColumn>
               <WineInfo>
@@ -236,7 +233,11 @@ function Result({
                 setRatingVal={setRatingVal}
                 setRatingCnt={setRatingCnt}
               />
-              <RatingPrice>가격: \{price}</RatingPrice>
+              {price === 0 ? (
+                <RatingPrice>가격 정보가 없습니다</RatingPrice>
+              ) : (
+                <RatingPrice>가격: \{price}</RatingPrice>
+              )}
             </RatingWrapper>
           </ContentWrapper>
         </StyledCard>
