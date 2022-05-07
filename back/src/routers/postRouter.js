@@ -46,10 +46,33 @@ postRouter.post("/post",
 });
 
 /*
- * Community : Post 조회(요청시마다 view +1)
+ * Community : Post 조회
  */
 postRouter.get(
   "/post/:id",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const postId = req.params.id;
+      const post =await PostService.getPost(postId);
+
+      const body = {
+          success: true,
+          post: post,
+        };
+
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+
+/*
+ * Community : Post 조회수 증가 라우터(요청시마다 view +1)
+ */
+postRouter.get(
+  "/post/view/:id",
   loginRequired,
   async (req, res, next) => {
     try {
@@ -64,7 +87,7 @@ postRouter.get(
 
       const body = {
           success: true,
-          post: post,
+          view: post.view
         };
 
       res.status(200).json(body);
