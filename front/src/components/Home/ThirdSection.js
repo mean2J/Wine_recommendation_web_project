@@ -105,7 +105,7 @@ const flavorMeanData = {
   labels: ["Sweet", "Acidity", "Body", "Tannin"],
   datasets: [
     {
-      label: "March",
+      label: "Taste",
       backgroundColor: "rgba(34, 202, 236, .2)",
       borderColor: "rgba(34, 202, 236, 1)",
       pointBackgroundColor: "rgba(34, 202, 236, 1)",
@@ -142,10 +142,10 @@ const typeOptions = {
       position: "bottom",
     },
   },
-   interaction: {
-      mode: 'index',
-      intersect: false,
-    },
+  interaction: {
+    mode: "index",
+    intersect: false,
+  },
 };
 
 const flavorRadarOptions = {
@@ -173,7 +173,7 @@ const flavorRadarOptions = {
 
 const TrdSection = styled.section`
   background-color: #f9fafb;
-  height: 85vh;
+  height: 95vh;
 `;
 
 const Titlewrapper = styled.div`
@@ -244,7 +244,7 @@ export function ThirdSection() {
       <ContentWrapper>
         <InnerWrapper {...animatedItem[1]}>
           <Contents>
-            <ContentTitle>원산지</ContentTitle>
+            <ContentTitle>생산국</ContentTitle>
             <ContentDesc>
               <PolarArea
                 data={nationData}

@@ -7,7 +7,7 @@ class PostService {
    */
   static async addPost({userId, category, author, title, content}) {
 
-    
+    //const createdAtKT = await PostService.getCurrentDate();
     const id = uuidv4();
     const view = 0;
     const newPost = {id, userId, category, author, title, content, view};
@@ -42,6 +42,17 @@ class PostService {
   static async getFinalPage({category, maxPost}) {
     const finalPage = await Post.findFinalPage({category, maxPost})
     return finalPage;
+  }
+
+
+  static async getCurrentDate(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var today = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    return new Date(Date.UTC(year, month, today, hours, minutes));
   }
 
   /**

@@ -122,6 +122,7 @@ class UserService {
   }
 
   static async updateUser(userId, fieldToUpdate) {
+    // db에 유저 존재 여부 확인
     const idExists = await User.exists({ id: userId });
 
     if (!idExists) {

@@ -1,6 +1,7 @@
 import { Button, Collapse, Divider, List } from "antd";
 import * as Api from "../../api";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
+import { UserStateContext, DispatchContext } from "../../App";
 import WineReview from "./WineReview";
 import styled from "styled-components";
 import ReviewCard from "./ReviewCard";
@@ -23,23 +24,38 @@ const StyledCollapse = styled(Collapse)`
 function ReviewForm({ wineId, setRatingVal, setRatingCnt }) {
   const [accordion, setAccordion] = useState(false);
   const [review, setReview] = useState([]);
+
+  const userState = useContext(UserStateContext);
+  //const dispatch = useContext(DispatchContext);
+
+  // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
+  const isLogin = !!userState.user;
+
   const handleReview = async () => {
-    setAccordion((accordion) => !accordion);
-    if (accordion === false) {
-      const res = await Api.get(`reviews/wines/${wineId}`);
-      setReview(res.data.reviews);
+    if (isLogin) {
+      setAccordion((accordion) => !accordion);
+      if (accordion === false) {
+        const res = await Api.get(`reviews/wines/${wineId}`);
+        setReview(res.data.reviews);
+      }
     }
   };
 
   return (
     <StyledCollapse onChange={handleReview}>
       <Panel header="⭐리뷰 보기 / 작성⭐" key="1" style={{ border: "0" }}>
-        <WineReview
-          wineId={wineId}
-          setReview={setReview}
-          setRatingVal={setRatingVal}
-          setRatingCnt={setRatingCnt}
-        />
+        {isLogin ? (
+          <WineReview
+            wineId={wineId}
+            setReview={setReview}
+            setRatingVal={setRatingVal}
+            setRatingCnt={setRatingCnt}
+          />
+        ) : (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            로그인한 유저만 볼 수 있어요.
+          </div>
+        )}
         <Divider />
         <List
           itemLayout="horizontal"

@@ -52,6 +52,12 @@ const InfoBtnWrapper = styled.div`
   position: absolute;
   bottom: 3px;
   right: 10px;
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  ${BookmarkContainer}:hover & {
+    opacity: 1;
+  }
 `;
 
 function BookmarkItem({ wineInfo, bookmarkList, setBookmarkList }) {

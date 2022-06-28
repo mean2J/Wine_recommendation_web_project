@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import * as Api from "../../api";
 import { Steps, Button } from "antd";
 import styled from "styled-components";
@@ -8,6 +8,7 @@ import { currentAtom, isLoadedAtom, resultAtom } from "../../atoms";
 import Result from "./Result";
 import StpesBtn from "./StepsAction";
 import { useNavigate } from "react-router-dom";
+import { UserStateContext } from "../../App";
 
 const MainContainer = styled.div`
   display: flex;
@@ -83,6 +84,7 @@ const StyledStep = styled(Steps)`
 `;
 
 function WineInfo() {
+  const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   const current = useRecoilValue(currentAtom);
   const [isLoaded, setIsLoaded] = useRecoilState(isLoadedAtom);
@@ -104,10 +106,14 @@ function WineInfo() {
   ];
 
   useEffect(() => {
-    Api.get("bookmarklist").then((res) => {
-      const data = res.data.bookmark;
-      setBookmarkList(data);
-    });
+    if (userState.user !== null) {
+      Api.get("bookmarklist").then((res) => {
+        const data = res.data.bookmark;
+        setBookmarkList(data);
+      });
+    } else {
+      return;
+    }
   }, []);
 
   return (

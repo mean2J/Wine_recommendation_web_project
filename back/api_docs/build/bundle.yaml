@@ -19,218 +19,6 @@ tags:
     description: '리뷰 작성, 조회, 수정, 삭제 등'
   - name: auth
 paths:
-  /users/signup:
-    post:
-      tags:
-        - users
-      summary: 입력받은 유저 정보로 회원가입을 합니다.
-      description: |
-        # 회원가입 API
-        유저의 이메일과 비밀번호, 이름을 전달받아 회원가입을 진행하고 결과를 반환합니다.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - email
-                - password
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-            example:
-              name: acorn
-              email: mokoko@elice.com
-              password: 1q2w3e4r5t!
-      responses:
-        '201':
-          description: 정상적으로 회원가입이 되었습니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    description: 요청이 성공했는지를 나타냅니다.
-                  user:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        description: userId
-                      name:
-                        type: string
-                        description: 유저가 설정한 이름
-                      email:
-                        type: string
-                        description: 유저가 가입에 사용한 이메일 주소
-              example:
-                success: true
-                user:
-                  id: 6f07b884-1519-4bca-b4c2-4d86e559e16e
-                  name: acorn
-                  email: mokoko@elice.com
-        '400':
-          description: 잘못된 요청입니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    description: 요청이 성공했는지를 나타냅니다.
-                  error:
-                    type: obejct
-                    properties:
-                      code:
-                        type: integer
-                        description: http status code
-                      message:
-                        type: string
-                        description: 에러 메시지
-              example:
-                success: false
-                error:
-                  code: 400
-                  message: 이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.
-  /users/signin:
-    post:
-      tags:
-        - users
-      summary: 입력받은 유저 정보로 로그인을 합니다.
-      description: |
-        # 로그인 API
-        유저의 이메일과 비밀번호를 전달받아 토큰과 함께 결과를 반환합니다.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - email
-                - password
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-            example:
-              email: mokoko@elice.com
-              password: 1q2w3e4r5t!
-      responses:
-        '200':
-          description: 정상적으로 로그인되었습니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    description: 요청이 성공했는지를 나타냅니다.
-                  user:
-                    type: object
-                    properties:
-                      token:
-                        type: string
-                        description: 이번 로그인에 대한 bearer token
-                      id:
-                        type: string
-                        description: userId
-                      name:
-                        type: string
-                        description: 유저가 설정한 이름
-                      email:
-                        type: string
-                        description: 유저가 가입에 사용한 이메일 주소
-              example:
-                success: true
-                user:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-                  id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
-                  name: acorn
-                  email: mokoko@elice.com
-        '400':
-          description: 잘못된 요청입니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    description: 요청이 성공했는지를 나타냅니다.
-                  error:
-                    type: obejct
-                    properties:
-                      code:
-                        type: integer
-                        description: http status code
-                      message:
-                        type: string
-                        description: 에러 메시지
-              example:
-                success: false
-                error:
-                  code: 400
-                  message: 이메일 정보는 필수입니다.
-        '401':
-          description: 비밀번호가 잘못되었습니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    description: 요청이 성공했는지를 나타냅니다.
-                  error:
-                    type: obejct
-                    properties:
-                      code:
-                        type: integer
-                        description: http status code
-                      message:
-                        type: string
-                        description: 에러 메시지
-              example:
-                success: false
-                error:
-                  code: 401
-                  message: 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.
-        '404':
-          description: 가입 내역이 존재하지 않습니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    description: 요청이 성공했는지를 나타냅니다.
-                  error:
-                    type: obejct
-                    properties:
-                      code:
-                        type: integer
-                        description: http status code
-                      message:
-                        type: string
-                        description: 에러 메시지
-              example:
-                success: false
-                error:
-                  code: 404
-                  message: 해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.
   /users:
     get:
       tags:
@@ -1010,6 +798,16 @@ paths:
           description: 와인 아이디
           required: true
           type: number
+        - name: page
+          in: query
+          schema:
+            type: integer
+          description: 페이지 넘버
+        - name: limit
+          in: query
+          schema:
+            type: interger
+          description: 한 페이지에 표시할 리뷰 수
       responses:
         '200':
           description: 정상적으로 리뷰를 조회했습니다.
@@ -1088,8 +886,10 @@ paths:
                     createdAt: 2022-04-29T07:24:28.863Z
   /bookmark:
     post:
-      summary: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
-      description: Optional extended description in Markdown.
+      tags:
+        - bookmarks
+      summary: 북마크를 생성합니다.
+      description: 와인 카드의 북마크 버튼을 선택하면 해당 와인에 대한 나의 북마크가 생성됩니다.
       requestBody:
         required: true
         content:
@@ -1099,6 +899,8 @@ paths:
               properties:
                 wineId:
                   type: number
+            example:
+              wineId: 150637
       responses:
         '201':
           description: 와인 북마크가 생성되었습니다.
@@ -1119,6 +921,14 @@ paths:
                       wineId:
                         type: number
                         description: wineId 넘버
+              example:
+                success: true
+                bookmark:
+                  id: 069a686b-0bee-4d10-b302-741c57e746a7
+                  userId: d020ec12-f280-4d30-be94-58350d6fac8
+                  wineId: 150637
+                  createdAt: 2022-05-06T23:56:37.395Z
+                  updatedAt: 2022-05-06T23:56:37.395Z
         '400':
           description: 존재하지 않는 와인입니다. 와인ID를 확인해주세요.
         '404':
@@ -1127,8 +937,10 @@ paths:
           description: Unexpected error
   /bookmarklist:
     get:
-      summary: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
-      description: Optional extended description in Markdown.
+      tags:
+        - bookmarks
+      summary: 나의 북마크를 조회합니다.
+      description: 마이페이지 - 북마크 탭을 클릭하면 북마크 리스트를 볼 수 있습니다.
       responses:
         '200':
           description: 내 북마크리스트가 정상적으로 출력되었습니다.
@@ -1149,14 +961,34 @@ paths:
                         type: string
                       wineInfo:
                         type: Object
+              example:
+                success: true
+                bookmark:
+                  bookmarkId: 79228eb7-a17d-44c4-b9fe-6b6c5bc71759
+                  bookmarkCreate: 2022-04-29T10:34:41.272Z
+                  wineInfo:
+                    id: 137202
+                    name: 'Calvet, Beaujolais Villages'
+                    nation: 프랑스 France
+                    local: '부르고뉴 Bourgogne, 보졸레 Beaujolais'
+                    varieties: 'Gamay, - , -'
+                    type: Red
+                    abv: 12
+                    sweet: 2
+                    acidity: 4
+                    body: 2
+                    tannin: 2
+                    price: 0
         '404':
           description: 북마크한 와인이 없습니다. 먼저 관심있는 와인을 북마크해주세요.
         default:
           description: Unexpected error
   '/bookmark/{wineId}':
     delete:
-      summary: 와인 카드의 북마크 버튼을 해제하면 해당와인의 북마크가 해제됩니다.
-      description: Optional extended description in Markdown.
+      tags:
+        - bookmarks
+      summary: 북마크를 해제합니다.
+      description: 와인 카드의 북마크 버튼을 해제하면 해당와인의 북마크가 해제됩니다.
       parameters:
         - name: wineId
           in: path
@@ -1164,15 +996,6 @@ paths:
           required: true
           schema:
             type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                wineId:
-                  type: number
       responses:
         '200':
           description: 와인 북마크가 해제되었습니다.
@@ -1301,9 +1124,6 @@ paths:
                   user:
                     type: object
                     properties:
-                      token:
-                        type: string
-                        description: 이번 로그인에 대한 bearer token
                       id:
                         type: string
                         description: userId
@@ -1313,13 +1133,20 @@ paths:
                       email:
                         type: string
                         description: 유저가 가입에 사용한 이메일 주소
+                      token:
+                        type: string
+                        description: 이번 로그인에 대한 bearer token
+                        expiredIn:
+                          type: string
+                          description: 토큰 유효기간
               example:
                 success: true
                 user:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                   id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
                   name: acorn
                   email: mokoko@elice.com
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  expiredIn: 1d
         '400':
           description: 잘못된 요청입니다.
           content:
@@ -1435,8 +1262,858 @@ paths:
                   id: 55a44134-b0f9-4c90-9ae4-ba925dc6473e
                   name: acorn
                   email: mokoko@gmail.com
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                   expiredIn: 1d
+  /wines/recommend:
+    post:
+      tags:
+        - wines
+      summary: 사용자 선택 속성에 따라 필터링된 와인 리스트를 전송한다
+      description: |
+        사용자가 선택한 와인 속성을 전달받고, 송석에 따라 필터링된 와인 추천 리스트를 전달한다
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nation
+                - type
+                - sweet
+                - acidity
+                - body
+                - tannin
+                - price
+                - isChecked
+              properties:
+                nation:
+                  type: string
+                  description: 생산국
+                type:
+                  type: string
+                  description: 와인 타입
+                sweet:
+                  type: array
+                  description: sweet
+                acidity:
+                  type: array
+                  description: acidity
+                body:
+                  type: array
+                  description: body
+                tannin:
+                  type: array
+                  description: tannin
+                price:
+                  type: number
+                  description: price
+                isChecked:
+                  type: Boolean
+                  description: 가격 정보 없음 선택 여부
+            example:
+              nation: 이탈리아 Italy
+              type: White
+              sweet:
+                - 1
+                - 4
+              acidity:
+                - 1
+                - 4
+              body:
+                - 1
+                - 4
+              tannin:
+                - 1
+                - 4
+              price:
+                - 10000
+                - 50000
+              isChecked: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRandom: Boolean
+                  wines:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: ObjectId
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                      nation:
+                        type: string
+                        description: 생산국
+                      local:
+                        type: string
+                        description: 생산 지역
+                      varieties:
+                        type: string
+                        description: 품종
+                      wine_type:
+                        type: string
+                        description: 와인 타입
+                      abv:
+                        type: string
+                        description: 알코올 도수
+                      sweet:
+                        type: number
+                        description: sweet
+                      acidity:
+                        type: number
+                        description: acidity
+                      body:
+                        type: number
+                        description: body
+                      tannin:
+                        type: number
+                        description: tannin
+                      price:
+                        type: number
+                        description: price
+                      imageUrl:
+                        type: string
+                        description: 이미지 주소
+              example:
+                isRandom: 'false,'
+                wines:
+                  - _id: 6274c6481063b16ef06af404
+                    id: 139589
+                    name: 'Baroncini, Rosaspina'
+                    nation: 이탈리아 Italy
+                    local: '토스카나 Toscana, -'
+                    varieties: 'Vernaccia, - , -'
+                    type: White
+                    abv: 11.5
+                    sweet: 1
+                    acidity: 3
+                    body: 2
+                    tannin: 1
+                    price: 15000
+                    ImageURL: images.vivino.com/thumbs/qdDqUA4oQVqkkgYRCRwfZA_375x500.jpg
+                  - _id: 6274c64f1063b16ef06b11c6
+                    id: 150990
+                    name: M by villa M
+                    nation: 이탈리아 Italy
+                    local: '피에몬테 Piemonte, -'
+                    varieties: 'Moscato, - , -'
+                    type: White
+                    abv: 3
+                    sweet: 4
+                    acidity: 1
+                    body: 2
+                    tannin: 1
+                    price: 20000
+                    ImageURL: images.vivino.com/thumbs/gmTnkreyTiSR7QcCE8c7xg_pb_300x300.png
+  '/wines/{id}':
+    get:
+      tags:
+        - wines
+      summary: 와인 아이디로 특정 와인을 찾는다
+      description: |
+        쿼리로 와인 아이디를 전달받아, 해당 아이디의 와인 정보를 전송한다
+      parameters:
+        - name: id
+          in: path
+          description: 와인 아이디
+          required: true
+          type: number
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ObjectId
+                  id:
+                    type: number
+                    description: 와인 아이디
+                  name:
+                    type: string
+                    description: 와인 이름
+                  nation:
+                    type: string
+                    description: 생산국
+                  local:
+                    type: string
+                    description: 생산 지역
+                  varieties:
+                    type: string
+                    description: 품종
+                  type:
+                    type: string
+                    description: 와인 타입
+                  abv:
+                    type: string
+                    description: 알코올 도수
+                  sweet:
+                    type: number
+                    description: sweet
+                  acidity:
+                    type: number
+                    description: acidity
+                  body:
+                    type: number
+                    description: body
+                  tannin:
+                    type: number
+                    description: tannin
+                  price:
+                    type: number
+                    description: price
+                  imageUrl:
+                    type: string
+                    description: 이미지 주소
+              example:
+                _id: 6274c6461063b16ef06aeea2
+                id: 137197
+                name: Altair
+                nation: 칠레 Chile
+                local: '라펠 밸리 Rapel Valley, -'
+                varieties: 'Cabernet Sauvignon, Carmenere, Merlot'
+                type: Red
+                abv: 14~15
+                sweet: 1
+                acidity: 4
+                body: 5
+                tannin: 4
+                price: 220000
+                ImageURL: images.vivino.com/thumbs/THePUhwIRlSQKmg5Li1YjQ_pb_300x300.png
+  '/search/wines/{name}{page}{perPage}':
+    get:
+      tags:
+        - search
+      summary: 와인 검색을 진행한다
+      description: |
+        쿼리로 검색어를 입력 받고, 검색 결과인 와인 리스트를 페이지네이션을 통해 전달한다
+      parameters:
+        - name: name
+          in: path
+          description: 검색어 (와인 이름)
+          required: true
+          type: string
+        - name: page
+          in: path
+          description: page
+          required: true
+          type: string
+        - name: perPage
+          in: path
+          description: perPage
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalPage:
+                    type: number
+                    description: 총 페이지 수
+                  page:
+                    type: number
+                    description: 현재 페이지
+                  isNone:
+                    type: boolean
+                    description: 검색 결과 유무
+                  wines:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: ObjectId
+                      id:
+                        type: number
+                        description: 와인 아이디
+                      name:
+                        type: string
+                        description: 와인 이름
+                      nation:
+                        type: string
+                        description: 생산국
+                      local:
+                        type: string
+                        description: 생산 지역
+                      varieties:
+                        type: string
+                        description: 품종
+                      wine_type:
+                        type: string
+                        description: 와인 타입
+                      abv:
+                        type: string
+                        description: 알코올 도수
+                      sweet:
+                        type: number
+                        description: sweet
+                      acidity:
+                        type: number
+                        description: acidity
+                      body:
+                        type: number
+                        description: body
+                      tannin:
+                        type: number
+                        description: tannin
+                      price:
+                        type: number
+                        description: price
+                      imageUrl:
+                        type: string
+                        description: 이미지 주소
+              example:
+                totalPage: 11
+                page: 1
+                isNone: false
+                wines:
+                  - _id: 6274c6461063b16ef06aeea4
+                    id: 137199
+                    name: Baron du Val Red
+                    nation: 프랑스 France
+                    local: '-, -'
+                    varieties: 'Carignan, Cinsault, Syrah & Shiraz'
+                    type: Red
+                    abv: 11~12
+                    sweet: 2
+                    acidity: 3
+                    body: 2
+                    tannin: 2
+                    price: 0
+                    ImageURL: images.vivino.com/thumbs/00v4bfwk0r26j_375x500.jpg
+                  - _id: 6274c6461063b16ef06aeea5
+                    id: 137200
+                    name: Baron du Val White
+                    nation: 프랑스 France
+                    local: '-, -'
+                    varieties: 'Carignan, Ugni blanc, Grenache Blanc'
+                    type: White
+                    abv: 11~12
+                    sweet: 1
+                    acidity: 3
+                    body: 2
+                    tannin: 1
+                    price: 0
+                    ImageURL: images.vivino.com/thumbs/00v4bfwk0r26j_375x500.jpg
+  /post:
+    post:
+      tags:
+        - posts
+      summary: 게시글(post)을 생성합니다.
+      description: 게시글(post)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wineId:
+                  type: number
+            example:
+              category: 와인샵
+              title: 파이퍼하이직 파는 곳 어디 있을까요?
+              content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+      responses:
+        '201':
+          description: 게시물이 정상적으로 생성되었습니다..
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: post를 구분하는 id
+                      userId:
+                        type: string
+                        description: post를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: post를 작성한 유저의 이름
+                      category:
+                        type: string
+                        description: post가 속한 카테고리
+                      title:
+                        type: string
+                        description: 제목
+                      content:
+                        type: string
+                        description: 본문 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                post:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:17:22.464Z
+  '/post/{id}':
+    get:
+      tags:
+        - posts
+      summary: 게시글(post)을 상세 조회합니다.
+      description: 게시글(post)을 상세 조회합니다. 조회할 post의 id를 입력합니다.
+      parameters:
+        - name: id
+          in: path
+          description: post 고유 id
+          required: true
+          type: string
+          example:
+            id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+      responses:
+        '201':
+          description: 게시물이 정상적으로 생성되었습니다..
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: post를 구분하는 id
+                      userId:
+                        type: string
+                        description: post를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: post를 작성한 유저의 이름
+                      category:
+                        type: string
+                        description: post가 속한 카테고리
+                      title:
+                        type: string
+                        description: 제목
+                      content:
+                        type: string
+                        description: 본문 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                post:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:17:22.464Z
+    put:
+      tags:
+        - posts
+      summary: 게시글(post)을 수정합니다.
+      description: '수정할 post의 id와 수정할 제목, 본문을 입력합니다.'
+      parameters:
+        - name: id
+          in: path
+          description: post 고유 id
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 수정할 제목을 입력합니다.
+                content:
+                  type: string
+                  description: 수정할 본문을 입력합니다.
+            example:
+              content: 올림픽공원 말고 여의도쪽으로 추천해주세요!
+      responses:
+        '200':
+          description: 게시물이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: post를 구분하는 id
+                      userId:
+                        type: string
+                        description: post를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: post를 작성한 유저의 이름
+                      category:
+                        type: string
+                        description: post가 속한 카테고리
+                      title:
+                        type: string
+                        description: 제목
+                      content:
+                        type: string
+                        description: 본문 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                post:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽공원 말고 여의도쪽으로 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:37:53.111Z
+    delete:
+      tags:
+        - posts
+      summary: 게시글(post)을 삭제합니다.
+      description: 게시글(post)을 삭제합니다. 삭제할 post의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 게시물이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: post 고유 id
+          required: true
+          responses: null
+  '/postlist/{category}{page}{maxPost}':
+    get:
+      tags:
+        - posts
+      summary: 페이지로 나눠진 게시글(post) 목록을 조회합니다.
+      description: '쿼리 파라미터로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다.'
+      parameters:
+        - name: category
+          in: query
+          description: 게시물이 속한 카테고리
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: 페이지 번호
+          required: true
+          type: string
+        - name: maxPost
+          in: query
+          description: 페이지당 게시글 수
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 'n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  page:
+                    type: number
+                    description: 요청한 페이지 번호
+                  finalPage:
+                    type: number
+                    description: 요청한 게시글 목록의 최대 페이지 번호
+                  postList:
+                    type: object array
+                    properties:
+                      id:
+                        type: string
+                        description: post를 구분하는 id
+                      userId:
+                        type: string
+                        description: post를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: post를 작성한 유저의 이름
+                      category:
+                        type: string
+                        description: post가 속한 카테고리
+                      title:
+                        type: string
+                        description: 제목
+                      content:
+                        type: string
+                        description: 본문 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                page: 1
+                finalPage: 3
+                postList:
+                  id: 69d1e9ec-ddf6-4504-8fd9-c8e32959b711
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  category: 와인샵
+                  title: 파이퍼하이직 파는 곳 어디 있을까요?
+                  content: 올림픽 공원 근방에 있으면 좋을 것 같아요. 추천해주세요!
+                  createdAt: 2022-05-07T00:17:22.464Z
+                  updatedAt: 2022-05-07T00:37:53.111Z
+  /comment:
+    post:
+      tags:
+        - comments
+      summary: 댓글(comment)을 생성합니다.
+      description: 댓글(comment)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: 댓글을 작성할 게시글의 postId
+                content:
+                  type: string
+                  description: 댓글 내용
+            example:
+              postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+              content: 댓글
+      responses:
+        '201':
+          description: 댓글이 정상적으로 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: comment를 구분하는 id
+                      postId:
+                        type: string
+                        description: comment가 속한 post의 id
+                      userId:
+                        type: string
+                        description: comment를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: comment를 작성한 유저의 이름
+                      content:
+                        type: string
+                        description: 댓글 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                post:
+                  id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+                  postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  content: 근방에 **샵 있어요 추천합니다.
+                  createdAt: 2022-05-07T00:50:21.846Z
+                  updatedAt: 2022-05-07T00:50:21.846Z
+  '/commentlist/{postId}':
+    get:
+      tags:
+        - comments
+      summary: 댓글(comment)목록을 조회합니다.
+      description: 각 게시물(post)에 속한 댓글(comment)을 조회합니다.
+      parameters:
+        - name: postId
+          in: path
+          description: post 고유 id
+          required: true
+          type: string
+          example:
+            id: 81e7e004-47d1-40c6-8667-6a063f4de3003
+      responses:
+        '200':
+          description: 댓글 목록이 정상적으로 조회되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  commentList:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: comment를 구분하는 id
+                      postId:
+                        type: string
+                        description: comment가 속한 post의 id
+                      userId:
+                        type: string
+                        description: comment를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: comment를 작성한 유저의 이름
+                      content:
+                        type: string
+                        description: 댓글 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                commentList:
+                  id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+                  postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  content: 근방에 **샵 있어요 추천합니다.
+                  createdAt: 2022-05-07T00:50:21.846Z
+                  updatedAt: 2022-05-07T00:50:21.846Z
+  '/comment/{id}':
+    put:
+      tags:
+        - comments
+      summary: 댓글(comment)을 수정합니다.
+      description: 수정할 comments의 id와 수정할 본문을 입력합니다.
+      parameters:
+        - name: id
+          in: path
+          description: comment 고유 id
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 수정할 본문을 입력합니다.
+            example:
+              content: 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요.
+      responses:
+        '200':
+          description: 댓글이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: comment를 구분하는 id
+                      postId:
+                        type: string
+                        description: comment가 속한 post의 id
+                      userId:
+                        type: string
+                        description: comment를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: comment를 작성한 유저의 이름
+                      content:
+                        type: string
+                        description: 댓글 내용
+                      createdAt:
+                        type: string
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        description: 업데이트 시각
+              example:
+                success: true
+                commentList:
+                  id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+                  postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+                  userId: d020ec12-f280-4d30-be94-58350d6fac81
+                  author: 익명
+                  content: 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요.
+                  createdAt: 2022-05-07T00:50:21.846Z
+                  updatedAt: 2022-05-07T01:02:49.140Z
+    delete:
+      tags:
+        - comments
+      summary: 댓글(comment)을 삭제합니다.
+      description: 삭제할 comments의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 댓글이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: comment 고유 id
+          required: true
+          responses: null
 components:
   securitySchemes:
     BearerAuth:

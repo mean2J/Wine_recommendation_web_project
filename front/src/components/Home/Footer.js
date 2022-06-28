@@ -16,6 +16,15 @@ const FooterWrapper = styled.div`
   text-align: center;
 `;
 
+const FooterTitle = styled.h1`
+  font-weight: 600;
+  font-size: 54px;
+  line-height: 67px;
+  span {
+    color: #fd6585;
+  }
+`;
+
 
 const FooterDesc = styled.span`
   margin-top: 55px;
@@ -64,7 +73,8 @@ function Footer() {
   return (
     <>
       <FooterSection>
-        <FooterWrapper {...animatedItem[0]}>
+        <FooterWrapper >
+          <FooterTitle{...animatedItem[0]}>지금 바로 사용해보세요!</FooterTitle>
           <FooterDesc {...animatedItem[1]}>
             사용자의 입맛에 맛는 <span>와인</span>을 추천하고, <br />
             <span>와인</span>을 즐기는데에 도움을 주고자 제안한 서비스 입니다.

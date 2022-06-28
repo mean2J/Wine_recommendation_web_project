@@ -20,6 +20,7 @@ const MyReviewListContainer = styled(Row)`
   @media screen and (max-width: 768px) {
     display: relative;
     width: 80%;
+    margin-left: 30px;
   }
 `;
 
@@ -60,27 +61,35 @@ function MyReviewList({ currentUserId }) {
   const pageRef = React.useRef();
   const limit = 3;
   const [myReviewList, setMyReviewList] = useState([]);
+  const checkRef = React.useRef();
 
   const getMyReviewList = useCallback(async () => {
     if (currentUserId) {
       setIsLoaded(true);
       isLoadedRef.current = true;
 
-      let res = await Api.get(
-        `reviews/authors/${currentUserId}?page=${pageRef.current}&limit=${limit}`
-      );
-      const data = res.data.reviews;
+      if (checkRef.current !== 0) {
+        let res = await Api.get(
+          `reviews/authors/${currentUserId}?page=${pageRef.current}&limit=${limit}`
+        );
+        checkRef.current = res.data.reviews.length;
+        const data = res.data.reviews;
 
-      if (data.length > 0) {
-        setMyReviewList((prevState) => [...prevState, ...data]);
-        setPage((page) => page + 1);
-        pageRef.current = pageRef.current + 1;
-        setIsLoaded(false);
-        isLoadedRef.current = false;
+        if (data.length > 0) {
+          setMyReviewList((prevState) => [...prevState, ...data]);
+          setPage((page) => page + 1);
+          pageRef.current = pageRef.current + 1;
+          setIsLoaded(false);
+          isLoadedRef.current = false;
+        } else {
+          setIsLoaded(false);
+          isLoadedRef.current = false;
+        }
       } else {
-        setIsLoaded(false);
-        isLoadedRef.current = false;
+        return;
       }
+    } else {
+      return;
     }
   }, [currentUserId]);
 

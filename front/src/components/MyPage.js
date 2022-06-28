@@ -15,17 +15,17 @@ import MyReviewList from "./User/MyReview/MyReviewList";
 const { TabPane } = Tabs;
 
 const MyPageContainer = styled.div`
-  display: flex;
+  padding-top: 20px;
   position: relative;
-  height: auto;
+  flex: 0 0 auto;
   background-color: #f8f9fa;
 `;
 
 const MyPageSection = styled(Card)`
-  display: flex;
-
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0 auto;
   width: 1000px;
-  left: 260px;
 
   background: #ffffff;
   border: 1px solid rgba(196, 196, 196, 0.5);

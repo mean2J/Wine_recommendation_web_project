@@ -1,0 +1,81 @@
+put:
+  tags:
+    - comments
+  summary: 댓글(comment)을 수정합니다.
+  description: 수정할 comments의 id와 수정할 본문을 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: comment 고유 id
+    required: true
+    type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+              description: 수정할 본문을 입력합니다.
+        example:
+          content : 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요. 
+  responses:
+    '200':
+      description: 댓글이 정상적으로 수정되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    description: comment를 구분하는 id
+                  postId: 
+                    type: string
+                    description: comment가 속한 post의 id
+                  userId: 
+                    type: string
+                    description: comment를 작성한 유저의 id
+                  author: 
+                    type: string
+                    description: comment를 작성한 유저의 이름
+                  content : 
+                    type: string
+                    description: 댓글 내용
+                  createdAt: 
+                    type: string
+                    description: 작성 시각
+                  updatedAt: 
+                    type: string
+                    description: 업데이트 시각
+          example:
+            success: true
+            commentList:
+              id: 9e4851c7-c243-44dc-98db-f2cb5a766e8d
+              postId: 81e7e004-47d1-40c6-8667-6a063f4de3003
+              userId: d020ec12-f280-4d30-be94-58350d6fac81
+              author: 익명
+              content : 근방에 **샵 있어요 추천합니다. 주차공간은 협소해요. 
+              createdAt: 2022-05-07T00:50:21.846Z
+              updatedAt: 2022-05-07T01:02:49.140Z
+
+delete:
+  tags:
+    - comments
+  summary: 댓글(comment)을 삭제합니다.
+  description: 삭제할 comments의 id를 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: comment 고유 id
+    required: true
+    responses:
+    '200':
+      description: 댓글이 정상적으로 삭제되었습니다.
